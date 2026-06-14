@@ -201,18 +201,17 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
 
-        // Sử dụng cấu hình app Firebase cá nhân chính xác của bạn
-        const firebaseConfig = {
-            apiKey: "AIzaSyANKVOm9BwwvRCRBM0Eu2Y5K_ahPwiJH0k",
-            authDomain: "datepooh-86717.firebaseapp.com",
-            projectId: "datepooh-86717",
-            storageBucket: "datepooh-86717.firebasestorage.app",
-            messagingSenderId: "531254453809",
-            appId: "1:531254453809:web:b8dc6807f69d815df3d710",
-            measurementId: "G-8KBN8XS7FM",
-            databaseURL: "https://datepooh-86717-default-rtdb.firebaseio.com" // Đã kích hoạt đường link dẫn thẳng vào Realtime Database của bạn
-        };
-
+       // Thay thế đoạn cấu hình Firebase cũ bằng đoạn chính xác này:
+const firebaseConfig = {
+    apiKey: "AIzaSyANKVOm9BwwvRCRBM0Eu2Y5K_ahPwiJH0k",
+    authDomain: "datepooh-86717.firebaseapp.com",
+    projectId: "datepooh-86717",
+    storageBucket: "datepooh-86717.firebasestorage.app",
+    messagingSenderId: "531254453809",
+    appId: "1:531254453809:web:b8dc6807f69d815df3d710",
+    measurementId: "G-8KBN8XS7FM",
+    databaseURL: "https://datepooh-86717-default-rtdb.asia-southeast1.firebasedatabase.app/" // Đã cập nhật link Singapore của bạn ở đây
+};
         // Khởi tạo ứng dụng
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
