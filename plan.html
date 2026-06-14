@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lên lịch thôi nào 💕</title>
+    <style>
+        :root { --primary-pink: #ff7597; --secondary-pink: #ffb3c6; --soft-bg: #fff0f3; --text-color: #4a4a4a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--soft-bg); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .phone-container { background: #ffffff; width: 100%; max-width: 410px; height: 800px; border-radius: 40px; box-shadow: 0 20px 40px rgba(255, 117, 151, 0.25); border: 8px solid #fff; display: flex; flex-direction: column; }
+        .header { background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink)); padding: 30px 20px 20px; text-align: center; color: white; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; }
+        .content { padding: 20px; flex-grow: 1; overflow-y: auto; }
+        .section-title { font-size: 1rem; color: var(--primary-pink); margin-bottom: 12px; font-weight: 700; }
+        .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+        .option-card { background: #fdfdfd; border: 2px solid #f0f0f0; border-radius: 16px; padding: 12px 5px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .option-card input { display: none; }
+        .option-card:has(input:checked) { border-color: var(--primary-pink); background-color: #fff5f7; box-shadow: 0 4px 10px rgba(255, 117, 151, 0.12); }
+        .option-card input:checked + .card-content { color: var(--primary-pink); }
+        .card-icon { font-size: 1.7rem; margin-bottom: 4px; display: block; }
+        .card-title { font-size: 0.8rem; font-weight: 600; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #666; }
+        .input-group input, .input-group textarea { width: 100%; padding: 10px; border: 2px solid #f0f0f0; border-radius: 12px; font-size: 0.9rem; outline: none; }
+        .input-group input:focus, .input-group textarea:focus { border-color: var(--primary-pink); }
+        .btn { background: linear-gradient(135deg, var(--primary-pink), #ff4f79); color: white; border: none; width: 100%; padding: 14px; border-radius: 14px; font-size: 1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 12px rgba(255, 117, 151, 0.3); }
+        .btn-back { background: none; border: none; color: #999; cursor: pointer; display: block; text-align: center; margin-top: 15px; font-size: 0.85rem; text-decoration: underline; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="header">
+            <h1>Thiết kế buổi hẹn thôiii 💕</h1>
+            <p>Chọn những gì em thích nhất nhé!</p>
+        </div>
+
+        <form id="frmPlan" class="content">
+            <h3 class="section-title">🍕 Hôm nay mình ăn gì em nhỉ?</h3>
+            <div class="options-grid">
+                <label class="option-card">
+                    <input type="radio" name="food" value="Lẩu / Buffet" checked>
+                    <div class="card-content"><span class="card-icon">🍲</span><span class="card-title">Lẩu / Buffet</span></div>
+                </label>
+                <label class="option-card">
+                    <input type="radio" name="food" value="Đồ Hàn / Gà Rán">
+                    <div class="card-content"><span class="card-icon">🍗</span><span class="card-title">Đồ Hàn / Gà Rán</span></div>
+                </label>
+                <label class="option-card">
+                    <input type="radio" name="food" value="Ăn Vặt Vỉa Hè">
+                    <div class="card-content"><span class="card-icon">🍢</span><span class="card-title">Ăn Vặt Vỉa Hè</span></div>
+                </label>
+                <label class="option-card">
+                    <input type="radio" name="food" value="Món Tây sang chảnh">
+                    <div class="card-content"><span class="card-icon">🥩</span><span class="card-title">Món Tây sang chảnh</span></div>
+                </label>
+            </div>
+
+            <h3 class="section-title">🛵 Ăn xong mình đi đâu tiếp?</h3>
+            <div class="options-grid">
+                <label class="option-card">
+                    <input type="checkbox" name="activity" value="Cà phê">
+                    <div class="card-content"><span class="card-icon">☕</span><span class="card-title">Cà phê sống ảo</span></div>
+                </label>
+                <label class="option-card">
+                    <input type="checkbox" name="activity" value="Công viên Gia Định">
+                    <div class="card-content"><span class="card-icon">🌅</span><span class="card-title">Lượn lờ hóng gió</span></div>
+                </label>
+                <label class="option-card">
+                    <input type="checkbox" name="activity" value="Xem phim">
+                    <div class="card-content"><span class="card-icon">🎬</span><span class="card-title">Xem phim rạp</span></div>
+                </label>
+                <label class="option-card">
+                    <input type="checkbox" name="activity" value="Lượn phố">
+                    <div class="card-content"><span class="card-icon">🎯</span><span class="card-title">Lượn lờ TTTM</span></div>
+                </label>
+            </div>
+
+            <div class="input-group">
+                <label for="txtTime">⏰ Thời gian đón Pooh:</label>
+                <input type="datetime-local" id="txtTime" required>
+            </div>
+
+            <div class="input-group">
+                <label for="txtNotes">📝 Lời dặn dò:</label>
+                <textarea id="txtNotes" rows="3" placeholder="Cần gì nhắn anh nha baby..."></textarea>
+            </div>
+
+            <button type="submit" class="btn">Chốt Lịch Lên Đồ! ✨</button>
+            <button type="button" class="btn-back" onclick="location.href='index.html'">Quay lại trang chủ</button>
+        </form>
+    </div>
+
+    <script>
+        // Khi mở trang, điền sẵn thông tin cũ nếu có để bạn gái sửa dễ hơn
+        window.addEventListener('DOMContentLoaded', () => {
+            const rawData = localStorage.getItem('romanticDatePlan');
+            if(rawData) {
+                const plan = JSON.parse(rawData);
+                const radio = document.querySelector(`input[name="food"][value="${plan.food}"]`);
+                if(radio) radio.checked = true;
+                
+                plan.activities.forEach(act => {
+                    const cb = document.querySelector(`input[name="activity"][value="${act}"]`);
+                    if(cb) cb.checked = true;
+                });
+                document.getElementById('txtTime').value = plan.dateTime;
+                document.getElementById('txtNotes').value = plan.notes;
+            }
+        });
+
+        // Xử lý gửi form
+        document.getElementById('frmPlan').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const food = document.querySelector('input[name="food"]:checked').value;
+            const activities = [];
+            document.querySelectorAll('input[name="activity"]:checked').forEach(cb => activities.push(cb.value));
+            
+            const data = {
+                food: food,
+                activities: activities,
+                dateTime: document.getElementById('txtTime').value,
+                notes: document.getElementById('txtNotes').value
+            };
+
+            localStorage.setItem('romanticDatePlan', JSON.stringify(data));
+            // Chuyển hướng sang trang thành công độc lập
+            window.location.href = 'success.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch hẹn với Pooh iu 💕</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💕</text></svg>">
+    <style>
+        :root { --primary-pink: #ff7597; --secondary-pink: #ffb3c6; --soft-bg: #fff0f3; --text-color: #4a4a4a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--soft-bg); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; overflow: hidden; position: relative; }
+        
+        /* Hiệu ứng hạt nền lung linh */
+        .sparkle { position: absolute; background: white; border-radius: 50%; pointer-events: none; animation: floatUp 4s linear infinite; opacity: 0.5; }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Khung mô phỏng điện thoại cao cấp */
+        .phone-container { background: #ffffff; width: 100%; max-width: 410px; height: 820px; border-radius: 40px; box-shadow: 0 20px 40px rgba(255, 117, 151, 0.25); border: 8px solid #fff; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 2; transition: transform 0.1s ease; }
+        
+        /* Hiệu ứng RUNG LẮC giao diện khi thành công */
+        .shake-success { animation: phoneShake 0.6s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes phoneShake {
+            10%, 90% { transform: translate3d(-2px, 0, 0) scale(1.02); }
+            20%, 80% { transform: translate3d(4px, 0, 0) scale(1.02); }
+            30%, 50%, 70% { transform: translate3d(-6px, -2px, 0) scale(1.03); }
+            40%, 60% { transform: translate3d(6px, 2px, 0) scale(1.03); }
+        }
+
+        /* Hiệu ứng bắn tim tung tóe (Heart Burst) */
+        .heart-pop { position: absolute; font-size: 1.5rem; pointer-events: none; z-index: 99; animation: popFly 0.8s ease-out forwards; }
+        @keyframes popFly {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(var(--tw-x), var(--tw-y)) scale(1.5); opacity: 0; }
+        }
+        
+        /* Header đồng bộ */
+        .header { background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink)); padding: 35px 20px 25px; text-align: center; color: white; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; flex-shrink: 0; }
+        .header h1 { font-size: 1.5rem; margin-bottom: 6px; }
+        .header p { font-size: 0.85rem; opacity: 0.9; }
+
+        /* Vùng nội dung chia màn hình mượt mà */
+        .main-content { flex-grow: 1; display: flex; width: 400%; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .step-view { width: 25%; height: 100%; padding: 25px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; }
+
+        /* --- KHUNG ẢNH LƯỚT SLIDESHOW POLAROID --- */
+        .photo-album { width: 210px; height: 250px; background: white; padding: 12px 12px 40px 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee; transform: rotate(-3deg); animation: photoSwing 3s ease-in-out infinite alternate; margin-bottom: 20px; position: relative; cursor: pointer; }
+        .photo-album img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; transition: opacity 0.4s ease; }
+        .upload-input { display: none; }
+        .upload-hint { position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 0.7rem; color: #ff7597; text-align: center; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 0; }
+        @keyframes photoSwing { 0% { transform: rotate(-3deg); } 100% { transform: rotate(3deg); } }
+
+        /* Các nút bấm */
+        .btn { background: linear-gradient(135deg, var(--primary-pink), #ff4f79); color: white; border: none; width: 100%; padding: 15px; border-radius: 15px; font-size: 1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 12px rgba(255, 117, 151, 0.3); transition: all 0.2s; margin-top: auto; text-align: center; text-decoration: none; }
+        .btn:active { transform: scale(0.98); }
+        .btn-secondary { background: #fff; color: var(--primary-pink); border: 2px solid var(--primary-pink); box-shadow: none; margin-top: 10px; }
+
+        /* Lưới chọn Option linh hoạt */
+        .section-title { font-size: 1.05rem; color: var(--primary-pink); margin-bottom: 15px; font-weight: 700; width: 100%; text-align: left; }
+        .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; width: 100%; }
+        .option-card { background: #fdfdfd; border: 2px solid #f0f0f0; border-radius: 16px; padding: 16px 10px; text-align: center; cursor: pointer; transition: all 0.25s; position: relative; }
+        .option-card input { display: none; }
+        .option-card:has(input:checked) { border-color: var(--primary-pink); background-color: #fff5f7; box-shadow: 0 4px 12px rgba(255, 117, 151, 0.15); }
+        .option-card input:checked + .card-content { color: var(--primary-pink); }
+        .card-icon { font-size: 1.8rem; margin-bottom: 6px; display: block; }
+        .card-title { font-size: 0.85rem; font-weight: 600; }
+
+        /* Ô nhập tùy biến linh hoạt */
+        .custom-input-box { width: 100%; display: flex; gap: 8px; margin-bottom: 25px; }
+        .custom-input-box input { flex-grow: 1; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px; outline: none; font-size: 0.9rem; }
+        .custom-input-box input:focus { border-color: var(--primary-pink); }
+        .custom-input-box .add-btn { background: var(--primary-pink); color: white; border: none; padding: 0 15px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+
+        /* Form Thời gian & Lời nhắn */
+        .input-group { margin-bottom: 20px; width: 100%; text-align: left; }
+        .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #666; }
+        .input-group input, .input-group textarea { width: 100%; padding: 12px; border: 2px solid #f0f0f0; border-radius: 12px; font-size: 0.95rem; outline: none; }
+        .input-group input:focus, .input-group textarea:focus { border-color: var(--primary-pink); }
+
+        /* Màn hình kết quả tóm tắt */
+        .summary-card { background: #fff8f9; border: 1px dashed var(--primary-pink); border-radius: 16px; padding: 15px; margin: 15px 0; text-align: left; width: 100%; }
+        .summary-item { margin-bottom: 10px; font-size: 0.9rem; }
+        .summary-item strong { color: var(--primary-pink); }
+        .countdown { background: #ffe3e8; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold; color: var(--primary-pink); margin-top: 10px; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container" id="phoneWrapper">
+        <!-- HEADER CỐ ĐỊNH -->
+        <div class="header">
+            <h1 id="headerTitle">Lịch hẹn với Pooh iu 💕</h1>
+            <p id="headerSubtitle">Đi date cùng baby ngdiu</p>
+        </div>
+
+        <!-- VÙNG TRƯỢT MÀN HÌNH CHUYỂN TRANG -->
+        <div class="main-content" id="mainContentSlider">
+            
+            <!-- MÀN HÌNH 1: TRANG CHỦ / XEM LỊCH CŨ -->
+            <div class="step-view" id="stepHome">
+                <label class="photo-album" for="imgLoader">
+                    <img id="slideshowImg" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600" alt="Memories">
+                    <span class="upload-hint" id="uploadHintText">Thêm ảnh tình yêu 📸</span>
+                    <input type="file" id="imgLoader" class="upload-input" accept="image/*" multiple>
+                </label>
+
+                <!-- Trạng thái chưa có lịch -->
+                <div id="boxNoPlan" style="width: 100%;">
+                    <h2 style="color: var(--primary-pink); margin-bottom: 10px;">Chủ nhật 21/06</h2>
+                    <p style="font-size: 0.88rem; color: #777; margin-bottom: 20px;">Lên plan thôi!</p>
+                    <button class="btn" onclick="goToStep(1)">Bắt Đầu Lên Kế Hoạch ✨</button>
+                </div>
+
+                <!-- Trạng thái đã chốt lịch lịch -->
+                <div id="boxHasPlan" style="width: 100%; display: none;">
+                    <h2 style="color: var(--primary-pink);">Lịch Hẹn Của Hai Đứa!</h2>
+                    <div class="summary-card">
+                        <div class="summary-item">🍕 <strong>Món ăn:</strong> <span id="lblFood"></span></div>
+                        <div class="summary-item">🛵 <strong>Đi chơi:</strong> <span id="lblActivities"></span></div>
+                        <div class="summary-item">⏰ <strong>Thời gian:</strong> <span id="lblTime"></span></div>
+                        <div class="summary-item">📝 <strong>Dặn dò:</strong> <span id="lblNotes"></span></div>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #666;">⏳ Thời gian đón em:</p>
+                    <div class="countdown" id="mainTimer">00d 00h 00m 00s</div>
+                    <button class="btn btn-secondary" onclick="goToStep(1)">Sửa Lại Kế Hoạch 🛠️</button>
+                </div>
+            </div>
+
+            <!-- MÀN HÌNH 2: CHỌN MÓN ĂN -->
+            <div class="step-view" id="stepFood">
+                <h3 class="section-title">🍕 Hôm nay mình ăn gì em nhỉ?</h3>
+                <div class="options-grid" id="foodGrid">
+                    <label class="option-card">
+                        <input type="radio" name="foodOpt" value="🍲 Hokkiya Lê Thánh Tôn" checked>
+                        <div class="card-content"><span class="card-icon">🍲</span><span class="card-title">Hokkiya Lê Thánh Tôn</span></div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="foodOpt" value="🥟 Dimsum">
+                        <div class="card-content"><span class="card-icon">🥟</span><span class="card-title">Dimsum</span></div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="foodOpt" value="🍢 Fine dining">
+                        <div class="card-content"><span class="card-icon">🍢</span><span class="card-title">Fine dining</span></div>
+                    </label>
+                </div>
+
+                <div class="custom-input-box">
+                    <input type="text" id="txtCustomFood" placeholder="Thêm món ăn khác em có thể suggest...">
+                    <button type="button" class="add-btn" onclick="addNewFoodOption()">Thêm</button>
+                </div>
+
+                <button class="btn" onclick="goToStep(2)">Chọn Xong & Đi Tiếp ➡️</button>
+                <button class="btn btn-secondary" onclick="goToStep(0)">⬅️ Quay Lại</button>
+            </div>
+
+            <!-- MÀN HÌNH 3: CHỌN ĐỊA ĐIỂM DI CHƠI -->
+            <div class="step-view" id="stepActivity">
+                <h3 class="section-title">🛵 Ăn xong mình đi đâu?</h3>
+                <div class="options-grid" id="planGrid">
+                    <label class="option-card">
+                        <input type="checkbox" name="actOpt" value="☕ Cà phê cà pháo">
+                        <div class="card-content"><span class="card-icon">☕</span><span class="card-title">Cà phê cà pháo</span></div>
+                    </label>
+                    <label class="option-card">
+                        <input type="checkbox" name="actOpt" value="🌅 Ginh Đạ">
+                        <div class="card-content"><span class="card-icon">🌅</span><span class="card-title">Ginh Đạ</span></div>
+                    </label>
+                    <label class="option-card">
+                        <input type="checkbox" name="actOpt" value="🎬 Xem phim">
+                        <div class="card-content"><span class="card-icon">🎬</span><span class="card-title">Xem phim</span></div>
+                    </label>
+                    <label class="option-card">
+                        <input type="checkbox" name="actOpt" value="🎯 Đi lượn phố">
+                        <div class="card-content"><span class="card-icon">🎯</span><span class="card-title">Đi lượn phố</span></div>
+                    </label>
+                </div>
+                
+                <div class="custom-input-box">
+                    <input type="text" id="txtPlanFood" placeholder="Thêm địa điểm em có thể suggest...">
+                    <button type="button" class="add-btn" onclick="addNewPlanOption()">Thêm</button>
+                </div>
+
+                <button class="btn" onclick="goToStep(3)">Chọn Xong & Đi Tiếp ➡️</button>
+                <button class="btn btn-secondary" onclick="goToStep(1)">⬅️ Quay Lại</button>
+            </div>
+
+            <!-- MÀN HÌNH 4: THỜI GIAN & CHỐT ĐƠN -->
+            <div class="step-view" id="stepFinal">
+                <div class="input-group">
+                    <label for="dateInp">⏰ Thời gian đón baby:</label>
+                    <input type="datetime-local" id="dateInp" required>
+                </div>
+                <div class="input-group">
+                    <label for="notesInp">📝 Lời dặn dò:</label>
+                    <textarea id="notesInp" rows="4" placeholder="Có gì cần note nhắn anh nha baby..."></textarea>
+                </div>
+
+                <button class="btn" onclick="finalizePlan()">Chốt Đơn Kế Hoạch! 💖</button>
+                <button class="btn btn-secondary" onclick="goToStep(2)">⬅️ Quay Lại</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Cấu hình API Key Imgbb để lưu ảnh vĩnh viễn trên mạng toàn cầu công cộng
+        const IMGBB_API_KEY = "69c9ff4c6735e5d16a5d43a6d1a10052"; // Hãy thay bằng key của bạn khi chạy thực tế
+
+        let currentStep = 0;
+        
+        // Danh sách ảnh mẫu ban đầu mặc định
+        let albumImages = [
+            "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600",
+            "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=600"
+        ];
+        
+        let isCustomAlbum = false; 
+        let slideshowInterval;
+        let timerInterval;
+
+        const imgElement = document.getElementById('slideshowImg');
+        const hintElement = document.getElementById('uploadHintText');
+        
+        function runSlideshow() {
+            clearInterval(slideshowInterval);
+            if (albumImages.length === 0) return;
+            let idx = 0;
+            slideshowInterval = setInterval(() => {
+                idx = (idx + 1) % albumImages.length;
+                imgElement.style.opacity = 0;
+                setTimeout(() => {
+                    imgElement.src = albumImages[idx];
+                    imgElement.style.opacity = 1;
+                }, 400);
+            }, 3000);
+        }
+
+        // TỰ ĐỘNG UPLOAD ẢNH LÊN CLOUD ĐỂ NGƯỜI KHÁC CŨNG THẤY ĐƯỢC
+        document.getElementById('imgLoader').addEventListener('change', async function(e) {
+            const files = e.target.files;
+            if (files.length === 0) return;
+
+            hintElement.innerText = "Chờ xíu, đang lưu ảnh... ⏳";
+            
+            // Xóa sạch ảnh mặc định ban đầu ngay lập tức khi bắt đầu upload mới
+            if (!isCustomAlbum) {
+                albumImages = [];
+                isCustomAlbum = true;
+            }
+
+            let newUploads = [];
+
+            for(let i = 0; i < files.length; i++) {
+                const formData = new FormData();
+                formData.append("image", files[i]);
+
+                try {
+                    // Gọi API tải ảnh trực tiếp lên hệ thống đám mây Imgbb
+                    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                        method: "POST",
+                        body: formData
+                    });
+                    const resData = await response.json();
+                    
+                    if(resData.success) {
+                        newUploads.push(resData.data.url);
+                    }
+                } catch (error) {
+                    console.error("Lỗi upload ảnh:", error);
+                }
+            }
+
+            if(newUploads.length > 0) {
+                albumImages = albumImages.concat(newUploads);
+                // Lưu lại mảng đường dẫn Cloud vào localStorage cục bộ
+                localStorage.setItem('poohAlbum', JSON.stringify(albumImages));
+                
+                // Gửi dữ liệu đồng bộ (Mô phỏng lưu trữ vĩnh viễn trên thiết bị hiện tại)
+                imgElement.src = albumImages[albumImages.length - 1];
+                hintElement.innerText = "Upload thành công! 🎉";
+                runSlideshow();
+            } else {
+                hintElement.innerText = "Lỗi tải ảnh, thử lại nhé! ❌";
+            }
+            
+            setTimeout(() => {
+                hintElement.innerText = "Thêm ảnh tình yêu 📸";
+            }, 3000);
+        });
+
+        function addNewFoodOption() {
+            const txtInput = document.getElementById('txtCustomFood');
+            const value = txtInput.value.trim();
+            if(!value) return;
+
+            const grid = document.getElementById('foodGrid');
+            const newLabel = document.createElement('label');
+            newLabel.classList.add('option-card');
+            newLabel.innerHTML = `
+                <input type="radio" name="foodOpt" value="✨ ${value}" checked>
+                <div class="card-content"><span class="card-icon">✨</span><span class="card-title">${value}</span></div>
+            `;
+            grid.appendChild(newLabel);
+            txtInput.value = ""; 
+        }
+
+        // --- ĐÃ ĐƯỢC SỬA: Thay thế hoàn toàn "planOpt" thành "actOpt" và đổi kiểu input sang checkbox để hoạt động chính xác ---
+        function addNewPlanOption() {
+            const txtInput = document.getElementById('txtPlanFood');
+            const value = txtInput.value.trim();
+            if(!value) return;
+
+            const grid = document.getElementById('planGrid');
+            const newLabel = document.createElement('label');
+            newLabel.classList.add('option-card');
+            newLabel.innerHTML = `
+                <input type="checkbox" name="actOpt" value="✨ ${value}" checked>
+                <div class="card-content"><span class="card-icon">✨</span><span class="card-title">${value}</span></div>
+            `;
+            grid.appendChild(newLabel);
+            txtInput.value = ""; 
+        }
+
+        function goToStep(stepNumber) {
+            currentStep = stepNumber;
+            const slider = document.getElementById('mainContentSlider');
+            slider.style.transform = `translateX(-${stepNumber * 25}%)`;
+
+            const titles = ["Lịch hẹn với Pooh iu 💕", "Món Ngon Cho Em 🍕", "Đi Chơi Ở Đâu? 🛵", "Lời Nhắn Gửi ⏰"];
+            const subs = ["Đi date cùng baby ngdiu", "Chọn món em thích hoặc tự điền thêm nha", "Bấm chọn những điểm em muốn qua", "Điền giờ đón em chính xác nhé"];
+            document.getElementById('headerTitle').innerText = titles[stepNumber];
+            document.getElementById('headerSubtitle').innerText = subs[stepNumber];
+        }
+
+        function triggerSuccessEffects() {
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 200]); 
+            }
+
+            const phone = document.getElementById('phoneWrapper');
+            phone.classList.add('shake-success');
+            setTimeout(() => { phone.classList.remove('shake-success'); }, 600);
+
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-pop');
+                heart.innerText = ['💖', '💝', '💕', '❤️', '🌸'][Math.floor(Math.random() * 5)];
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 150 + 80;
+                const x = Math.cos(angle) * distance + 'px';
+                const y = Math.sin(angle) * distance + 'px';
+                
+                heart.style.setProperty('--tw-x', x);
+                heart.style.setProperty('--tw-y', y);
+                
+                phone.appendChild(heart);
+                setTimeout(() => heart.remove(), 800);
+            }
+        }
+
+        function initCountdown(targetStr) {
+            clearInterval(timerInterval);
+            const timerEl = document.getElementById('mainTimer');
+            const target = new Date(targetStr).getTime();
+
+            timerInterval = setInterval(() => {
+                const distance = target - new Date().getTime();
+                if(distance < 0) {
+                    timerEl.innerText = "❤️ Đến giờ đi hẹn hò rồi bé ơi! ❤️";
+                    clearInterval(timerInterval);
+                    return;
+                }
+                const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+                timerEl.innerText = `${d}d ${h}h ${m}m ${s}s`;
+            }, 1000);
+        }
+
+        function formatTime(str) {
+            if(!str) return "";
+            const d = new Date(str);
+            return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} ngày ${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+        }
+
+        function finalizePlan() {
+            const food = document.querySelector('input[name="foodOpt"]:checked')?.value || "Chưa chọn";
+            const acts = [];
+            // Lấy tất cả các ô chọn có name là actOpt (đã bao gồm các địa điểm tự thêm mới)
+            document.querySelectorAll('input[name="actOpt"]:checked').forEach(cb => acts.push(cb.value));
+            const time = document.getElementById('dateInp').value;
+            const notes = document.getElementById('notesInp').value;
+
+            if(!time) { alert("Vui lòng chọn thời gian đón em nhé!"); return; }
+
+            const plan = { food, activities: acts, dateTime: time, notes };
+            localStorage.setItem('romanticDatePlan', JSON.stringify(plan));
+
+            checkAndDisplaySavedPlan();
+            goToStep(0); 
+            
+            setTimeout(triggerSuccessEffects, 300);
+        }
+
+        function checkAndDisplaySavedPlan() {
+            const data = localStorage.getItem('romanticDatePlan');
+            if(data) {
+                const plan = JSON.parse(data);
+                document.getElementById('boxNoPlan').style.display = 'none';
+                document.getElementById('boxHasPlan').style.display = 'block';
+
+                document.getElementById('lblFood').innerText = plan.food;
+                document.getElementById('lblActivities').innerText = plan.activities.length ? plan.activities.join(', ') : "Chỉ đi ăn thôi";
+                document.getElementById('lblTime').innerText = formatTime(plan.dateTime);
+                document.getElementById('lblNotes').innerText = plan.notes || "Không có dặn dò gì thêm";
+                
+                initCountdown(plan.dateTime);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            for (let i = 0; i < 15; i++) {
+                const sp = document.createElement('div'); sp.classList.add('sparkle');
+                sp.style.left = Math.random() * 100 + 'vw'; sp.style.width = sp.style.height = Math.random() * 6 + 4 + 'px';
+                sp.style.animationDelay = Math.random() * 4 + 's'; sp.style.animationDuration = Math.random() * 3 + 3 + 's';
+                document.body.appendChild(sp);
+            }
+
+            const localAlbum = localStorage.getItem('poohAlbum');
+            if(localAlbum) {
+                albumImages = JSON.parse(localAlbum);
+                isCustomAlbum = true;
+                imgElement.src = albumImages[albumImages.length - 1]; 
+            }
+            runSlideshow();
+            checkAndDisplaySavedPlan();
+        });
+    </script>
+</body>
+</html>

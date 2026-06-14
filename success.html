@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success - Our Date 💕</title>
+    <style>
+        :root { --primary-pink: #ff7597; --secondary-pink: #ffb3c6; --soft-bg: #fff0f3; --text-color: #4a4a4a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--soft-bg); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .phone-container { background: #ffffff; width: 100%; max-width: 410px; height: 800px; border-radius: 40px; box-shadow: 0 20px 40px rgba(255, 117, 151, 0.25); border: 8px solid #fff; display: flex; flex-direction: column; overflow: hidden; }
+        .header { background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink)); padding: 40px 20px 30px; text-align: center; color: white; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; }
+        .content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow-y: auto; }
+        .heart-icon { font-size: 5rem; animation: heartbeat 1.2s infinite; margin-bottom: 15px; }
+        @keyframes heartbeat { 0%, 40%, 100% { transform: scale(1); } 20%, 60% { transform: scale(1.12); } }
+        .summary-card { background: #fff8f9; border: 1px dashed var(--primary-pink); border-radius: 16px; padding: 15px; margin: 20px 0; text-align: left; width: 100%; }
+        .summary-item { margin-bottom: 10px; font-size: 0.9rem; }
+        .summary-item strong { color: var(--primary-pink); }
+        .countdown { background: #ffe3e8; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold; color: var(--primary-pink); margin-top: 10px; font-size: 1.1rem; }
+        .btn { background: #fff; color: var(--primary-pink); border: 2px solid var(--primary-pink); width: 100%; padding: 14px; border-radius: 14px; font-size: 1rem; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 25px; transition: 0.2s; }
+        .btn:hover { background: #fff5f7; }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="header">
+            <h1>Chốt Đơn Thành Công! 🎉</h1>
+            <p>Anh đã nhận được lịch hẹn rồi nè!</p>
+        </div>
+
+        <div class="content">
+            <div class="heart-icon">💖</div>
+            <h2 style="color: var(--primary-pink);">Hẹn em hôm đó nha!</h2>
+            
+            <div class="summary-card">
+                <div class="summary-item">🍕 <strong>Món ăn em chọn:</strong> <span id="lblFood"></span></div>
+                <div class="summary-item">🛵 <strong>Tăng hai mình đi:</strong> <span id="lblActivities"></span></div>
+                <div class="summary-item">⏰ <strong>Thời gian đón:</strong> <span id="lblTime"></span></div>
+                <div class="summary-item">📝 <strong>Lời nhắn:</strong> <span id="lblNotes"></span></div>
+            </div>
+
+            <p style="font-size: 0.8rem; color: #666;">⏳ Thời gian đếm ngược:</p>
+            <div class="countdown" id="timer">00d 00h 00m 00s</div>
+
+            <a href="index.html" class="btn">Về lại Trang Chủ</a>
+        </div>
+    </div>
+
+    <script>
+        function formatDateTime(str) {
+            if(!str) return "";
+            const d = new Date(str);
+            return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} ngày ${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const data = localStorage.getItem('romanticDatePlan');
+            if (data) {
+                const plan = JSON.parse(data);
+                document.getElementById('lblFood').innerText = plan.food;
+                document.getElementById('lblActivities').innerText = plan.activities.length ? plan.activities.join(', ') : "Chỉ đi ăn thôi";
+                document.getElementById('lblTime').innerText = formatDateTime(plan.dateTime);
+                document.getElementById('lblNotes').innerText = plan.notes || "Không có lời nhắn nào";
+
+                // Chạy bộ đếm ngược
+                const target = new Date(plan.dateTime).getTime();
+                const interval = setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = target - now;
+                    if (distance < 0) {
+                        document.getElementById('timer').innerText = "❤️ Đến giờ đi chơi rồi! ❤️";
+                        clearInterval(interval);
+                        return;
+                    }
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    document.getElementById('timer').innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
