@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lịch hẹn với Pooh iu 💕</title>
 
-    <!-- Đổi icon quả địa cầu thành hình trái tim 💕 -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💕</text></svg>">
     
     <style>
@@ -99,18 +98,16 @@
 
         <div class="main-content" id="mainContentSlider">
             
-            <!-- MÀN HÌNH 1: TRANG CHỦ -->
             <div class="step-view" id="stepHome">
                 <div class="photo-album">
-                    <!-- Đã sửa chuẩn lỗi đường dẫn ảnh tương đối trên GitHub Pages -->
                     <img id="slideshowImg" src="./img/86c7ccc717089656cf19.jpg" alt="Our Memories">
                     <span class="upload-hint">Our Memories 💞</span>
                 </div>
 
                 <div id="boxNoPlan" style="width: 100%;">
                     <h2 style="color: var(--primary-pink); margin-bottom: 10px;">Chủ nhật 21/06</h2>
-                    <p style="font-size: 0.88rem; color: #777; margin-bottom: 20px;">Lên plan thôi!</p>
-                    <button class="btn" onclick="goToStep(1)">Bắt Đầu Lên Kế Hoạch ✨</button>
+                    <p id="loadingTxt" style="font-size: 0.88rem; color: #777; margin-bottom: 20px;">Đang kiểm tra lịch hẹn từ mây...</p>
+                    <button id="btnStartInit" class="btn" style="display: none;">Bắt Đầu Lên Kế Hoạch ✨</button>
                 </div>
 
                 <div id="boxHasPlan" style="width: 100%; display: none;">
@@ -123,11 +120,10 @@
                     </div>
                     <p style="font-size: 0.8rem; color: #666;">⏳ Thời gian đón em:</p>
                     <div class="countdown" id="mainTimer">00d 00h 00m 00s</div>
-                    <button class="btn btn-secondary" id="btnEditPlan" onclick="goToStep(1)">Sửa Lại Kế Hoạch 🛠️</button>
+                    <button class="btn btn-secondary" id="btnEditPlan">Sửa Lại Kế Hoạch 🛠️</button>
                 </div>
             </div>
 
-            <!-- MÀN HÌNH 2: CHỌN MÓN ĂN -->
             <div class="step-view" id="stepFood">
                 <h3 class="section-title">🍕 Hôm nay mình ăn gì em nhỉ?</h3>
                 <div class="options-grid" id="foodGrid">
@@ -147,14 +143,13 @@
 
                 <div class="custom-input-box">
                     <input type="text" id="txtCustomFood" placeholder="Thêm món ăn khác em có thể suggest...">
-                    <button type="button" class="add-btn" onclick="addNewFoodOption()">Thêm</button>
+                    <button type="button" class="add-btn" id="btnAddFood">Thêm</button>
                 </div>
 
-                <button class="btn" onclick="goToStep(2)">Chọn Xong & Đi Tiếp ➡️</button>
-                <button class="btn btn-secondary" onclick="goToStep(0)">⬅️ Quay Lại</button>
+                <button class="btn" id="btnGoToStep2">Chọn Xong & Đi Tiếp ➡️</button>
+                <button class="btn btn-secondary" id="btnBackToStep0">⬅️ Quay Lại</button>
             </div>
 
-            <!-- MÀN HÌNH 3: CHỌN ĐỊA ĐIỂM -->
             <div class="step-view" id="stepActivity">
                 <h3 class="section-title">🛵 Ăn xong mình đi đâu?</h3>
                 <div class="options-grid" id="planGrid">
@@ -178,14 +173,13 @@
                 
                 <div class="custom-input-box">
                     <input type="text" id="txtPlanFood" placeholder="Thêm địa điểm em có thể suggest...">
-                    <button type="button" class="add-btn" onclick="addNewPlanOption()">Thêm</button>
+                    <button type="button" class="add-btn" id="btnAddAct">Thêm</button>
                 </div>
 
-                <button class="btn" onclick="goToStep(3)">Chọn Xong & Đi Tiếp ➡️</button>
-                <button class="btn btn-secondary" onclick="goToStep(1)">⬅️ Quay Lại</button>
+                <button class="btn" id="btnGoToStep3">Chọn Xong & Đi Tiếp ➡️</button>
+                <button class="btn btn-secondary" id="btnBackToStep1">⬅️ Quay Lại</button>
             </div>
 
-            <!-- MÀN HÌNH 4: CHỐT ĐƠN -->
             <div class="step-view" id="stepFinal">
                 <div class="input-group">
                     <label for="dateInp">⏰ Thời gian đón baby:</label>
@@ -196,17 +190,34 @@
                     <textarea id="notesInp" rows="4" placeholder="Có gì cần note nhắn anh nha baby..."></textarea>
                 </div>
 
-                <button class="btn" onclick="finalizePlan()">Chốt Đơn Kế Hoạch! 💖</button>
-                <button class="btn btn-secondary" onclick="goToStep(2)">⬅️ Quay Lại</button>
+                <button class="btn" id="btnSubmitFinal">Chốt Đơn Kế Hoạch! 💖</button>
+                <button class="btn btn-secondary" id="btnBackToStep2">⬅️ Quay Lại</button>
             </div>
 
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
+
+        // Sử dụng cấu hình app Firebase cá nhân chính xác của bạn
+        const firebaseConfig = {
+            apiKey: "AIzaSyANKVOm9BwwvRCRBM0Eu2Y5K_ahPwiJH0k",
+            authDomain: "datepooh-86717.firebaseapp.com",
+            projectId: "datepooh-86717",
+            storageBucket: "datepooh-86717.firebasestorage.app",
+            messagingSenderId: "531254453809",
+            appId: "1:531254453809:web:b8dc6807f69d815df3d710",
+            measurementId: "G-8KBN8XS7FM",
+            databaseURL: "https://datepooh-86717-default-rtdb.firebaseio.com" // Đã kích hoạt đường link dẫn thẳng vào Realtime Database của bạn
+        };
+
+        // Khởi tạo ứng dụng
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
         let currentStep = 0;
-        
-        // Cố định danh sách ảnh và đồng bộ chuẩn đường dẫn tương đối `./img/`
         const albumImages = [
             "./img/86c7ccc717089656cf19.jpg",
             "./img/82f33b13e0dc618238cd.jpg",
@@ -215,7 +226,6 @@
         
         let slideshowInterval;
         let timerInterval;
-
         const imgElement = document.getElementById('slideshowImg');
         
         function runSlideshow() {
@@ -229,38 +239,6 @@
                     imgElement.style.opacity = 1;
                 }, 400);
             }, 3500);
-        }
-
-        function addNewFoodOption() {
-            const txtInput = document.getElementById('txtCustomFood');
-            const value = txtInput.value.trim();
-            if(!value) return;
-
-            const grid = document.getElementById('foodGrid');
-            const newLabel = document.createElement('label');
-            newLabel.classList.add('option-card');
-            newLabel.innerHTML = `
-                <input type="radio" name="foodOpt" value="✨ ${value}" checked>
-                <div class="card-content"><span class="card-icon">✨</span><span class="card-title">${value}</span></div>
-            `;
-            grid.appendChild(newLabel);
-            txtInput.value = ""; 
-        }
-
-        function addNewPlanOption() {
-            const txtInput = document.getElementById('txtPlanFood');
-            const value = txtInput.value.trim();
-            if(!value) return;
-
-            const grid = document.getElementById('planGrid');
-            const newLabel = document.createElement('label');
-            newLabel.classList.add('option-card');
-            newLabel.innerHTML = `
-                <input type="checkbox" name="actOpt" value="✨ ${value}" checked>
-                <div class="card-content"><span class="card-icon">✨</span><span class="card-title">${value}</span></div>
-            `;
-            grid.appendChild(newLabel);
-            txtInput.value = ""; 
         }
 
         function goToStep(stepNumber) {
@@ -325,7 +303,19 @@
             return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} ngày ${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
         }
 
-        // --- CÁCH 2: ĐÓNG GÓI DỮ LIỆU VÀO ĐƯỜNG LINK ---
+        function displayPlanData(plan) {
+            document.getElementById('boxNoPlan').style.display = 'none';
+            document.getElementById('boxHasPlan').style.display = 'block';
+
+            document.getElementById('lblFood').innerText = plan.food;
+            document.getElementById('lblActivities').innerText = plan.activities && plan.activities.length ? plan.activities.join(', ') : "Chỉ đi ăn thôi";
+            document.getElementById('lblTime').innerText = formatTime(plan.dateTime);
+            document.getElementById('lblNotes').innerText = plan.notes || "Không có dặn dò gì thêm";
+            
+            initCountdown(plan.dateTime);
+        }
+
+        // Đẩy dữ liệu đồng bộ lên mây thời gian thực
         function finalizePlan() {
             const food = document.querySelector('input[name="foodOpt"]:checked')?.value || "Chưa chọn";
             const acts = [];
@@ -335,84 +325,90 @@
 
             if(!time) { alert("Vui lòng chọn thời gian đón em nhé!"); return; }
 
-            // Tạo đối tượng kế hoạch
             const plan = { food, activities: acts, dateTime: time, notes };
             
-            // Mã hóa dữ liệu thành chuỗi text an toàn để gắn vào link URL
-            const encryptedPlan = btoa(unescape(encodeURIComponent(JSON.stringify(plan))));
-            
-            // Tạo đường link tuyệt đối mới chứa plan vừa tạo
-            const shareUrl = `${window.location.origin}${window.location.pathname}?plan=${encryptedPlan}`;
+            const btn = document.getElementById('btnSubmitFinal');
+            btn.innerText = "Đang đồng bộ lên mây...";
+            btn.disabled = true;
 
-            // Lưu cục bộ đồng thời tự động copy link chia sẻ
-            localStorage.setItem('romanticDatePlan', JSON.stringify(plan));
-            
-            navigator.clipboard.writeText(shareUrl).then(() => {
-                alert("🎉 Tuyệt vời! Kế hoạch đã được tự động sao chép thành một đường link riêng biệt. Hãy gửi đường link này cho bạn gái nhé!");
-            }).catch(() => {
-                // Phương án dự phòng nếu trình duyệt chặn quyền tự động copy
-                prompt("Hãy copy đường link chứa kế hoạch này gửi cho bạn gái nha:", shareUrl);
-            });
-
-            // Hiển thị giao diện kết quả
-            displayPlanData(plan);
-            goToStep(0); 
-            setTimeout(triggerSuccessEffects, 300);
-        }
-
-        function displayPlanData(plan) {
-            document.getElementById('boxNoPlan').style.display = 'none';
-            document.getElementById('boxHasPlan').style.display = 'block';
-
-            document.getElementById('lblFood').innerText = plan.food;
-            document.getElementById('lblActivities').innerText = plan.activities.length ? plan.activities.join(', ') : "Chỉ đi ăn thôi";
-            document.getElementById('lblTime').innerText = formatTime(plan.dateTime);
-            document.getElementById('lblNotes').innerText = plan.notes || "Không có dặn dò gì thêm";
-            
-            initCountdown(plan.dateTime);
-        }
-
-        // Kiểm tra xem người vào link có mang theo dữ liệu kế hoạch từ trước không
-        function checkUrlAndDisplaySavedPlan() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const planParam = urlParams.get('plan');
-
-            if (planParam) {
-                try {
-                    // Giải mã dữ liệu từ link URL nhận được
-                    const decryptedData = decodeURIComponent(escape(atob(planParam)));
-                    const plan = JSON.parse(decryptedData);
-                    
-                    // Hiển thị kế hoạch nhận được lên màn hình
+            set(ref(db, 'datePlan'), plan)
+                .then(() => {
+                    btn.innerText = "Chốt Đơn Kế Hoạch! 💖";
+                    btn.disabled = false;
+                    alert("🎉 Đã đồng bộ thành công! Pooh ở nhà mở trang web lên là sẽ tự động thấy ngay kế hoạch!");
                     displayPlanData(plan);
-                    
-                    // Ẩn nút sửa kế hoạch nếu người xem là bạn gái (để tránh ấn nhầm sửa lung tung)
-                    // Nếu bạn tự mở link của mình thì nút này vẫn có ích
-                    document.getElementById('btnEditPlan').innerText = "Tự Lên Plan Mới Theo Ý Em 🛠️";
-                    return;
-                } catch (e) {
-                    console.error("Lỗi giải mã link dữ liệu URL:", e);
-                }
-            }
-
-            // Nếu không có link dữ liệu, kiểm tra bộ nhớ máy như cũ
-            const localData = localStorage.getItem('romanticDatePlan');
-            if(localData) {
-                displayPlanData(JSON.parse(localData));
-            }
+                    goToStep(0); 
+                    setTimeout(triggerSuccessEffects, 300);
+                })
+                .catch((error) => {
+                    btn.innerText = "Chốt Đơn Kế Hoạch! 💖";
+                    btn.disabled = false;
+                    alert("Lỗi lưu dữ liệu: " + error.message);
+                });
         }
 
+        // Lắng nghe thay đổi dữ liệu từ Cloud Firebase
+        function listenToCloudDatabase() {
+            onValue(ref(db, 'datePlan'), (snapshot) => {
+                const plan = snapshot.val();
+                if(plan) {
+                    displayPlanData(plan);
+                } else {
+                    document.getElementById('loadingTxt').innerText = "Chưa có kế hoạch nào được tạo.";
+                    document.getElementById('btnStartInit').style.display = 'block';
+                    document.getElementById('boxNoPlan').style.display = 'block';
+                    document.getElementById('boxHasPlan').style.display = 'none';
+                }
+            }, (error) => {
+                console.error("Lỗi đọc từ Firebase:", error);
+                document.getElementById('loadingTxt').innerText = "Không thể kết nối cơ sở dữ liệu.";
+            });
+        }
+
+        // Gán sự kiện cho các nút bấm vì đoạn mã module không gọi trực tiếp qua onclick trong html được
+        document.getElementById('btnStartInit').addEventListener('click', () => goToStep(1));
+        document.getElementById('btnEditPlan').addEventListener('click', () => goToStep(1));
+        document.getElementById('btnGoToStep2').addEventListener('click', () => goToStep(2));
+        document.getElementById('btnBackToStep0').addEventListener('click', () => goToStep(0));
+        document.getElementById('btnGoToStep3').addEventListener('click', () => goToStep(3));
+        document.getElementById('btnBackToStep1').addEventListener('click', () => goToStep(1));
+        document.getElementById('btnBackToStep2').addEventListener('click', () => goToStep(2));
+        document.getElementById('btnSubmitFinal').addEventListener('click', finalizePlan);
+
+        document.getElementById('btnAddFood').addEventListener('click', () => {
+            const txtInput = document.getElementById('txtCustomFood');
+            const value = txtInput.value.trim();
+            if(!value) return;
+            const grid = document.getElementById('foodGrid');
+            const newLabel = document.createElement('label');
+            newLabel.classList.add('option-card');
+            newLabel.innerHTML = `<input type="radio" name="foodOpt" value="✨ ${value}" checked><div class="card-content"><span class="card-icon">✨</span><span class="card-title">${value}</span></div>`;
+            grid.appendChild(newLabel);
+            txtInput.value = ""; 
+        });
+
+        document.getElementById('btnAddAct').addEventListener('click', () => {
+            const txtInput = document.getElementById('txtPlanFood');
+            const value = txtInput.value.trim();
+            if(!value) return;
+            const grid = document.getElementById('planGrid');
+            const newLabel = document.createElement('label');
+            newLabel.classList.add('option-card');
+            newLabel.innerHTML = `<input type="checkbox" name="actOpt" value="✨ ${value}" checked><div class="card-content"><span class="card-icon">✨</span><span class="card-title">${value}</span></div>`;
+            grid.appendChild(newLabel);
+            txtInput.value = ""; 
+        });
+
+        // Khởi động khi tải xong trang
         window.addEventListener('DOMContentLoaded', () => {
-            // Tạo hiệu ứng hạt lấp lánh nền
             for (let i = 0; i < 15; i++) {
                 const sp = document.createElement('div'); sp.classList.add('sparkle');
                 sp.style.left = Math.random() * 100 + 'vw'; sp.style.width = sp.style.height = Math.random() * 6 + 4 + 'px';
                 sp.style.animationDelay = Math.random() * 4 + 's'; sp.style.animationDuration = Math.random() * 3 + 3 + 's';
                 document.body.appendChild(sp);
             }
-
             runSlideshow();
-            checkUrlAndDisplaySavedPlan();
+            listenToCloudDatabase();
         });
     </script>
 </body>
