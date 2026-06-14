@@ -198,20 +198,21 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
+     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
 
-       // Thay thế đoạn cấu hình Firebase cũ bằng đoạn chính xác này:
-const firebaseConfig = {
-    apiKey: "AIzaSyANKVOm9BwwvRCRBM0Eu2Y5K_ahPwiJH0k",
-    authDomain: "datepooh-86717.firebaseapp.com",
-    projectId: "datepooh-86717",
-    storageBucket: "datepooh-86717.firebasestorage.app",
-    messagingSenderId: "531254453809",
-    appId: "1:531254453809:web:b8dc6807f69d815df3d710",
-    measurementId: "G-8KBN8XS7FM",
-    databaseURL: "https://datepooh-86717-default-rtdb.asia-southeast1.firebasedatabase.app/" // Đã cập nhật link Singapore của bạn ở đây
-};
+        // Cấu hình Firebase của bạn
+        const firebaseConfig = {
+            apiKey: "AIzaSyANKVOm9BwwvRCRBM0Eu2Y5K_ahPwiJH0k",
+            authDomain: "datepooh-86717.firebaseapp.com",
+            projectId: "datepooh-86717",
+            storageBucket: "datepooh-86717.firebasestorage.app",
+            messagingSenderId: "531254453809",
+            appId: "1:531254453809:web:b8dc6807f69d815df3d710",
+            measurementId: "G-8KBN8XS7FM",
+            databaseURL: "https://datepooh-86717-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        };
+
         // Khởi tạo ứng dụng
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
@@ -346,7 +347,7 @@ const firebaseConfig = {
                 });
         }
 
-        // Lắng nghe thay đổi dữ liệu từ Cloud Firebase
+        // Lắng nghe thay đổi dữ liệu chốt lịch hẹn
         function listenToCloudDatabase() {
             onValue(ref(db, 'datePlan'), (snapshot) => {
                 const plan = snapshot.val();
@@ -364,7 +365,86 @@ const firebaseConfig = {
             });
         }
 
-        // Gán sự kiện cho các nút bấm vì đoạn mã module không gọi trực tiếp qua onclick trong html được
+        // --- ĐỒNG BỘ ĐỘNG OPTIONS TỪ FIREBASE ---
+
+        // Lắng nghe và hiển thị danh sách món ăn từ Firebase
+        function listenToFoodOptions() {
+            onValue(ref(db, 'foodOptions'), (snapshot) => {
+                const data = snapshot.val();
+                const grid = document.getElementById('foodGrid');
+                grid.innerHTML = ""; // Xóa các option tĩnh cũ đi để render lại từ Firebase
+
+                if (!data) {
+                    // Nếu Firebase chưa có gì (lần đầu chạy), tạo danh sách gốc mặc định
+                    const defaultFoods = [
+                        { icon: "🍲", name: "Hokkiya Lê Thánh Tôn" },
+                        { icon: "🥟", name: "Dimsum" },
+                        { icon: "🍢", name: "Fine dining" }
+                    ];
+                    defaultFoods.forEach(item => {
+                        push(ref(db, 'foodOptions'), item);
+                    });
+                    return;
+                }
+
+                // Render danh sách món ăn từ mây
+                let isFirst = true;
+                Object.keys(data).forEach(key => {
+                    const item = data[key];
+                    const label = document.createElement('label');
+                    label.classList.add('option-card');
+                    label.innerHTML = `
+                        <input type="radio" name="foodOpt" value="${item.icon} ${item.name}" ${isFirst ? 'checked' : ''}>
+                        <div class="card-content">
+                            <span class="card-icon">${item.icon}</span>
+                            <span class="card-title">${item.name}</span>
+                        </div>
+                    `;
+                    grid.appendChild(label);
+                    isFirst = false;
+                });
+            });
+        }
+
+        // Lắng nghe và hiển thị danh sách địa điểm chơi từ Firebase
+        function listenToActivityOptions() {
+            onValue(ref(db, 'activityOptions'), (snapshot) => {
+                const data = snapshot.val();
+                const grid = document.getElementById('planGrid');
+                grid.innerHTML = ""; // Xóa dữ liệu cũ tĩnh
+
+                if (!data) {
+                    // Nếu Firebase chưa có gì, tạo danh sách gốc mặc định
+                    const defaultActs = [
+                        { icon: "☕", name: "Cà phê cà pháo" },
+                        { icon: "🌅", name: "Ginh Đạ" },
+                        { icon: "🎬", name: "Xem phim" },
+                        { icon: "🎯", name: "Đi lượn phố" }
+                    ];
+                    defaultActs.forEach(item => {
+                        push(ref(db, 'activityOptions'), item);
+                    });
+                    return;
+                }
+
+                // Render danh sách địa điểm từ mây
+                Object.keys(data).forEach(key => {
+                    const item = data[key];
+                    const label = document.createElement('label');
+                    label.classList.add('option-card');
+                    label.innerHTML = `
+                        <input type="checkbox" name="actOpt" value="${item.icon} ${item.name}">
+                        <div class="card-content">
+                            <span class="card-icon">${item.icon}</span>
+                            <span class="card-title">${item.name}</span>
+                        </div>
+                    `;
+                    grid.appendChild(label);
+                });
+            });
+        }
+
+        // Gán sự kiện điều hướng bước
         document.getElementById('btnStartInit').addEventListener('click', () => goToStep(1));
         document.getElementById('btnEditPlan').addEventListener('click', () => goToStep(1));
         document.getElementById('btnGoToStep2').addEventListener('click', () => goToStep(2));
@@ -374,28 +454,34 @@ const firebaseConfig = {
         document.getElementById('btnBackToStep2').addEventListener('click', () => goToStep(2));
         document.getElementById('btnSubmitFinal').addEventListener('click', finalizePlan);
 
+        // Sự kiện khi bấm nút "Thêm món ăn"
         document.getElementById('btnAddFood').addEventListener('click', () => {
             const txtInput = document.getElementById('txtCustomFood');
             const value = txtInput.value.trim();
             if(!value) return;
-            const grid = document.getElementById('foodGrid');
-            const newLabel = document.createElement('label');
-            newLabel.classList.add('option-card');
-            newLabel.innerHTML = `<input type="radio" name="foodOpt" value="✨ ${value}" checked><div class="card-content"><span class="card-icon">✨</span><span class="card-title">${value}</span></div>`;
-            grid.appendChild(newLabel);
-            txtInput.value = ""; 
+
+            // Đẩy trực tiếp item mới lên nhánh 'foodOptions' trên Firebase
+            const newItem = { icon: "✨", name: value };
+            push(ref(db, 'foodOptions'), newItem)
+                .then(() => {
+                    txtInput.value = ""; 
+                })
+                .catch(err => alert("Lỗi thêm món: " + err.message));
         });
 
+        // Sự kiện khi bấm nút "Thêm địa điểm"
         document.getElementById('btnAddAct').addEventListener('click', () => {
             const txtInput = document.getElementById('txtPlanFood');
             const value = txtInput.value.trim();
             if(!value) return;
-            const grid = document.getElementById('planGrid');
-            const newLabel = document.createElement('label');
-            newLabel.classList.add('option-card');
-            newLabel.innerHTML = `<input type="checkbox" name="actOpt" value="✨ ${value}" checked><div class="card-content"><span class="card-icon">✨</span><span class="card-title">${value}</span></div>`;
-            grid.appendChild(newLabel);
-            txtInput.value = ""; 
+
+            // Đẩy trực tiếp địa điểm mới lên nhánh 'activityOptions' trên Firebase
+            const newItem = { icon: "✨", name: value };
+            push(ref(db, 'activityOptions'), newItem)
+                .then(() => {
+                    txtInput.value = ""; 
+                })
+                .catch(err => alert("Lỗi thêm địa điểm: " + err.message));
         });
 
         // Khởi động khi tải xong trang
@@ -408,6 +494,8 @@ const firebaseConfig = {
             }
             runSlideshow();
             listenToCloudDatabase();
+            listenToFoodOptions();       // Bật lắng nghe món ăn tự động
+            listenToActivityOptions();   // Bật lắng nghe địa điểm tự động
         });
     </script>
 </body>
