@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lịch hẹn với Pooh iu 💕</title>
 
+    <!-- Đổi icon quả địa cầu thành hình trái tim 💕 -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💕</text></svg>">
     
     <style>
@@ -48,11 +49,10 @@
         .main-content { flex-grow: 1; display: flex; width: 400%; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .step-view { width: 25%; height: 100%; padding: 25px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; }
 
-        /* --- KHUNG ẢNH LƯỚT SLIDESHOW POLAROID --- */
-        .photo-album { width: 210px; height: 250px; background: white; padding: 12px 12px 40px 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee; transform: rotate(-3deg); animation: photoSwing 3s ease-in-out infinite alternate; margin-bottom: 20px; position: relative; cursor: pointer; }
+        /* --- KHUNG ẢNH LƯỚT SLIDESHOW POLAROID CỐ ĐỊNH --- */
+        .photo-album { width: 210px; height: 250px; background: white; padding: 12px 12px 40px 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee; transform: rotate(-3deg); animation: photoSwing 3s ease-in-out infinite alternate; margin-bottom: 20px; position: relative; }
         .photo-album img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; transition: opacity 0.4s ease; }
-        .upload-input { display: none; }
-        .upload-hint { position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 0.7rem; color: #ff7597; text-align: center; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 0; }
+        .upload-hint { position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 0.75rem; color: #ff7597; text-align: center; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 0; }
         @keyframes photoSwing { 0% { transform: rotate(-3deg); } 100% { transform: rotate(3deg); } }
 
         /* Các nút bấm */
@@ -99,12 +99,13 @@
 
         <div class="main-content" id="mainContentSlider">
             
+            <!-- MÀN HÌNH 1: TRANG CHỦ -->
             <div class="step-view" id="stepHome">
-                <label class="photo-album" for="imgLoader">
-                    <img id="slideshowImg" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600" alt="Memories">
-                    <span class="upload-hint" id="uploadHintText">Thêm ảnh tình yêu 📸</span>
-                    <input type="file" id="imgLoader" class="upload-input" accept="image/*" multiple>
-                </label>
+                <div class="photo-album">
+                    <!-- ĐỔI THÀNH: -->
+<img id="slideshowImg" src="img/86c7ccc717089656cf19.jpg" alt="Our Memories">
+                    <span class="upload-hint">Our Memories 💞</span>
+                </div>
 
                 <div id="boxNoPlan" style="width: 100%;">
                     <h2 style="color: var(--primary-pink); margin-bottom: 10px;">Chủ nhật 21/06</h2>
@@ -126,6 +127,7 @@
                 </div>
             </div>
 
+            <!-- MÀN HÌNH 2: CHỌN MÓN ĂN -->
             <div class="step-view" id="stepFood">
                 <h3 class="section-title">🍕 Hôm nay mình ăn gì em nhỉ?</h3>
                 <div class="options-grid" id="foodGrid">
@@ -152,6 +154,7 @@
                 <button class="btn btn-secondary" onclick="goToStep(0)">⬅️ Quay Lại</button>
             </div>
 
+            <!-- MÀN HÌNH 3: CHỌN ĐỊA ĐIỂM -->
             <div class="step-view" id="stepActivity">
                 <h3 class="section-title">🛵 Ăn xong mình đi đâu?</h3>
                 <div class="options-grid" id="planGrid">
@@ -182,6 +185,7 @@
                 <button class="btn btn-secondary" onclick="goToStep(1)">⬅️ Quay Lại</button>
             </div>
 
+            <!-- MÀN HÌNH 4: CHỐT ĐƠN -->
             <div class="step-view" id="stepFinal">
                 <div class="input-group">
                     <label for="dateInp">⏰ Thời gian đón baby:</label>
@@ -200,25 +204,22 @@
     </div>
 
     <script>
-   
-        const IMGBB_API_KEY = "cb689f33615d031b8159625ef4e91541"; 
-
         let currentStep = 0;
-        let albumImages = [
-            "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600",
-            "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=600"
-        ];
         
-        let isCustomAlbum = false; 
+        // Cố định danh sách 3 tệp ảnh cục bộ của hai bạn để chạy slideshow ổn định
+       const albumImages = [
+    "img/86c7ccc717089656cf19.jpg",
+    "img/82f33b13e0dc618238cd.jpg",
+    "img/a000d9fd1d329c6cc523.jpg"
+];
+        
         let slideshowInterval;
         let timerInterval;
 
         const imgElement = document.getElementById('slideshowImg');
-        const hintElement = document.getElementById('uploadHintText');
         
         function runSlideshow() {
             clearInterval(slideshowInterval);
-            if (albumImages.length === 0) return;
             let idx = 0;
             slideshowInterval = setInterval(() => {
                 idx = (idx + 1) % albumImages.length;
@@ -227,70 +228,7 @@
                     imgElement.src = albumImages[idx];
                     imgElement.style.opacity = 1;
                 }, 400);
-            }, 3000);
-        }
-
-        // --- ĐÃ TỐI ƯU: Sử dụng Base64 để vượt qua bộ lọc chặn CORS bảo mật của GitHub ---
-        document.getElementById('imgLoader').addEventListener('change', async function(e) {
-            const files = e.target.files;
-            if (files.length === 0) return;
-
-            hintElement.innerText = "Đang tải lên cloud... ⏳";
-            
-            if (!isCustomAlbum) {
-                albumImages = [];
-                isCustomAlbum = true;
-            }
-
-            let newUploads = [];
-
-            for(let i = 0; i < files.length; i++) {
-                try {
-                    // Chuyển đổi file ảnh sang dạng chuỗi Base64
-                    const base64String = await fileToBase64(files[i]);
-                    
-                    const formData = new FormData();
-                    formData.append("image", base64String);
-
-                    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                        method: "POST",
-                        body: formData
-                    });
-                    const resData = await response.json();
-                    
-                    if(resData.success && resData.data && resData.data.url) {
-                        newUploads.push(resData.data.url);
-                    }
-                } catch (error) {
-                    console.error("Lỗi khi gửi ảnh lên Imgbb:", error);
-                }
-            }
-
-            if(newUploads.length > 0) {
-                albumImages = albumImages.concat(newUploads);
-                localStorage.setItem('poohAlbum', JSON.stringify(albumImages));
-                imgElement.src = albumImages[albumImages.length - 1];
-                hintElement.innerText = "Tải ảnh lên thành công! 🎉";
-                runSlideshow();
-            } else {
-                hintElement.innerText = "Lỗi kết nối API! ❌";
-            }
-            
-            setTimeout(() => { hintElement.innerText = "Thêm ảnh tình yêu 📸"; }, 3000);
-        });
-
-        // Hàm bổ trợ mã hóa ảnh sang Base64 an toàn mạng
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    // Loại bỏ phần tiền tố "data:image/jpeg;base64," để lấy chuỗi mã hóa thuần túy
-                    const base64 = reader.result.split(',')[1];
-                    resolve(base64);
-                };
-                reader.onerror = error => reject(error);
-            });
+            }, 3500); // Đổi ảnh mượt mà sau mỗi 3.5 giây
         }
 
         function addNewFoodOption() {
@@ -428,12 +366,6 @@
                 document.body.appendChild(sp);
             }
 
-            const localAlbum = localStorage.getItem('poohAlbum');
-            if(localAlbum) {
-                albumImages = JSON.parse(localAlbum);
-                isCustomAlbum = true;
-                imgElement.src = albumImages[albumImages.length - 1]; 
-            }
             runSlideshow();
             checkAndDisplaySavedPlan();
         });
