@@ -49,7 +49,7 @@
         .main-content { flex-grow: 1; display: flex; width: 400%; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .step-view { width: 25%; height: 100%; padding: 25px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; }
 
-        /* --- KHUNG ẢNH LƯỚT SLIDESHOW POLAROID CỐ ĐỊNH --- */
+        /* --- KHUNG ẢNH LƯỚT SLIDESHOW POLAROID --- */
         .photo-album { width: 210px; height: 250px; background: white; padding: 12px 12px 40px 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee; transform: rotate(-3deg); animation: photoSwing 3s ease-in-out infinite alternate; margin-bottom: 20px; position: relative; }
         .photo-album img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; transition: opacity 0.4s ease; }
         .upload-hint { position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 0.75rem; color: #ff7597; text-align: center; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 0; }
@@ -102,8 +102,8 @@
             <!-- MÀN HÌNH 1: TRANG CHỦ -->
             <div class="step-view" id="stepHome">
                 <div class="photo-album">
-                    <!-- ĐỔI THÀNH: -->
-<img id="slideshowImg" src="./img/86c7ccc717089656cf19.jpg" alt="Our Memories">
+                    <!-- Đã sửa chuẩn lỗi đường dẫn ảnh tương đối trên GitHub Pages -->
+                    <img id="slideshowImg" src="./img/86c7ccc717089656cf19.jpg" alt="Our Memories">
                     <span class="upload-hint">Our Memories 💞</span>
                 </div>
 
@@ -123,7 +123,7 @@
                     </div>
                     <p style="font-size: 0.8rem; color: #666;">⏳ Thời gian đón em:</p>
                     <div class="countdown" id="mainTimer">00d 00h 00m 00s</div>
-                    <button class="btn btn-secondary" onclick="goToStep(1)">Sửa Lại Kế Hoạch 🛠️</button>
+                    <button class="btn btn-secondary" id="btnEditPlan" onclick="goToStep(1)">Sửa Lại Kế Hoạch 🛠️</button>
                 </div>
             </div>
 
@@ -205,12 +205,13 @@
 
     <script>
         let currentStep = 0;
-
-    const albumImages = [
-    "./img/86c7ccc717089656cf19.jpg",
-    "./img/82f33b13e0dc618238cd.jpg",
-    "./img/a000d9fd1d329c6cc523.jpg"
-];
+        
+        // Cố định danh sách ảnh và đồng bộ chuẩn đường dẫn tương đối `./img/`
+        const albumImages = [
+            "./img/86c7ccc717089656cf19.jpg",
+            "./img/82f33b13e0dc618238cd.jpg",
+            "./img/a000d9fd1d329c6cc523.jpg"
+        ];
         
         let slideshowInterval;
         let timerInterval;
@@ -227,7 +228,7 @@
                     imgElement.src = albumImages[idx];
                     imgElement.style.opacity = 1;
                 }, 400);
-            }, 3500); // Đổi ảnh mượt mà sau mỗi 3.5 giây
+            }, 3500);
         }
 
         function addNewFoodOption() {
@@ -324,6 +325,7 @@
             return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} ngày ${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
         }
 
+        // --- CÁCH 2: ĐÓNG GÓI DỮ LIỆU VÀO ĐƯỜNG LINK ---
         function finalizePlan() {
             const food = document.querySelector('input[name="foodOpt"]:checked')?.value || "Chưa chọn";
             const acts = [];
@@ -333,31 +335,75 @@
 
             if(!time) { alert("Vui lòng chọn thời gian đón em nhé!"); return; }
 
+            // Tạo đối tượng kế hoạch
             const plan = { food, activities: acts, dateTime: time, notes };
-            localStorage.setItem('romanticDatePlan', JSON.stringify(plan));
+            
+            // Mã hóa dữ liệu thành chuỗi text an toàn để gắn vào link URL
+            const encryptedPlan = btoa(unescape(encodeURIComponent(JSON.stringify(plan))));
+            
+            // Tạo đường link tuyệt đối mới chứa plan vừa tạo
+            const shareUrl = `${window.location.origin}${window.location.pathname}?plan=${encryptedPlan}`;
 
-            checkAndDisplaySavedPlan();
+            // Lưu cục bộ đồng thời tự động copy link chia sẻ
+            localStorage.setItem('romanticDatePlan', JSON.stringify(plan));
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert("🎉 Tuyệt vời! Kế hoạch đã được tự động sao chép thành một đường link riêng biệt. Hãy gửi đường link này cho bạn gái nhé!");
+            }).catch(() => {
+                // Phương án dự phòng nếu trình duyệt chặn quyền tự động copy
+                prompt("Hãy copy đường link chứa kế hoạch này gửi cho bạn gái nha:", shareUrl);
+            });
+
+            // Hiển thị giao diện kết quả
+            displayPlanData(plan);
             goToStep(0); 
             setTimeout(triggerSuccessEffects, 300);
         }
 
-        function checkAndDisplaySavedPlan() {
-            const data = localStorage.getItem('romanticDatePlan');
-            if(data) {
-                const plan = JSON.parse(data);
-                document.getElementById('boxNoPlan').style.display = 'none';
-                document.getElementById('boxHasPlan').style.display = 'block';
+        function displayPlanData(plan) {
+            document.getElementById('boxNoPlan').style.display = 'none';
+            document.getElementById('boxHasPlan').style.display = 'block';
 
-                document.getElementById('lblFood').innerText = plan.food;
-                document.getElementById('lblActivities').innerText = plan.activities.length ? plan.activities.join(', ') : "Chỉ đi ăn thôi";
-                document.getElementById('lblTime').innerText = formatTime(plan.dateTime);
-                document.getElementById('lblNotes').innerText = plan.notes || "Không có dặn dò gì thêm";
-                
-                initCountdown(plan.dateTime);
+            document.getElementById('lblFood').innerText = plan.food;
+            document.getElementById('lblActivities').innerText = plan.activities.length ? plan.activities.join(', ') : "Chỉ đi ăn thôi";
+            document.getElementById('lblTime').innerText = formatTime(plan.dateTime);
+            document.getElementById('lblNotes').innerText = plan.notes || "Không có dặn dò gì thêm";
+            
+            initCountdown(plan.dateTime);
+        }
+
+        // Kiểm tra xem người vào link có mang theo dữ liệu kế hoạch từ trước không
+        function checkUrlAndDisplaySavedPlan() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const planParam = urlParams.get('plan');
+
+            if (planParam) {
+                try {
+                    // Giải mã dữ liệu từ link URL nhận được
+                    const decryptedData = decodeURIComponent(escape(atob(planParam)));
+                    const plan = JSON.parse(decryptedData);
+                    
+                    // Hiển thị kế hoạch nhận được lên màn hình
+                    displayPlanData(plan);
+                    
+                    // Ẩn nút sửa kế hoạch nếu người xem là bạn gái (để tránh ấn nhầm sửa lung tung)
+                    // Nếu bạn tự mở link của mình thì nút này vẫn có ích
+                    document.getElementById('btnEditPlan').innerText = "Tự Lên Plan Mới Theo Ý Em 🛠️";
+                    return;
+                } catch (e) {
+                    console.error("Lỗi giải mã link dữ liệu URL:", e);
+                }
+            }
+
+            // Nếu không có link dữ liệu, kiểm tra bộ nhớ máy như cũ
+            const localData = localStorage.getItem('romanticDatePlan');
+            if(localData) {
+                displayPlanData(JSON.parse(localData));
             }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Tạo hiệu ứng hạt lấp lánh nền
             for (let i = 0; i < 15; i++) {
                 const sp = document.createElement('div'); sp.classList.add('sparkle');
                 sp.style.left = Math.random() * 100 + 'vw'; sp.style.width = sp.style.height = Math.random() * 6 + 4 + 'px';
@@ -366,7 +412,7 @@
             }
 
             runSlideshow();
-            checkAndDisplaySavedPlan();
+            checkUrlAndDisplaySavedPlan();
         });
     </script>
 </body>
