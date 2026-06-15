@@ -10,7 +10,7 @@
     <style>
         :root { --primary-pink: #ff7597; --secondary-pink: #ffb3c6; --soft-bg: #fff0f3; --text-color: #4a4a4a; --cream: #fffaf4; --lavender: #f6ecff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: radial-gradient(circle at top left, #fff 0 8%, transparent 26%), radial-gradient(circle at bottom right, #ffe0e8 0 12%, transparent 32%), linear-gradient(135deg, var(--soft-bg), var(--cream) 48%, var(--lavender)); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; overflow: hidden; position: relative; }
+        body { background: radial-gradient(circle at top left, #fff 0 8%, transparent 26%), radial-gradient(circle at bottom right, #ffe0e8 0 12%, transparent 32%), linear-gradient(135deg, var(--soft-bg), var(--cream) 48%, var(--lavender)); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; overflow-x: hidden; position: relative; }
         body::before, body::after { content: "💕"; position: absolute; font-size: 7rem; opacity: 0.08; filter: blur(0.3px); pointer-events: none; }
         body::before { top: 5%; left: 8%; transform: rotate(-18deg); }
         body::after { right: 7%; bottom: 8%; transform: rotate(15deg); }
@@ -24,7 +24,7 @@
         }
 
         /* Khung mô phỏng điện thoại cao cấp */
-        .phone-container { background: linear-gradient(180deg, #fff, #fff8fb); width: 100%; max-width: 410px; height: 820px; border-radius: 40px; box-shadow: 0 24px 55px rgba(255, 117, 151, 0.28), inset 0 0 0 1px rgba(255,255,255,0.8); border: 8px solid #fff; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 2; transition: transform 0.1s ease; }
+        .phone-container { background: linear-gradient(180deg, #fff, #fff8fb); width: 100%; max-width: 410px; height: min(820px, calc(100dvh - 30px)); border-radius: 40px; box-shadow: 0 24px 55px rgba(255, 117, 151, 0.28), inset 0 0 0 1px rgba(255,255,255,0.8); border: 8px solid #fff; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 2; transition: transform 0.1s ease; }
         .phone-container::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(#ffd3dd 1px, transparent 1px); background-size: 18px 18px; opacity: 0.22; pointer-events: none; }
 
         /* Hiệu ứng RUNG LẮC giao diện khi thành công */
@@ -157,12 +157,68 @@
         .smart-pill strong { display: block; color: var(--primary-pink); margin-bottom: 3px; }
         .smart-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
         .smart-action-btn { background: #fff; border: 1px solid #ffd3dd; color: var(--primary-pink); border-radius: 12px; padding: 9px; font-size: 0.78rem; font-weight: 800; cursor: pointer; }
+        .smart-apply-btn { grid-column: 1 / -1; background: linear-gradient(135deg, #ff7fa2, #ff5f89); color: #fff; border: none; box-shadow: 0 10px 18px rgba(255, 117, 151, 0.18); }
         .rating-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
         .rating-option { background: #fff; border: 1px solid #ffe1e8; color: #666; border-radius: 14px; padding: 10px 6px; font-size: 0.78rem; font-weight: 800; cursor: pointer; }
         .rating-option.active { border-color: var(--primary-pink); background: #fff5f7; color: var(--primary-pink); box-shadow: 0 8px 18px rgba(255, 117, 151, 0.1); }
         .rating-note { width: 100%; min-height: 72px; resize: vertical; border: 1px solid #ffe1e8; border-radius: 14px; padding: 10px; outline: none; color: #555; font-size: 0.84rem; }
         .rating-note:focus { border-color: var(--primary-pink); }
         .rating-status { color: #777; font-size: 0.78rem; line-height: 1.35; margin-top: 8px; }
+
+        .step-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 12px 14px; background: rgba(255,255,255,0.86); border-bottom: 1px solid #ffe3ea; flex-shrink: 0; position: relative; z-index: 2; }
+        .step-dot { border: 1px solid #ffe0e8; background: #fff; color: #9b8b91; border-radius: 999px; min-height: 38px; padding: 7px 8px; font-size: 0.72rem; font-weight: 800; cursor: pointer; transition: 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .step-dot.active { background: linear-gradient(135deg, #ff7fa2, #ff5f89); color: #fff; border-color: transparent; box-shadow: 0 8px 16px rgba(255, 117, 151, 0.24); }
+        .step-dot span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        @media (hover: hover) {
+            .btn:hover, .smart-action-btn:hover, .reminder-btn:hover, .confirm-btn:hover, .live-weather-refresh:hover, .rating-option:hover, .step-dot:hover { transform: translateY(-1px); }
+            .option-card:hover, .mini-card:hover, .date-panel:hover, .smart-card:hover, .live-weather-card:hover { box-shadow: 0 16px 34px rgba(255, 117, 151, 0.16); }
+        }
+
+        @media (min-width: 760px) {
+            body { padding: 28px; overflow: auto; align-items: center; }
+            .phone-container { max-width: 760px; height: min(840px, calc(100dvh - 56px)); border-radius: 34px; }
+            .step-view { padding: 26px 34px 36px; }
+            #stepHome .photo-album { width: 220px; height: 250px; }
+            #boxHasPlan { display: none; }
+            #boxHasPlan .summary-card { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; }
+            #boxHasPlan .summary-item { margin-bottom: 0; }
+            .options-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .prediction-grid, .insight-grid, .smart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .live-weather-main { grid-template-columns: 92px 1fr; }
+            .live-weather-icon { width: 92px; height: 92px; font-size: 3rem; }
+            .live-weather-temp { font-size: 2.4rem; }
+        }
+
+        @media (max-width: 520px) {
+            body { padding: 0; align-items: stretch; overflow: hidden; }
+            body::before, body::after { display: none; }
+            .phone-container { max-width: none; height: 100dvh; border-radius: 0; border: 0; box-shadow: none; }
+            .phone-container::before { opacity: 0.14; }
+            .header { padding: calc(18px + env(safe-area-inset-top)) 16px 16px; border-bottom-left-radius: 22px; border-bottom-right-radius: 22px; }
+            .header h1 { font-size: 1.22rem; }
+            .header p { font-size: 0.78rem; }
+            .step-nav { padding: 10px 10px; gap: 6px; }
+            .step-dot { min-height: 34px; padding: 6px 5px; font-size: 0.68rem; }
+            .step-view { padding: 16px 14px calc(24px + env(safe-area-inset-bottom)); }
+            .photo-album { width: min(178px, 62vw); height: 210px; margin-bottom: 12px; }
+            .decor-strip { grid-template-columns: 1fr; gap: 6px; }
+            .decor-chip { padding: 7px; }
+            .options-grid { gap: 10px; }
+            .option-card { padding: 14px 8px; }
+            .btn, .reminder-btn, .confirm-btn, .smart-action-btn, .rating-option, .custom-input-box .add-btn { min-height: 46px; }
+            .summary-card, .live-weather-card, .date-panel, .smart-card, .prediction-card, .reminder-box, .activity-insight { border-radius: 18px; padding: 13px; }
+        }
+
+        @media (max-width: 380px) {
+            .options-grid, .prediction-grid, .insight-grid, .smart-grid, .smart-actions, .reminder-options, .rating-options, .live-weather-stats { grid-template-columns: 1fr; }
+            .custom-input-box { flex-direction: column; }
+            .live-weather-main { grid-template-columns: 58px 1fr; }
+            .live-weather-icon { width: 58px; height: 58px; border-radius: 18px; font-size: 2rem; }
+            .live-weather-temp { font-size: 1.7rem; }
+            .date-panel-title, .smart-title, .insight-header, .live-weather-top { align-items: flex-start; flex-direction: column; }
+            .step-dot span { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -171,6 +227,12 @@
         <div class="header">
             <h1 id="headerTitle">Lịch hẹn với Pooh iu 💕</h1>
             <p id="headerSubtitle">Đi date cùng baby ngdiu</p>
+        </div>
+        <div class="step-nav" aria-label="Các bước lên kế hoạch">
+            <button class="step-dot active" data-step-target="0">🏠 <span>Tổng quan</span></button>
+            <button class="step-dot" data-step-target="1">🍕 <span>Món ăn</span></button>
+            <button class="step-dot" data-step-target="2">🛵 <span>Đi chơi</span></button>
+            <button class="step-dot" data-step-target="3">✅ <span>Chốt lịch</span></button>
         </div>
 
         <div class="main-content" id="mainContentSlider">
@@ -249,6 +311,7 @@
                         <div class="smart-actions">
                             <button class="smart-action-btn" data-smart-feedback="like">Gợi ý hợp gu 💕</button>
                             <button class="smart-action-btn" data-smart-feedback="dislike">Chưa hợp lắm</button>
+                            <button class="smart-action-btn smart-apply-btn" data-apply-smart>Áp dụng gợi ý vào form ✨</button>
                         </div>
                     </div>
                     <div class="date-panel">
@@ -403,6 +466,9 @@
                         <div class="smart-pill"><strong>Combo gợi ý</strong><span id="finalSmartCombo">--</span></div>
                         <div class="smart-pill"><strong>Checklist thêm</strong><span id="finalSmartChecklist">--</span></div>
                     </div>
+                    <div class="smart-actions">
+                        <button class="smart-action-btn smart-apply-btn" data-apply-smart>Áp dụng combo này ✨</button>
+                    </div>
                 </div>
                 <div class="date-panel">
                     <div class="date-panel-title">
@@ -504,6 +570,9 @@
             currentStep = stepNumber;
             const slider = document.getElementById('mainContentSlider');
             slider.style.transform = `translateX(-${stepNumber * 25}%)`;
+            document.querySelectorAll('[data-step-target]').forEach(button => {
+                button.classList.toggle('active', Number(button.dataset.stepTarget) === stepNumber);
+            });
 
             const titles = ["Lịch hẹn với Pooh iu 💕", "Món Ngon Cho Em 🍕", "Đi Chơi Ở Đâu? 🛵", "Lời Nhắn Gửi ⏰"];
             const subs = ["Đi date cùng baby ngdiu", "Chọn món em thích hoặc tự điền thêm nha", "Bấm chọn những điểm em muốn qua", "Điền giờ đón em chính xác nhé"];
@@ -715,6 +784,58 @@
             }).then(() => {
                 alert(value === 'like' ? "Anh đã ghi nhận gu này rồi 💕" : "Anh sẽ để ý để lựa chọn phù hợp hơn nha.");
             }).catch(error => alert("Lỗi lưu feedback: " + error.message));
+        }
+
+        function normalizeOptionValue(value) {
+            return String(value || "")
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^\w\s]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function appendTemporaryOption(gridId, inputName, value, checked) {
+            const grid = document.getElementById(gridId);
+            const label = document.createElement('label');
+            label.className = 'option-card';
+            label.innerHTML = `
+                <input type="${inputName === 'foodOpt' ? 'radio' : 'checkbox'}" name="${inputName}" value="${escapeHtml(value)}" ${checked ? 'checked' : ''}>
+                <div class="card-content">
+                    <span class="card-icon">✨</span>
+                    <span class="card-title">${escapeHtml(value.replace(/^\S+\s*/, ''))}</span>
+                </div>
+            `;
+            grid.appendChild(label);
+            return label.querySelector('input');
+        }
+
+        function selectOptionByValue(inputName, gridId, value, checked = true) {
+            const target = normalizeOptionValue(value);
+            const inputs = Array.from(document.querySelectorAll(`input[name="${inputName}"]`));
+            let input = inputs.find(item => item.value === value)
+                || inputs.find(item => normalizeOptionValue(item.value) === target)
+                || inputs.find(item => normalizeOptionValue(item.value).includes(target) || target.includes(normalizeOptionValue(item.value)));
+
+            if (!input) input = appendTemporaryOption(gridId, inputName, value, checked);
+            input.checked = checked;
+            return Boolean(input);
+        }
+
+        function applySmartSuggestion() {
+            const suggestion = latestSmartSuggestion || generateSmartSuggestion();
+            if (!suggestion) return;
+
+            document.querySelectorAll('input[name="actOpt"]').forEach(input => {
+                input.checked = false;
+            });
+            selectOptionByValue('foodOpt', 'foodGrid', suggestion.food, true);
+            selectOptionByValue('actOpt', 'planGrid', suggestion.activity, true);
+            renderFinalChecklist(suggestion.checklist);
+            updatePredictionPreview();
+            goToStep(3);
+            alert("Đã áp dụng gợi ý vào form. Pooh chỉ cần kiểm tra thời gian, địa điểm rồi chốt nha 💕");
         }
 
         function renderDateRating(rating) {
@@ -1310,6 +1431,9 @@
         }
 
         // Gán sự kiện điều hướng bước
+        document.querySelectorAll('[data-step-target]').forEach(button => {
+            button.addEventListener('click', () => goToStep(Number(button.dataset.stepTarget)));
+        });
         document.getElementById('btnStartInit').addEventListener('click', () => goToStep(1));
         document.getElementById('btnEditPlan').addEventListener('click', () => goToStep(1));
         document.getElementById('btnGoToStep2').addEventListener('click', () => goToStep(2));
@@ -1338,6 +1462,9 @@
         });
         document.querySelectorAll('[data-smart-feedback]').forEach(button => {
             button.addEventListener('click', () => saveSmartFeedback(button.dataset.smartFeedback));
+        });
+        document.querySelectorAll('[data-apply-smart]').forEach(button => {
+            button.addEventListener('click', applySmartSuggestion);
         });
         document.querySelectorAll('[data-date-rating]').forEach(button => {
             button.addEventListener('click', () => {
