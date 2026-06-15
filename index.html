@@ -6,12 +6,15 @@
     <title>Lịch hẹn với Pooh iu 💕</title>
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💕</text></svg>">
-    
+
     <style>
-        :root { --primary-pink: #ff7597; --secondary-pink: #ffb3c6; --soft-bg: #fff0f3; --text-color: #4a4a4a; }
+        :root { --primary-pink: #ff7597; --secondary-pink: #ffb3c6; --soft-bg: #fff0f3; --text-color: #4a4a4a; --cream: #fffaf4; --lavender: #f6ecff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--soft-bg); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; overflow: hidden; position: relative; }
-        
+        body { background: radial-gradient(circle at top left, #fff 0 8%, transparent 26%), radial-gradient(circle at bottom right, #ffe0e8 0 12%, transparent 32%), linear-gradient(135deg, var(--soft-bg), var(--cream) 48%, var(--lavender)); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; overflow: hidden; position: relative; }
+        body::before, body::after { content: "💕"; position: absolute; font-size: 7rem; opacity: 0.08; filter: blur(0.3px); pointer-events: none; }
+        body::before { top: 5%; left: 8%; transform: rotate(-18deg); }
+        body::after { right: 7%; bottom: 8%; transform: rotate(15deg); }
+
         /* Hiệu ứng hạt nền lung linh */
         .sparkle { position: absolute; background: white; border-radius: 50%; pointer-events: none; animation: floatUp 4s linear infinite; opacity: 0.5; }
         @keyframes floatUp {
@@ -21,8 +24,9 @@
         }
 
         /* Khung mô phỏng điện thoại cao cấp */
-        .phone-container { background: #ffffff; width: 100%; max-width: 410px; height: 820px; border-radius: 40px; box-shadow: 0 20px 40px rgba(255, 117, 151, 0.25); border: 8px solid #fff; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 2; transition: transform 0.1s ease; }
-        
+        .phone-container { background: linear-gradient(180deg, #fff, #fff8fb); width: 100%; max-width: 410px; height: 820px; border-radius: 40px; box-shadow: 0 24px 55px rgba(255, 117, 151, 0.28), inset 0 0 0 1px rgba(255,255,255,0.8); border: 8px solid #fff; display: flex; flex-direction: column; overflow: hidden; position: relative; z-index: 2; transition: transform 0.1s ease; }
+        .phone-container::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(#ffd3dd 1px, transparent 1px); background-size: 18px 18px; opacity: 0.22; pointer-events: none; }
+
         /* Hiệu ứng RUNG LẮC giao diện khi thành công */
         .shake-success { animation: phoneShake 0.6s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes phoneShake {
@@ -38,18 +42,20 @@
             0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
             100% { transform: translate(var(--tw-x), var(--tw-y)) scale(1.5); opacity: 0; }
         }
-        
+
         /* Header đồng bộ */
-        .header { background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink)); padding: 35px 20px 25px; text-align: center; color: white; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; flex-shrink: 0; }
+        .header { background: linear-gradient(135deg, #ff5f89, var(--secondary-pink)); padding: 35px 20px 25px; text-align: center; color: white; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; flex-shrink: 0; position: relative; overflow: hidden; }
+        .header::before { content: "✦"; position: absolute; left: 26px; top: 18px; font-size: 1.4rem; opacity: 0.85; }
+        .header::after { content: "♡"; position: absolute; right: 30px; bottom: 18px; font-size: 2rem; opacity: 0.45; }
         .header h1 { font-size: 1.5rem; margin-bottom: 6px; }
         .header p { font-size: 0.85rem; opacity: 0.9; }
 
         /* Vùng nội dung chia màn hình mượt mà */
-        .main-content { flex-grow: 1; display: flex; width: 400%; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .step-view { width: 25%; height: 100%; padding: 25px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; }
+        .main-content { flex-grow: 1; min-height: 0; display: flex; width: 400%; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .step-view { width: 25%; height: 100%; min-height: 0; padding: 20px 22px 32px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; z-index: 1; }
 
         /* --- KHUNG ẢNH LƯỚT SLIDESHOW POLAROID --- */
-        .photo-album { width: 210px; height: 250px; background: white; padding: 12px 12px 40px 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee; transform: rotate(-3deg); animation: photoSwing 3s ease-in-out infinite alternate; margin-bottom: 20px; position: relative; }
+        .photo-album { width: 190px; height: 220px; background: white; padding: 12px 12px 38px 12px; box-shadow: 0 12px 26px rgba(255, 117, 151, 0.16); border: 1px solid #fff0f3; transform: rotate(-3deg); animation: photoSwing 3s ease-in-out infinite alternate; margin-bottom: 15px; position: relative; }
         .photo-album img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; transition: opacity 0.4s ease; }
         .upload-hint { position: absolute; bottom: 8px; left: 0; width: 100%; font-size: 0.75rem; color: #ff7597; text-align: center; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 0; }
         @keyframes photoSwing { 0% { transform: rotate(-3deg); } 100% { transform: rotate(3deg); } }
@@ -58,11 +64,12 @@
         .btn { background: linear-gradient(135deg, var(--primary-pink), #ff4f79); color: white; border: none; width: 100%; padding: 15px; border-radius: 15px; font-size: 1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 12px rgba(255, 117, 151, 0.3); transition: all 0.2s; margin-top: auto; text-align: center; text-decoration: none; }
         .btn:active { transform: scale(0.98); }
         .btn-secondary { background: #fff; color: var(--primary-pink); border: 2px solid var(--primary-pink); box-shadow: none; margin-top: 10px; }
+        #stepFinal .btn { margin-top: 10px; flex-shrink: 0; }
 
         /* Lưới chọn Option linh hoạt */
-        .section-title { font-size: 1.05rem; color: var(--primary-pink); margin-bottom: 15px; font-weight: 700; width: 100%; text-align: left; }
+        .section-title { font-size: 1.05rem; color: var(--primary-pink); margin-bottom: 15px; font-weight: 700; width: 100%; text-align: left; background: #fff8f9; border: 1px solid #ffe1e8; border-radius: 14px; padding: 10px 12px; }
         .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; width: 100%; }
-        .option-card { background: #fdfdfd; border: 2px solid #f0f0f0; border-radius: 16px; padding: 16px 10px; text-align: center; cursor: pointer; transition: all 0.25s; position: relative; }
+        .option-card { background: rgba(255,255,255,0.88); border: 2px solid #f0f0f0; border-radius: 16px; padding: 16px 10px; text-align: center; cursor: pointer; transition: all 0.25s; position: relative; box-shadow: 0 8px 18px rgba(255, 117, 151, 0.08); }
         .option-card input { display: none; }
         .option-card:has(input:checked) { border-color: var(--primary-pink); background-color: #fff5f7; box-shadow: 0 4px 12px rgba(255, 117, 151, 0.15); }
         .option-card input:checked + .card-content { color: var(--primary-pink); }
@@ -80,12 +87,56 @@
         .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #666; }
         .input-group input, .input-group textarea { width: 100%; padding: 12px; border: 2px solid #f0f0f0; border-radius: 12px; font-size: 0.95rem; outline: none; }
         .input-group input:focus, .input-group textarea:focus { border-color: var(--primary-pink); }
+        .reminder-box, .prediction-card { width: 100%; background: rgba(255,248,249,0.92); border: 1px solid #ffd3dd; border-radius: 16px; padding: 14px; margin-bottom: 18px; text-align: left; box-shadow: 0 10px 22px rgba(255, 117, 151, 0.08); }
+        .reminder-title { color: var(--primary-pink); font-weight: 700; margin-bottom: 8px; font-size: 0.95rem; }
+        .reminder-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0; }
+        .reminder-pill { display: flex; align-items: center; gap: 6px; background: white; border: 1px solid #ffe1e7; border-radius: 12px; padding: 8px; font-size: 0.82rem; cursor: pointer; }
+        .reminder-pill input { accent-color: var(--primary-pink); }
+        .reminder-status { font-size: 0.78rem; color: #777; line-height: 1.35; }
+        .reminder-btn, .confirm-btn { background: #fff; color: var(--primary-pink); border: 2px solid var(--primary-pink); padding: 9px 10px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; width: 100%; }
+        .confirm-btn.confirmed { background: #fff5f7; border-color: #ff4f79; }
+        .timeline-list { width: 100%; background: #fff8f9; border-radius: 16px; padding: 12px 14px; margin: 10px 0; text-align: left; }
+        .timeline-item { border-left: 3px solid var(--secondary-pink); padding: 0 0 10px 10px; font-size: 0.86rem; line-height: 1.35; }
+        .timeline-item:last-child { padding-bottom: 0; }
 
         /* Màn hình kết quả tóm tắt */
-        .summary-card { background: #fff8f9; border: 1px dashed var(--primary-pink); border-radius: 16px; padding: 15px; margin: 15px 0; text-align: left; width: 100%; }
+        .summary-card { background: rgba(255,248,249,0.94); border: 1px dashed var(--primary-pink); border-radius: 16px; padding: 15px; margin: 12px 0; text-align: left; width: 100%; box-shadow: 0 10px 24px rgba(255, 117, 151, 0.08); }
         .summary-item { margin-bottom: 10px; font-size: 0.9rem; }
         .summary-item strong { color: var(--primary-pink); }
         .countdown { background: #ffe3e8; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold; color: var(--primary-pink); margin-top: 10px; font-size: 1.1rem; }
+        .decor-strip { width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0 12px; }
+        .decor-chip { background: #fff; border: 1px solid #ffe1e8; border-radius: 999px; padding: 8px; text-align: center; color: var(--primary-pink); font-size: 0.78rem; font-weight: 700; box-shadow: 0 8px 18px rgba(255, 117, 151, 0.08); }
+        .prediction-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; margin: 10px 0; }
+        .mini-card { background: #fff; border: 1px solid #ffe1e8; border-radius: 15px; padding: 12px; min-height: 94px; box-shadow: 0 8px 18px rgba(255, 117, 151, 0.08); }
+        .mini-card strong { color: var(--primary-pink); display: block; margin-bottom: 6px; }
+        .mini-card span { font-size: 0.84rem; line-height: 1.35; }
+        .prediction-title { color: var(--primary-pink); font-weight: 800; margin-bottom: 8px; }
+        .activity-insight { width: 100%; background: linear-gradient(135deg, #fff8f9, #fff); border: 1px solid #ffd3dd; border-radius: 20px; padding: 14px; margin: 0 0 18px; box-shadow: 0 12px 26px rgba(255, 117, 151, 0.1); }
+        .insight-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--primary-pink); font-weight: 800; margin-bottom: 10px; }
+        .insight-badge { background: #ffe3e8; border-radius: 999px; padding: 5px 9px; font-size: 0.72rem; white-space: nowrap; }
+        .insight-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .insight-card { background: #fff; border: 1px solid #ffe1e8; border-radius: 16px; padding: 12px; min-height: 112px; }
+        .insight-icon { font-size: 1.6rem; margin-bottom: 5px; }
+        .insight-card strong { display: block; color: var(--primary-pink); margin-bottom: 5px; font-size: 0.86rem; }
+        .insight-card p { font-size: 0.8rem; color: #666; line-height: 1.35; }
+        .outfit-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+        .outfit-chip { background: #fff; border: 1px solid #ffd3dd; border-radius: 999px; color: #ff5f89; padding: 6px 9px; font-size: 0.76rem; font-weight: 700; }
+        .insight-reason { margin-top: 10px; font-size: 0.78rem; color: #777; line-height: 1.35; }
+        .live-weather-card { width: 100%; background: linear-gradient(135deg, #fff8f9, #f7fbff); border: 1px solid #ffd3dd; border-radius: 22px; padding: 14px; margin: 12px 0; box-shadow: 0 14px 30px rgba(255, 117, 151, 0.12); overflow: hidden; position: relative; }
+        .live-weather-card::after { content: ""; position: absolute; width: 115px; height: 115px; border-radius: 50%; right: -36px; top: -38px; background: rgba(255, 211, 221, 0.45); }
+        .live-weather-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; position: relative; z-index: 1; }
+        .live-weather-title { color: var(--primary-pink); font-weight: 800; font-size: 0.92rem; }
+        .live-weather-place { color: #777; font-size: 0.76rem; margin-top: 2px; }
+        .live-weather-refresh { background: #fff; border: 1px solid #ffd3dd; color: var(--primary-pink); border-radius: 999px; padding: 7px 10px; font-size: 0.76rem; font-weight: 800; cursor: pointer; }
+        .live-weather-main { display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: center; margin-top: 12px; position: relative; z-index: 1; }
+        .live-weather-icon { width: 72px; height: 72px; display: grid; place-items: center; border-radius: 22px; background: #fff; font-size: 2.5rem; box-shadow: inset 0 0 0 1px #ffe1e8; }
+        .live-weather-temp { font-size: 2rem; font-weight: 900; color: #ff5f89; line-height: 1; }
+        .live-weather-desc { font-size: 0.86rem; color: #555; margin-top: 4px; }
+        .live-weather-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; position: relative; z-index: 1; }
+        .weather-stat { background: rgba(255,255,255,0.84); border: 1px solid #ffe1e8; border-radius: 13px; padding: 9px 7px; text-align: center; }
+        .weather-stat strong { display: block; color: var(--primary-pink); font-size: 0.78rem; margin-bottom: 3px; }
+        .weather-stat span { font-size: 0.8rem; color: #666; }
+        .live-weather-tip { margin-top: 10px; color: #777; font-size: 0.78rem; line-height: 1.35; position: relative; z-index: 1; }
     </style>
 </head>
 <body>
@@ -97,11 +148,16 @@
         </div>
 
         <div class="main-content" id="mainContentSlider">
-            
+
             <div class="step-view" id="stepHome">
                 <div class="photo-album">
                     <img id="slideshowImg" src="./img/86c7ccc717089656cf19.jpg" alt="Our Memories">
                     <span class="upload-hint">Our Memories 💞</span>
+                </div>
+                <div class="decor-strip">
+                    <div class="decor-chip">Sweet date</div>
+                    <div class="decor-chip">Pooh mode</div>
+                    <div class="decor-chip">Love plan</div>
                 </div>
 
                 <div id="boxNoPlan" style="width: 100%;">
@@ -112,12 +168,51 @@
 
                 <div id="boxHasPlan" style="width: 100%; display: none;">
                     <h2 style="color: var(--primary-pink);">Lịch Hẹn Của Hai Đứa!</h2>
+                    <div class="live-weather-card">
+                        <div class="live-weather-top">
+                            <div>
+                                <div class="live-weather-title">🌈 Thời tiết realtime ngoài trang chính</div>
+                                <div class="live-weather-place" id="liveWeatherPlace">Đang lấy thời tiết TP.HCM...</div>
+                            </div>
+                            <button class="live-weather-refresh" id="btnRefreshWeather">Làm mới</button>
+                        </div>
+                        <div class="live-weather-main">
+                            <div class="live-weather-icon" id="liveWeatherIcon">⛅</div>
+                            <div>
+                                <div class="live-weather-temp" id="liveWeatherTemp">--°C</div>
+                                <div class="live-weather-desc" id="liveWeatherDesc">Đang cập nhật realtime...</div>
+                            </div>
+                        </div>
+                        <div class="live-weather-stats">
+                            <div class="weather-stat"><strong>Mưa</strong><span id="liveWeatherRain">--%</span></div>
+                            <div class="weather-stat"><strong>Gió</strong><span id="liveWeatherWind">-- km/h</span></div>
+                            <div class="weather-stat"><strong>Cập nhật</strong><span id="liveWeatherUpdated">--:--</span></div>
+                        </div>
+                        <div class="live-weather-tip" id="liveWeatherTip">Dữ liệu realtime dùng Open-Meteo, không cần API key.</div>
+                    </div>
                     <div class="summary-card">
                         <div class="summary-item">🍕 <strong>Món ăn:</strong> <span id="lblFood"></span></div>
                         <div class="summary-item">🛵 <strong>Đi chơi:</strong> <span id="lblActivities"></span></div>
+                        <div class="summary-item">📍 <strong>Địa điểm đón:</strong> <span id="lblPickup"></span></div>
                         <div class="summary-item">⏰ <strong>Thời gian:</strong> <span id="lblTime"></span></div>
                         <div class="summary-item">📝 <strong>Dặn dò:</strong> <span id="lblNotes"></span></div>
+                        <div class="summary-item">🔔 <strong>Nhắc nhở:</strong> <span id="lblReminder"></span></div>
+                        <div class="summary-item">💌 <strong>Xác nhận:</strong> <span id="lblConfirmStatus"></span></div>
                     </div>
+                    <div class="prediction-grid">
+                        <div class="mini-card">
+                            <strong>🌤️ Thời tiết dự đoán</strong>
+                            <span id="lblWeather"></span>
+                        </div>
+                        <div class="mini-card">
+                            <strong>👗 Mood & dresscode</strong>
+                            <span id="lblDresscode"></span>
+                        </div>
+                    </div>
+                    <div class="timeline-list" id="timelineList"></div>
+                    <div class="reminder-status" id="homeReminderStatus"></div>
+                    <button class="reminder-btn" id="btnEnableReminderHome">Bật thông báo trên Windows 🔔</button>
+                    <button class="confirm-btn" id="btnConfirmPlan">Pooh đồng ý lịch này 💕</button>
                     <p style="font-size: 0.8rem; color: #666;">⏳ Thời gian đón em:</p>
                     <div class="countdown" id="mainTimer">00d 00h 00m 00s</div>
                     <button class="btn btn-secondary" id="btnEditPlan">Sửa Lại Kế Hoạch 🛠️</button>
@@ -170,10 +265,31 @@
                         <div class="card-content"><span class="card-icon">🎯</span><span class="card-title">Đi lượn phố</span></div>
                     </label>
                 </div>
-                
+
                 <div class="custom-input-box">
                     <input type="text" id="txtPlanFood" placeholder="Thêm địa điểm em có thể suggest...">
                     <button type="button" class="add-btn" id="btnAddAct">Thêm</button>
+                </div>
+
+                <div class="activity-insight">
+                    <div class="insight-header">
+                        <span>✨ Dự đoán theo nơi đi chơi</span>
+                        <span class="insight-badge" id="activityMoodBadge">Cute chill</span>
+                    </div>
+                    <div class="insight-grid">
+                        <div class="insight-card">
+                            <div class="insight-icon" id="activityWeatherIcon">🌤️</div>
+                            <strong>Dự báo thời tiết</strong>
+                            <p id="activityWeatherText">Chọn nơi đi chơi để anh dự đoán cần chuẩn bị gì nha.</p>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon" id="activityDressIcon">👗</div>
+                            <strong>Dresscode hợp vibe</strong>
+                            <p id="activityDressText">Outfit sẽ được gợi ý theo cafe, phim, dạo phố hoặc ngoài trời.</p>
+                        </div>
+                    </div>
+                    <div class="outfit-chips" id="activityOutfitChips"></div>
+                    <div class="insight-reason" id="activityPredictionReason">Tip: chọn nhiều option đi chơi để dresscode dự đoán sát hơn.</div>
                 </div>
 
                 <button class="btn" id="btnGoToStep3">Chọn Xong & Đi Tiếp ➡️</button>
@@ -186,8 +302,40 @@
                     <input type="datetime-local" id="dateInp" required>
                 </div>
                 <div class="input-group">
+                    <label for="pickupInp">📍 Địa điểm đón:</label>
+                    <input type="text" id="pickupInp" placeholder="Nhập địa chỉ hoặc link Google Maps nha baby...">
+                </div>
+                <div class="input-group">
+                    <label for="timelineInp">🗓️ Timeline buổi hẹn:</label>
+                    <textarea id="timelineInp" rows="4" placeholder="Ví dụ: 18:00 đón em&#10;18:30 ăn tối&#10;20:00 cà phê / xem phim"></textarea>
+                </div>
+                <div class="prediction-card">
+                    <div class="prediction-title">🌤️ Dự đoán tự động cho buổi hẹn</div>
+                    <div class="prediction-grid">
+                        <div class="mini-card">
+                            <strong>Thời tiết</strong>
+                            <span id="previewWeather">Chọn thời gian để anh dự đoán nha.</span>
+                        </div>
+                        <div class="mini-card">
+                            <strong>Dresscode</strong>
+                            <span id="previewDresscode">Sẽ gợi ý theo giờ, món ăn và hoạt động.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
                     <label for="notesInp">📝 Lời dặn dò:</label>
                     <textarea id="notesInp" rows="4" placeholder="Có gì cần note nhắn anh nha baby..."></textarea>
+                </div>
+                <div class="reminder-box">
+                    <div class="reminder-title">🔔 Nhắc em trước giờ hẹn</div>
+                    <div class="reminder-options">
+                        <label class="reminder-pill"><input type="checkbox" name="reminderOpt" value="0" checked> Đúng giờ</label>
+                        <label class="reminder-pill"><input type="checkbox" name="reminderOpt" value="15" checked> Trước 15 phút</label>
+                        <label class="reminder-pill"><input type="checkbox" name="reminderOpt" value="60"> Trước 1 tiếng</label>
+                        <label class="reminder-pill"><input type="checkbox" name="reminderOpt" value="1440"> Trước 1 ngày</label>
+                    </div>
+                    <div class="reminder-status" id="finalReminderStatus">Thông báo sẽ hiện trên Windows nếu trình duyệt đang mở và đã cấp quyền.</div>
+                    <button type="button" class="reminder-btn" id="btnEnableReminderFinal">Cho phép thông báo Windows</button>
                 </div>
 
                 <button class="btn" id="btnSubmitFinal">Chốt Đơn Kế Hoạch! 💖</button>
@@ -199,7 +347,7 @@
 
     <script type="module">
      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
+        import { getDatabase, ref, set, update, onValue, push } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
 
         // Cấu hình Firebase của bạn
         const firebaseConfig = {
@@ -223,11 +371,20 @@
             "./img/82f33b13e0dc618238cd.jpg",
             "./img/a000d9fd1d329c6cc523.jpg"
         ];
-        
+
         let slideshowInterval;
         let timerInterval;
+        let reminderTimeouts = [];
+        let weatherInterval;
+        let currentWeatherPlan = null;
         const imgElement = document.getElementById('slideshowImg');
-        
+        const reminderLabels = {
+            0: "Đúng giờ",
+            15: "Trước 15 phút",
+            60: "Trước 1 tiếng",
+            1440: "Trước 1 ngày"
+        };
+
         function runSlideshow() {
             clearInterval(slideshowInterval);
             let idx = 0;
@@ -263,15 +420,15 @@
                 heart.classList.add('heart-pop');
                 heart.innerText = ['💖', '💝', '💕', '❤️', '🌸'][Math.floor(Math.random() * 5)];
                 heart.style.left = '50%'; heart.style.top = '50%';
-                
+
                 const angle = Math.random() * Math.PI * 2;
                 const distance = Math.random() * 150 + 80;
                 const x = Math.cos(angle) * distance + 'px';
                 const y = Math.sin(angle) * distance + 'px';
-                
+
                 heart.style.setProperty('--tw-x', x);
                 heart.style.setProperty('--tw-y', y);
-                
+
                 phone.appendChild(heart);
                 setTimeout(() => heart.remove(), 800);
             }
@@ -303,16 +460,387 @@
             return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} ngày ${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
         }
 
+        function escapeHtml(value) {
+            return String(value)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+        function getWeatherInfo(code) {
+            const weatherMap = {
+                0: ["☀️", "Trời quang, rất hợp đi date"],
+                1: ["🌤️", "Ít mây, thời tiết khá đẹp"],
+                2: ["⛅", "Có mây nhẹ, đi chơi ổn áp"],
+                3: ["☁️", "Nhiều mây, nên chụp hình nơi có ánh sáng đẹp"],
+                45: ["🌫️", "Có sương nhẹ, đi chậm và cẩn thận nha"],
+                48: ["🌫️", "Sương mù lạnh nhẹ, nên có áo khoác"],
+                51: ["🌦️", "Mưa phùn nhẹ, mang dù mini nha"],
+                53: ["🌦️", "Mưa phùn vừa, ưu tiên lịch trong nhà"],
+                55: ["🌧️", "Mưa phùn nhiều, nhớ chuẩn bị áo mưa"],
+                61: ["🌧️", "Mưa nhẹ, nên có phương án indoor"],
+                63: ["🌧️", "Mưa vừa, cân nhắc đổi sang cafe/phim"],
+                65: ["⛈️", "Mưa lớn, nên hạn chế đi ngoài trời"],
+                80: ["🌦️", "Có mưa rào nhẹ, mang dù mini nha"],
+                81: ["🌧️", "Mưa rào vừa, ưu tiên nơi gần nhau"],
+                82: ["⛈️", "Mưa rào mạnh, nên chọn indoor date"],
+                95: ["⛈️", "Có thể có giông, tránh hoạt động ngoài trời"]
+            };
+            return weatherMap[code] || ["🌤️", "Thời tiết ổn, vẫn nên kiểm tra trước khi đi"];
+        }
+
+        function setLiveWeatherLoading(message) {
+            document.getElementById('liveWeatherDesc').innerText = message;
+            document.getElementById('liveWeatherTip').innerText = "Đang cập nhật realtime từ Open-Meteo...";
+        }
+
+        async function getWeatherLocation(plan) {
+            const fallback = { latitude: 10.7769, longitude: 106.7009, name: "TP.HCM" };
+            const query = (plan && plan.pickupLocation || "").trim();
+            if (!query || query.startsWith('http') || query.length < 4) return fallback;
+
+            try {
+                const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=vi&format=json`;
+                const response = await fetch(url);
+                if (!response.ok) return fallback;
+                const data = await response.json();
+                const result = data.results && data.results[0];
+                if (!result) return fallback;
+                return {
+                    latitude: result.latitude,
+                    longitude: result.longitude,
+                    name: result.name || fallback.name
+                };
+            } catch (error) {
+                console.warn("Không thể lấy tọa độ thời tiết:", error);
+                return fallback;
+            }
+        }
+
+        function getNearestRainChance(hourly) {
+            if (!hourly || !hourly.time || !hourly.precipitation_probability) return "--";
+            const now = Date.now();
+            let bestIndex = 0;
+            let bestDistance = Infinity;
+            hourly.time.forEach((time, index) => {
+                const distance = Math.abs(new Date(time).getTime() - now);
+                if (distance < bestDistance) {
+                    bestDistance = distance;
+                    bestIndex = index;
+                }
+            });
+            return hourly.precipitation_probability[bestIndex] ?? "--";
+        }
+
+        function updateLiveWeatherTip(weatherCode, rainChance, windSpeed) {
+            const isRainy = Number(rainChance) >= 50 || [51, 53, 55, 61, 63, 65, 80, 81, 82, 95].includes(weatherCode);
+            const isWindy = Number(windSpeed) >= 20;
+            if (isRainy) return "Tip realtime: nên mang dù mini, ưu tiên cafe/phim hoặc nơi có mái che.";
+            if (isWindy) return "Tip realtime: gió hơi mạnh, chọn outfit gọn nhẹ và tóc dễ giữ nếp nha.";
+            return "Tip realtime: thời tiết đang ổn, hợp đi date và chụp hình.";
+        }
+
+        async function loadLiveWeather(plan) {
+            currentWeatherPlan = plan || currentWeatherPlan;
+            if (!currentWeatherPlan) return;
+
+            setLiveWeatherLoading("Đang cập nhật realtime...");
+            const location = await getWeatherLocation(currentWeatherPlan);
+            document.getElementById('liveWeatherPlace').innerText = `Khu vực: ${location.name}`;
+
+            try {
+                const params = new URLSearchParams({
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    current: "temperature_2m,weather_code,wind_speed_10m",
+                    hourly: "precipitation_probability",
+                    timezone: "Asia/Bangkok",
+                    forecast_days: "1"
+                });
+                const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
+                if (!response.ok) throw new Error("Weather API failed");
+                const data = await response.json();
+                const current = data.current || {};
+                const weatherCode = current.weather_code;
+                const [icon, description] = getWeatherInfo(weatherCode);
+                const rainChance = getNearestRainChance(data.hourly);
+                const windSpeed = Math.round(current.wind_speed_10m || 0);
+                const updated = current.time ? new Date(current.time) : new Date();
+
+                document.getElementById('liveWeatherIcon').innerText = icon;
+                document.getElementById('liveWeatherTemp').innerText = `${Math.round(current.temperature_2m)}°C`;
+                document.getElementById('liveWeatherDesc').innerText = description;
+                document.getElementById('liveWeatherRain').innerText = rainChance === "--" ? "--" : `${rainChance}%`;
+                document.getElementById('liveWeatherWind').innerText = `${windSpeed} km/h`;
+                document.getElementById('liveWeatherUpdated').innerText = `${String(updated.getHours()).padStart(2, '0')}:${String(updated.getMinutes()).padStart(2, '0')}`;
+                document.getElementById('liveWeatherTip').innerText = updateLiveWeatherTip(weatherCode, rainChance, windSpeed);
+            } catch (error) {
+                console.warn("Lỗi thời tiết realtime:", error);
+                document.getElementById('liveWeatherDesc').innerText = "Chưa lấy được thời tiết realtime.";
+                document.getElementById('liveWeatherTip').innerText = "Nếu mạng ổn, bấm Làm mới để thử lại nha.";
+            }
+        }
+
+        function startLiveWeather(plan) {
+            clearInterval(weatherInterval);
+            loadLiveWeather(plan);
+            weatherInterval = setInterval(() => loadLiveWeather(plan), 10 * 60 * 1000);
+        }
+
+        function getDefaultTimeline(plan) {
+            const timeText = plan.dateTime ? formatTime(plan.dateTime).split(' ngày ')[0] : "Giờ đón";
+            const activities = plan.activities && plan.activities.length ? plan.activities : ["Đi chơi nhẹ nhàng"];
+            return [
+                `${timeText} - Đón em tại ${plan.pickupLocation || "địa điểm đã hẹn"}`,
+                `Ăn tối: ${plan.food || "món em chọn"}`,
+                `Tăng hai: ${activities.join(', ')}`
+            ];
+        }
+
+        function getTimelineItems(plan) {
+            if (plan.timeline && plan.timeline.trim()) {
+                return plan.timeline.split('\n').map(item => item.trim()).filter(Boolean);
+            }
+            return getDefaultTimeline(plan);
+        }
+
+        function buildDraftPlanFromForm() {
+            const food = document.querySelector('input[name="foodOpt"]:checked')?.value || "";
+            const activities = [];
+            document.querySelectorAll('input[name="actOpt"]:checked').forEach(cb => activities.push(cb.value));
+            return {
+                food,
+                activities,
+                dateTime: document.getElementById('dateInp').value,
+                pickupLocation: document.getElementById('pickupInp').value.trim()
+            };
+        }
+
+        function predictDateVibe(plan) {
+            const selectedActivities = plan && plan.activities && plan.activities.length ? plan.activities : [];
+            const activitiesText = selectedActivities.join(' ').toLowerCase();
+            const foodText = (plan && plan.food || '').toLowerCase();
+            const isMovie = activitiesText.includes('phim');
+            const isCafe = activitiesText.includes('cà phê') || activitiesText.includes('coffee');
+            const isOutdoor = activitiesText.includes('lượn') || activitiesText.includes('phố') || activitiesText.includes('ginh');
+            const isFancy = foodText.includes('fine') || foodText.includes('dining');
+
+            if (!plan || !plan.dateTime) {
+                let weather = "Chưa có giờ hẹn để dự đoán thời tiết theo buổi.";
+                let dresscode = "Chọn thời gian, món ăn và hoạt động để có gợi ý outfit.";
+                let mood = "Đang chờ lên lịch";
+                let weatherIcon = "🌤️";
+                let dressIcon = "👗";
+                let chips = ["pastel", "giày dễ đi"];
+                let reason = "Chọn hoạt động đi chơi để hệ thống dự đoán theo vibe.";
+
+                if (isMovie || isCafe || isOutdoor || isFancy) {
+                    mood = "Dự đoán theo hoạt động";
+                    weather = isOutdoor ? "Có hoạt động ngoài trời, nên ưu tiên đồ dễ di chuyển và chuẩn bị phương án nếu mưa." : "Hoạt động trong nhà nhiều hơn, thời tiết ít ảnh hưởng nhưng vẫn nên mang áo khoác mỏng.";
+                    dresscode = isMovie ? "Rạp phim thường lạnh, nên mặc outfit thoải mái và có áo khoác." : "Outfit nhẹ nhàng, sáng màu, hợp đi ăn và chụp hình.";
+                    weatherIcon = isOutdoor ? "🌦️" : "🏠";
+                    dressIcon = isMovie ? "🧥" : "👗";
+                    chips = isOutdoor ? ["giày êm", "áo khoác mỏng", "túi nhỏ"] : ["tone kem", "cardigan", "phụ kiện nhỏ"];
+                    reason = `Dựa trên: ${selectedActivities.join(', ') || "chưa chọn hoạt động"}.`;
+                }
+
+                return {
+                    weather,
+                    dresscode,
+                    mood,
+                    weatherIcon,
+                    dressIcon,
+                    chips,
+                    reason
+                };
+            }
+
+            const date = new Date(plan.dateTime);
+            const month = date.getMonth() + 1;
+            const hour = date.getHours();
+            const rainySeason = month >= 5 && month <= 11;
+            const isEvening = hour >= 17;
+
+            let weather = rainySeason ? "Có thể có mưa nhẹ, nên mang dù mini hoặc áo khoác mỏng." : "Khả năng trời đẹp, hợp đi dạo và chụp hình.";
+            if (isEvening) weather += " Buổi tối sẽ dễ chịu hơn, hợp date chill.";
+            if (isOutdoor && rainySeason) weather += " Vì có hoạt động ngoài trời nên nhớ canh mưa nha.";
+
+            let mood = "Cute chill";
+            let dresscode = "Váy/áo màu sáng, giày dễ đi, thêm cardigan mỏng.";
+            let weatherIcon = rainySeason ? "🌦️" : "🌤️";
+            let dressIcon = "👗";
+            let chips = ["pastel", "giày dễ đi", "cardigan"];
+            if (isFancy) {
+                mood = "Sweet elegant";
+                dresscode = "Dress nhẹ nhàng hoặc set trắng/hồng pastel, phụ kiện nhỏ xinh.";
+                dressIcon = "✨";
+                chips = ["dress pastel", "phụ kiện nhỏ", "nước hoa nhẹ"];
+            } else if (isMovie) {
+                mood = "Cozy movie date";
+                dresscode = "Outfit thoải mái, áo khoác mỏng vì rạp phim thường lạnh.";
+                weatherIcon = "🏠";
+                dressIcon = "🧥";
+                chips = ["áo khoác", "giày êm", "túi nhỏ"];
+            } else if (isCafe) {
+                mood = "Soft cafe vibe";
+                dresscode = "Tone kem, hồng nhạt hoặc nâu sữa, hợp chụp ảnh cà phê.";
+                dressIcon = "☕";
+                chips = ["tone kem", "hồng nhạt", "makeup nhẹ"];
+            } else if (isOutdoor) {
+                mood = "Chill dạo phố";
+                dresscode = "Giày êm, outfit gọn nhẹ, thêm áo khoác nếu đi tối.";
+                weatherIcon = rainySeason ? "☔" : "🌇";
+                dressIcon = "👟";
+                chips = ["giày êm", "áo khoác mỏng", "dù mini"];
+            }
+
+            const reason = selectedActivities.length ? `Dựa trên option đã chọn: ${selectedActivities.join(', ')}.` : "Chưa chọn hoạt động, đang gợi ý vibe an toàn.";
+            return { weather, dresscode, mood, weatherIcon, dressIcon, chips, reason };
+        }
+
+        function updatePredictionPreview() {
+            const prediction = predictDateVibe(buildDraftPlanFromForm());
+            document.getElementById('previewWeather').innerText = prediction.weather;
+            document.getElementById('previewDresscode').innerText = `${prediction.mood}: ${prediction.dresscode}`;
+            document.getElementById('activityMoodBadge').innerText = prediction.mood;
+            document.getElementById('activityWeatherIcon').innerText = prediction.weatherIcon;
+            document.getElementById('activityWeatherText').innerText = prediction.weather;
+            document.getElementById('activityDressIcon').innerText = prediction.dressIcon;
+            document.getElementById('activityDressText').innerText = prediction.dresscode;
+            document.getElementById('activityPredictionReason').innerText = prediction.reason;
+            document.getElementById('activityOutfitChips').innerHTML = prediction.chips.map(chip => `<span class="outfit-chip">${escapeHtml(chip)}</span>`).join('');
+        }
+
+        function renderTimeline(plan) {
+            const timelineEl = document.getElementById('timelineList');
+            const items = getTimelineItems(plan);
+            timelineEl.innerHTML = items.map(item => `<div class="timeline-item">${escapeHtml(item)}</div>`).join('');
+        }
+
+        function getSelectedReminders() {
+            return Array.from(document.querySelectorAll('input[name="reminderOpt"]:checked'))
+                .map(input => Number(input.value))
+                .sort((a, b) => b - a);
+        }
+
+        function getPlanReminders(plan) {
+            if (plan && Object.prototype.hasOwnProperty.call(plan, 'reminders')) {
+                return Array.isArray(plan.reminders) ? plan.reminders : [];
+            }
+            return [0, 15];
+        }
+
+        function getReminderText(reminders) {
+            const selected = Array.isArray(reminders) ? reminders : [0, 15];
+            if (!selected.length) return "Không bật";
+            return selected.map(minutes => reminderLabels[minutes] || `Trước ${minutes} phút`).join(', ');
+        }
+
+        function updateReminderStatus(message) {
+            const finalStatus = document.getElementById('finalReminderStatus');
+            const homeStatus = document.getElementById('homeReminderStatus');
+            if(finalStatus) finalStatus.innerText = message;
+            if(homeStatus) homeStatus.innerText = message;
+        }
+
+        function getNotificationBody(plan, minutesBefore) {
+            const reminderLabel = reminderLabels[minutesBefore] || `trước ${minutesBefore} phút`;
+            const prefix = minutesBefore === 0 ? "Đến giờ đi date rồi bé ơi!" : `Còn ${reminderLabel.toLowerCase()} là tới giờ hẹn nha!`;
+            const activities = plan.activities && plan.activities.length ? plan.activities.join(', ') : "Chỉ đi ăn thôi";
+            const pickup = plan.pickupLocation ? `Đón tại: ${plan.pickupLocation}\n` : "";
+            return `${prefix}\n${pickup}${plan.food}\n${activities}\n${formatTime(plan.dateTime)}`;
+        }
+
+        async function requestNotificationPermission() {
+            if (!("Notification" in window)) {
+                updateReminderStatus("Trình duyệt này chưa hỗ trợ thông báo Windows.");
+                return false;
+            }
+
+            if (Notification.permission === "granted") {
+                updateReminderStatus("Đã bật thông báo Windows. Nhớ giữ trình duyệt mở để nhận nhắc hẹn nha.");
+                return true;
+            }
+
+            if (Notification.permission === "denied") {
+                updateReminderStatus("Thông báo đang bị chặn. Hãy mở quyền Notification trong cài đặt trình duyệt.");
+                return false;
+            }
+
+            const permission = await Notification.requestPermission();
+            const isGranted = permission === "granted";
+            updateReminderStatus(isGranted ? "Đã bật thông báo Windows. Nhớ giữ trình duyệt mở để nhận nhắc hẹn nha." : "Chưa được cấp quyền thông báo Windows.");
+            return isGranted;
+        }
+
+        function showReminderNotification(plan, minutesBefore) {
+            if (!("Notification" in window) || Notification.permission !== "granted") return;
+            const notification = new Notification("Date Pooh Reminder 💕", {
+                body: getNotificationBody(plan, minutesBefore),
+                icon: "./img/86c7ccc717089656cf19.jpg",
+                tag: `datepooh-${plan.dateTime}-${minutesBefore}`
+            });
+            notification.onclick = () => window.focus();
+        }
+
+        function scheduleReminders(plan) {
+            reminderTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+            reminderTimeouts = [];
+
+            if (!plan || !plan.dateTime) return;
+
+            const reminders = getPlanReminders(plan);
+            const target = new Date(plan.dateTime).getTime();
+            const now = Date.now();
+            let scheduledCount = 0;
+
+            reminders.forEach(minutesBefore => {
+                const reminderTime = target - (Number(minutesBefore) * 60 * 1000);
+                const delay = reminderTime - now;
+                if (delay > 0) {
+                    const timeoutId = setTimeout(() => showReminderNotification(plan, Number(minutesBefore)), delay);
+                    reminderTimeouts.push(timeoutId);
+                    scheduledCount += 1;
+                }
+            });
+
+            const permissionHint = ("Notification" in window && Notification.permission === "granted") ? "Đã hẹn giờ thông báo Windows" : "Bấm bật thông báo Windows để nhận reminder";
+            updateReminderStatus(`${permissionHint}. ${scheduledCount ? `Còn ${scheduledCount} mốc nhắc hẹn sắp tới.` : "Các mốc nhắc hẹn đã qua."}`);
+        }
+
         function displayPlanData(plan) {
             document.getElementById('boxNoPlan').style.display = 'none';
             document.getElementById('boxHasPlan').style.display = 'block';
 
             document.getElementById('lblFood').innerText = plan.food;
             document.getElementById('lblActivities').innerText = plan.activities && plan.activities.length ? plan.activities.join(', ') : "Chỉ đi ăn thôi";
+            document.getElementById('lblPickup').innerText = plan.pickupLocation || "Chưa nhập địa điểm đón";
             document.getElementById('lblTime').innerText = formatTime(plan.dateTime);
             document.getElementById('lblNotes').innerText = plan.notes || "Không có dặn dò gì thêm";
-            
+            document.getElementById('lblConfirmStatus').innerText = plan.confirmedAt ? `Pooh đã đồng ý lúc ${formatTime(plan.confirmedAt)}` : "Đang chờ Pooh xác nhận";
+            const prediction = plan.prediction || predictDateVibe(plan);
+            document.getElementById('lblWeather').innerText = prediction.weather;
+            document.getElementById('lblDresscode').innerText = `${prediction.mood}: ${prediction.dresscode}`;
+            const reminders = getPlanReminders(plan);
+            document.getElementById('lblReminder').innerText = getReminderText(reminders);
+            document.querySelectorAll('input[name="reminderOpt"]').forEach(input => {
+                input.checked = reminders.includes(Number(input.value));
+            });
+            document.getElementById('pickupInp').value = plan.pickupLocation || "";
+            document.getElementById('dateInp').value = plan.dateTime || "";
+            document.getElementById('timelineInp').value = plan.timeline || getDefaultTimeline(plan).join('\n');
+            document.getElementById('notesInp').value = plan.notes || "";
+            updatePredictionPreview();
+            const confirmBtn = document.getElementById('btnConfirmPlan');
+            confirmBtn.innerText = plan.confirmedAt ? "Pooh đã đồng ý rồi 💖" : "Pooh đồng ý lịch này 💕";
+            confirmBtn.classList.toggle('confirmed', Boolean(plan.confirmedAt));
+            renderTimeline(plan);
+
             initCountdown(plan.dateTime);
+            scheduleReminders(plan);
+            startLiveWeather(plan);
         }
 
         // Đẩy dữ liệu đồng bộ lên mây thời gian thực
@@ -321,12 +849,16 @@
             const acts = [];
             document.querySelectorAll('input[name="actOpt"]:checked').forEach(cb => acts.push(cb.value));
             const time = document.getElementById('dateInp').value;
+            const pickupLocation = document.getElementById('pickupInp').value.trim();
+            const timeline = document.getElementById('timelineInp').value.trim();
             const notes = document.getElementById('notesInp').value;
+            const reminders = getSelectedReminders();
 
             if(!time) { alert("Vui lòng chọn thời gian đón em nhé!"); return; }
 
-            const plan = { food, activities: acts, dateTime: time, notes };
-            
+            const prediction = predictDateVibe({ food, activities: acts, dateTime: time, pickupLocation });
+            const plan = { food, activities: acts, dateTime: time, pickupLocation, timeline, notes, reminders, prediction, confirmedAt: null };
+
             const btn = document.getElementById('btnSubmitFinal');
             btn.innerText = "Đang đồng bộ lên mây...";
             btn.disabled = true;
@@ -337,7 +869,7 @@
                     btn.disabled = false;
                     alert("🎉 Đã đồng bộ thành công! Pooh ở nhà mở trang web lên là sẽ tự động thấy ngay kế hoạch!");
                     displayPlanData(plan);
-                    goToStep(0); 
+                    goToStep(0);
                     setTimeout(triggerSuccessEffects, 300);
                 })
                 .catch((error) => {
@@ -354,6 +886,11 @@
                 if(plan) {
                     displayPlanData(plan);
                 } else {
+                    reminderTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+                    reminderTimeouts = [];
+                    clearInterval(weatherInterval);
+                    currentWeatherPlan = null;
+                    updateReminderStatus("Chưa có lịch hẹn để đặt nhắc nhở.");
                     document.getElementById('loadingTxt').innerText = "Chưa có kế hoạch nào được tạo.";
                     document.getElementById('btnStartInit').style.display = 'block';
                     document.getElementById('boxNoPlan').style.display = 'block';
@@ -363,6 +900,20 @@
                 console.error("Lỗi đọc từ Firebase:", error);
                 document.getElementById('loadingTxt').innerText = "Không thể kết nối cơ sở dữ liệu.";
             });
+        }
+
+        function confirmPlan() {
+            const btn = document.getElementById('btnConfirmPlan');
+            btn.disabled = true;
+            update(ref(db, 'datePlan'), { confirmedAt: new Date().toISOString() })
+                .then(() => {
+                    btn.disabled = false;
+                    triggerSuccessEffects();
+                })
+                .catch((error) => {
+                    btn.disabled = false;
+                    alert("Lỗi xác nhận lịch: " + error.message);
+                });
         }
 
         // --- ĐỒNG BỘ ĐỘNG OPTIONS TỪ FIREBASE ---
@@ -403,6 +954,7 @@
                     grid.appendChild(label);
                     isFirst = false;
                 });
+                updatePredictionPreview();
             });
         }
 
@@ -441,6 +993,7 @@
                     `;
                     grid.appendChild(label);
                 });
+                updatePredictionPreview();
             });
         }
 
@@ -453,6 +1006,14 @@
         document.getElementById('btnBackToStep1').addEventListener('click', () => goToStep(1));
         document.getElementById('btnBackToStep2').addEventListener('click', () => goToStep(2));
         document.getElementById('btnSubmitFinal').addEventListener('click', finalizePlan);
+        document.getElementById('btnEnableReminderFinal').addEventListener('click', requestNotificationPermission);
+        document.getElementById('btnEnableReminderHome').addEventListener('click', requestNotificationPermission);
+        document.getElementById('btnConfirmPlan').addEventListener('click', confirmPlan);
+        document.getElementById('btnRefreshWeather').addEventListener('click', () => loadLiveWeather(currentWeatherPlan));
+        document.getElementById('dateInp').addEventListener('change', updatePredictionPreview);
+        document.getElementById('pickupInp').addEventListener('input', updatePredictionPreview);
+        document.getElementById('foodGrid').addEventListener('change', updatePredictionPreview);
+        document.getElementById('planGrid').addEventListener('change', updatePredictionPreview);
 
         // Sự kiện khi bấm nút "Thêm món ăn"
         document.getElementById('btnAddFood').addEventListener('click', () => {
@@ -464,7 +1025,7 @@
             const newItem = { icon: "✨", name: value };
             push(ref(db, 'foodOptions'), newItem)
                 .then(() => {
-                    txtInput.value = ""; 
+                    txtInput.value = "";
                 })
                 .catch(err => alert("Lỗi thêm món: " + err.message));
         });
@@ -479,7 +1040,7 @@
             const newItem = { icon: "✨", name: value };
             push(ref(db, 'activityOptions'), newItem)
                 .then(() => {
-                    txtInput.value = ""; 
+                    txtInput.value = "";
                 })
                 .catch(err => alert("Lỗi thêm địa điểm: " + err.message));
         });
@@ -493,6 +1054,7 @@
                 document.body.appendChild(sp);
             }
             runSlideshow();
+            updatePredictionPreview();
             listenToCloudDatabase();
             listenToFoodOptions();       // Bật lắng nghe món ăn tự động
             listenToActivityOptions();   // Bật lắng nghe địa điểm tự động
