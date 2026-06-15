@@ -148,6 +148,21 @@
         .history-item strong { display: block; color: var(--primary-pink); font-size: 0.86rem; margin-bottom: 4px; }
         .history-item p { color: #666; font-size: 0.78rem; line-height: 1.35; }
         .empty-text { color: #888; font-size: 0.82rem; line-height: 1.35; }
+        .smart-card { width: 100%; background: linear-gradient(135deg, #fff8f9, #fff, #f7fbff); border: 1px solid #ffd3dd; border-radius: 20px; padding: 14px; margin: 12px 0; box-shadow: 0 14px 28px rgba(255, 117, 151, 0.12); text-align: left; }
+        .smart-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--primary-pink); font-weight: 900; margin-bottom: 10px; }
+        .smart-badge { background: #ffe3e8; color: #ff5f89; border-radius: 999px; padding: 5px 9px; font-size: 0.72rem; white-space: nowrap; }
+        .smart-text { color: #555; font-size: 0.84rem; line-height: 1.45; }
+        .smart-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
+        .smart-pill { background: #fff; border: 1px solid #ffe1e8; border-radius: 14px; padding: 9px; color: #666; font-size: 0.78rem; line-height: 1.35; }
+        .smart-pill strong { display: block; color: var(--primary-pink); margin-bottom: 3px; }
+        .smart-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
+        .smart-action-btn { background: #fff; border: 1px solid #ffd3dd; color: var(--primary-pink); border-radius: 12px; padding: 9px; font-size: 0.78rem; font-weight: 800; cursor: pointer; }
+        .rating-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+        .rating-option { background: #fff; border: 1px solid #ffe1e8; color: #666; border-radius: 14px; padding: 10px 6px; font-size: 0.78rem; font-weight: 800; cursor: pointer; }
+        .rating-option.active { border-color: var(--primary-pink); background: #fff5f7; color: var(--primary-pink); box-shadow: 0 8px 18px rgba(255, 117, 151, 0.1); }
+        .rating-note { width: 100%; min-height: 72px; resize: vertical; border: 1px solid #ffe1e8; border-radius: 14px; padding: 10px; outline: none; color: #555; font-size: 0.84rem; }
+        .rating-note:focus { border-color: var(--primary-pink); }
+        .rating-status { color: #777; font-size: 0.78rem; line-height: 1.35; margin-top: 8px; }
     </style>
 </head>
 <body>
@@ -173,7 +188,7 @@
 
                 <div id="boxNoPlan" style="width: 100%;">
                     <h2 style="color: var(--primary-pink); margin-bottom: 10px;">Chủ nhật 21/06</h2>
-                    <p id="loadingTxt" style="font-size: 0.88rem; color: #777; margin-bottom: 20px;">Đang kiểm tra lịch hẹn từ mây...</p>
+                    <p id="loadingTxt" style="font-size: 0.88rem; color: #777; margin-bottom: 20px;">Đang kiểm tra lịch hẹn..</p>
                     <button id="btnStartInit" class="btn" style="display: none;">Bắt Đầu Lên Kế Hoạch ✨</button>
                 </div>
 
@@ -182,8 +197,8 @@
                     <div class="live-weather-card">
                         <div class="live-weather-top">
                             <div>
-                                <div class="live-weather-title">🌈 Thời tiết realtime ngoài trang chính</div>
-                                <div class="live-weather-place" id="liveWeatherPlace">Đang lấy thời tiết TP.HCM...</div>
+                                <div class="live-weather-title">🌈 Thời tiết hiện tại</div>
+                                <div class="live-weather-place" id="liveWeatherPlace">Đang load thời tiết TP.HCM...</div>
                             </div>
                             <button class="live-weather-refresh" id="btnRefreshWeather">Làm mới</button>
                         </div>
@@ -191,7 +206,7 @@
                             <div class="live-weather-icon" id="liveWeatherIcon">⛅</div>
                             <div>
                                 <div class="live-weather-temp" id="liveWeatherTemp">--°C</div>
-                                <div class="live-weather-desc" id="liveWeatherDesc">Đang cập nhật realtime...</div>
+                                <div class="live-weather-desc" id="liveWeatherDesc">Đang cập nhật ...</div>
                             </div>
                         </div>
                         <div class="live-weather-stats">
@@ -199,7 +214,7 @@
                             <div class="weather-stat"><strong>Gió</strong><span id="liveWeatherWind">-- km/h</span></div>
                             <div class="weather-stat"><strong>Cập nhật</strong><span id="liveWeatherUpdated">--:--</span></div>
                         </div>
-                        <div class="live-weather-tip" id="liveWeatherTip">Dữ liệu realtime dùng Open-Meteo, không cần API key.</div>
+                        <div class="live-weather-tip" id="liveWeatherTip">Dữ liệu  dùng Open-Meteo, không cần API key.</div>
                     </div>
                     <div class="summary-card">
                         <div class="summary-item">🍕 <strong>Món ăn:</strong> <span id="lblFood"></span></div>
@@ -221,6 +236,21 @@
                         </div>
                     </div>
                     <div class="timeline-list" id="timelineList"></div>
+                    <div class="smart-card">
+                        <div class="smart-title">
+                            <span>🤖 Gợi ý</span>
+                            <span class="smart-badge" id="homeSmartConfidence">Đang học</span>
+                        </div>
+                        <div class="smart-text" id="homeSmartText">Anh sẽ học từ lịch sử date để gợi ý combo hợp gu hơn.</div>
+                        <div class="smart-grid">
+                            <div class="smart-pill"><strong>Món nên thử</strong><span id="homeSmartFood">--</span></div>
+                            <div class="smart-pill"><strong>Đi chơi hợp vibe</strong><span id="homeSmartActivity">--</span></div>
+                        </div>
+                        <div class="smart-actions">
+                            <button class="smart-action-btn" data-smart-feedback="like">Gợi ý hợp gu 💕</button>
+                            <button class="smart-action-btn" data-smart-feedback="dislike">Chưa hợp lắm</button>
+                        </div>
+                    </div>
                     <div class="date-panel">
                         <div class="date-panel-title">
                             <span>✅ Checklist chuẩn bị</span>
@@ -236,6 +266,20 @@
                         <div class="history-list" id="dateHistoryList">
                             <div class="empty-text">Chưa có lịch sử date nào.</div>
                         </div>
+                    </div>
+                    <div class="date-panel">
+                        <div class="date-panel-title">
+                            <span>💗 Đánh giá sau buổi date</span>
+                            <span id="dateRatingBadge">Chưa đánh giá</span>
+                        </div>
+                        <div class="rating-options" id="dateRatingOptions">
+                            <button class="rating-option" data-date-rating="love">Rất thích</button>
+                            <button class="rating-option" data-date-rating="ok">Ổn áp</button>
+                            <button class="rating-option" data-date-rating="nope">Chưa hợp</button>
+                        </div>
+                        <textarea class="rating-note" id="dateRatingNote" placeholder="Pooh thích/chưa thích điểm nào, note lại để anh tiếp nhận ý kiến và những lần tới rút kinh nghiệm nha..."></textarea>
+                        <button class="smart-action-btn" id="btnSaveDateRating" style="width: 100%; margin-top: 8px;">Lưu đánh giá</button>
+                        <div class="rating-status" id="dateRatingStatus">Đánh giá này sẽ giúp Bean rút kinh nghiệm sau mỗi buổi date nên khuyến khích Pooh thoải mái đánh giá nhé.</div>
                     </div>
                     <div class="reminder-status" id="homeReminderStatus"></div>
                     <button class="reminder-btn" id="btnEnableReminderHome">Bật thông báo trên Windows 🔔</button>
@@ -349,6 +393,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="smart-card">
+                    <div class="smart-title">
+                        <span>🤖 Gợi ý từ lịch sử date</span>
+                        <span class="smart-badge" id="finalSmartConfidence">Đang học</span>
+                    </div>
+                    <div class="smart-text" id="finalSmartText">Sau vài buổi date, hệ thống sẽ biết Pooh hay chọn món và hoạt động nào.</div>
+                    <div class="smart-grid">
+                        <div class="smart-pill"><strong>Combo gợi ý</strong><span id="finalSmartCombo">--</span></div>
+                        <div class="smart-pill"><strong>Checklist thêm</strong><span id="finalSmartChecklist">--</span></div>
+                    </div>
+                </div>
                 <div class="date-panel">
                     <div class="date-panel-title">
                         <span>✅ Checklist cần chuẩn bị</span>
@@ -427,6 +482,10 @@
             "Kiểm tra đường đi trước khi đón"
         ];
         let currentPlan = null;
+        let dateHistoryCache = [];
+        let dateRatingsCache = [];
+        let latestSmartSuggestion = null;
+        let selectedDateRating = "";
 
         function runSlideshow() {
             clearInterval(slideshowInterval);
@@ -565,6 +624,8 @@
             const list = document.getElementById('dateHistoryList');
             const items = data ? Object.keys(data).map(key => ({ key, ...data[key] })) : [];
             items.sort((a, b) => new Date(b.createdAt || b.dateTime || 0) - new Date(a.createdAt || a.dateTime || 0));
+            dateHistoryCache = items;
+            renderSmartSuggestion();
             const latest = items.slice(0, 5);
             document.getElementById('historyCount').innerText = `${items.length} buổi`;
             if (!latest.length) {
@@ -581,6 +642,116 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        function getTopFrequency(values) {
+            const scores = {};
+            values.filter(Boolean).forEach(value => {
+                scores[value] = (scores[value] || 0) + 1;
+            });
+            const sorted = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
+            return sorted.length ? { value: sorted[0], count: scores[sorted[0]] } : null;
+        }
+
+        function getRatingWeight(item) {
+            const value = item.rating && item.rating.value;
+            if (value === 'love') return 3;
+            if (value === 'ok') return 2;
+            if (value === 'nope') return 0;
+            return 1;
+        }
+
+        function getSmartChecklist(suggestion) {
+            const text = `${suggestion.food} ${suggestion.activity}`.toLowerCase();
+            const items = ["Sạc pin điện thoại", "Kiểm tra đường đi trước khi đón"];
+            if (text.includes('phim')) items.push("Mua vé phim trước", "Mang áo khoác vì rạp lạnh");
+            if (text.includes('cà phê') || text.includes('coffee')) items.push("Chọn góc ngồi đẹp để chụp hình");
+            if (text.includes('fine') || text.includes('dining')) items.push("Đặt bàn trước", "Chuẩn bị outfit lịch sự");
+            if (text.includes('lượn') || text.includes('phố') || text.includes('ginh')) items.push("Mang dù mini hoặc áo khoác mỏng");
+            return [...new Set(items)];
+        }
+
+        function generateSmartSuggestion() {
+            const history = [...dateHistoryCache, ...dateRatingsCache];
+            const draft = buildDraftPlanFromForm();
+            const weightedFoods = history.flatMap(item => Array(getRatingWeight(item)).fill(item.food));
+            const weightedActivities = history.flatMap(item => Array(getRatingWeight(item)).fill(item.activities || []).flat());
+            const topFood = getTopFrequency(weightedFoods);
+            const topActivities = getTopFrequency(weightedActivities);
+            const food = topFood?.value || draft.food || "Món nhẹ nhàng dễ ăn";
+            const activity = topActivities?.value || draft.activities[0] || "☕ Cà phê cà pháo";
+            const ratingCount = history.filter(item => item.rating).length;
+            const confidence = ratingCount >= 3 ? "Học từ đánh giá" : history.length >= 5 ? "Tự tin cao" : history.length >= 2 ? "Đang tích lũy" : "Mới tích lũy";
+            const moodPlan = { food, activities: [activity], dateTime: draft.dateTime || currentPlan?.dateTime || "", pickupLocation: draft.pickupLocation || currentPlan?.pickupLocation || "" };
+            const prediction = predictDateVibe(moodPlan);
+            const checklist = getSmartChecklist({ food, activity });
+            const reason = history.length
+                ? `Dựa trên ${history.length} buổi date${ratingCount ? ` và ${ratingCount} đánh giá` : ""}, Pooh hay chọn ${topFood?.value || "món nhẹ"} và ${topActivities?.value || "hoạt động chill"}.`
+                : "Chưa có đủ lịch sử, anh dùng rule-based để gợi ý combo an toàn.";
+            return { food, activity, confidence, prediction, checklist, reason };
+        }
+
+        function renderSmartSuggestion() {
+            const suggestion = generateSmartSuggestion();
+            latestSmartSuggestion = suggestion;
+            const combo = `${suggestion.food} + ${suggestion.activity}`;
+            const checklistText = suggestion.checklist.slice(0, 3).join(', ');
+            document.getElementById('homeSmartConfidence').innerText = suggestion.confidence;
+            document.getElementById('homeSmartText').innerText = `${suggestion.reason} Mood gợi ý: ${suggestion.prediction.mood}.`;
+            document.getElementById('homeSmartFood').innerText = suggestion.food;
+            document.getElementById('homeSmartActivity').innerText = suggestion.activity;
+            document.getElementById('finalSmartConfidence').innerText = suggestion.confidence;
+            document.getElementById('finalSmartText').innerText = `${suggestion.reason} ${suggestion.prediction.dresscode}`;
+            document.getElementById('finalSmartCombo').innerText = combo;
+            document.getElementById('finalSmartChecklist').innerText = checklistText;
+        }
+
+        function saveSmartFeedback(value) {
+            if (!latestSmartSuggestion) return;
+            push(ref(db, 'smartFeedback'), {
+                value,
+                suggestion: latestSmartSuggestion,
+                createdAt: new Date().toISOString()
+            }).then(() => {
+                alert(value === 'like' ? "Anh đã ghi nhận gu này rồi 💕" : "Anh sẽ để ý để lựa chọn phù hợp hơn nha.");
+            }).catch(error => alert("Lỗi lưu feedback: " + error.message));
+        }
+
+        function renderDateRating(rating) {
+            selectedDateRating = rating && rating.value ? rating.value : "";
+            document.querySelectorAll('[data-date-rating]').forEach(button => {
+                button.classList.toggle('active', button.dataset.dateRating === selectedDateRating);
+            });
+            document.getElementById('dateRatingNote').value = rating && rating.note ? rating.note : "";
+            const labels = { love: "Rất thích", ok: "Ổn áp", nope: "Chưa hợp" };
+            document.getElementById('dateRatingBadge').innerText = selectedDateRating ? labels[selectedDateRating] : "Chưa đánh giá";
+            document.getElementById('dateRatingStatus').innerText = selectedDateRating
+                ? "Đã có đánh giá, sẽ gợi ý gu này cho lần sau."
+                : "Đánh giá này sẽ giúp gợi ý phù hợp hơn.";
+        }
+
+        function saveDateRating() {
+            if (!currentPlan) return;
+            if (!selectedDateRating) {
+                alert("Pooh chọn mức đánh giá trước nha.");
+                return;
+            }
+
+            const rating = {
+                value: selectedDateRating,
+                note: document.getElementById('dateRatingNote').value.trim(),
+                createdAt: new Date().toISOString()
+            };
+            const payload = { ...currentPlan, rating };
+
+            update(ref(db, 'datePlan'), { rating })
+                .then(() => push(ref(db, 'dateRatings'), payload))
+                .then(() => {
+                    currentPlan = payload;
+                    renderDateRating(rating);
+                    alert("Đã lưu đánh giá, lần sau anh sẽ gợi ý đúng gu hơn 💕");
+                })
+                .catch(error => alert("Lỗi lưu đánh giá: " + error.message));
         }
 
         function getWeatherInfo(code) {
@@ -607,7 +778,7 @@
 
         function setLiveWeatherLoading(message) {
             document.getElementById('liveWeatherDesc').innerText = message;
-            document.getElementById('liveWeatherTip').innerText = "Đang cập nhật realtime từ Open-Meteo...";
+            document.getElementById('liveWeatherTip').innerText = "Đang cập nhật từ Open-Meteo...";
         }
 
         async function getWeatherLocation(plan) {
@@ -651,16 +822,16 @@
         function updateLiveWeatherTip(weatherCode, rainChance, windSpeed) {
             const isRainy = Number(rainChance) >= 50 || [51, 53, 55, 61, 63, 65, 80, 81, 82, 95].includes(weatherCode);
             const isWindy = Number(windSpeed) >= 20;
-            if (isRainy) return "Tip realtime: nên mang dù mini, ưu tiên cafe/phim hoặc nơi có mái che.";
-            if (isWindy) return "Tip realtime: gió hơi mạnh, chọn outfit gọn nhẹ và tóc dễ giữ nếp nha.";
-            return "Tip realtime: thời tiết đang ổn, hợp đi date và chụp hình.";
+            if (isRainy) return "Tip : nên mang dù mini, ưu tiên cafe/phim hoặc nơi có mái che.";
+            if (isWindy) return "Tip : gió hơi mạnh, chọn outfit gọn nhẹ và tóc dễ giữ nếp nha.";
+            return "Tip : thời tiết đang ổn, hợp đi date và chụp hình.";
         }
 
         async function loadLiveWeather(plan) {
             currentWeatherPlan = plan || currentWeatherPlan;
             if (!currentWeatherPlan) return;
 
-            setLiveWeatherLoading("Đang cập nhật realtime...");
+            setLiveWeatherLoading("Đang cập nhật ...");
             const location = await getWeatherLocation(currentWeatherPlan);
             document.getElementById('liveWeatherPlace').innerText = `Khu vực: ${location.name}`;
 
@@ -691,8 +862,8 @@
                 document.getElementById('liveWeatherUpdated').innerText = `${String(updated.getHours()).padStart(2, '0')}:${String(updated.getMinutes()).padStart(2, '0')}`;
                 document.getElementById('liveWeatherTip').innerText = updateLiveWeatherTip(weatherCode, rainChance, windSpeed);
             } catch (error) {
-                console.warn("Lỗi thời tiết realtime:", error);
-                document.getElementById('liveWeatherDesc').innerText = "Chưa lấy được thời tiết realtime.";
+                console.warn("Lỗi thời tiết :", error);
+                document.getElementById('liveWeatherDesc').innerText = "Chưa lấy được thời tiết .";
                 document.getElementById('liveWeatherTip').innerText = "Nếu mạng ổn, bấm Làm mới để thử lại nha.";
             }
         }
@@ -825,6 +996,7 @@
             document.getElementById('activityDressText').innerText = prediction.dresscode;
             document.getElementById('activityPredictionReason').innerText = prediction.reason;
             document.getElementById('activityOutfitChips').innerHTML = prediction.chips.map(chip => `<span class="outfit-chip">${escapeHtml(chip)}</span>`).join('');
+            renderSmartSuggestion();
         }
 
         function renderTimeline(plan) {
@@ -954,6 +1126,7 @@
             renderTimeline(plan);
             renderHomeChecklist(plan);
             renderFinalChecklist(plan.checklist);
+            renderDateRating(plan.rating);
 
             initCountdown(plan.dateTime);
             scheduleReminders(plan);
@@ -975,7 +1148,8 @@
             if(!time) { alert("Vui lòng chọn thời gian đón em nhé!"); return; }
 
             const prediction = predictDateVibe({ food, activities: acts, dateTime: time, pickupLocation });
-            const plan = { food, activities: acts, dateTime: time, pickupLocation, timeline, notes, reminders, checklist, prediction, confirmedAt: null, createdAt: new Date().toISOString() };
+            const smartSuggestion = latestSmartSuggestion || generateSmartSuggestion();
+            const plan = { food, activities: acts, dateTime: time, pickupLocation, timeline, notes, reminders, checklist, prediction, smartSuggestion, confirmedAt: null, createdAt: new Date().toISOString() };
 
             const btn = document.getElementById('btnSubmitFinal');
             btn.innerText = "Đang đồng bộ lên mây...";
@@ -1027,6 +1201,16 @@
                 renderDateHistory(snapshot.val());
             }, (error) => {
                 console.error("Lỗi đọc lịch sử date:", error);
+            });
+        }
+
+        function listenToDateRatings() {
+            onValue(ref(db, 'dateRatings'), (snapshot) => {
+                const data = snapshot.val();
+                dateRatingsCache = data ? Object.keys(data).map(key => ({ key, ...data[key] })) : [];
+                renderSmartSuggestion();
+            }, (error) => {
+                console.error("Lỗi đọc đánh giá date:", error);
             });
         }
 
@@ -1152,6 +1336,16 @@
             if (!input) return;
             input.closest('.checklist-item').classList.toggle('done', input.checked);
         });
+        document.querySelectorAll('[data-smart-feedback]').forEach(button => {
+            button.addEventListener('click', () => saveSmartFeedback(button.dataset.smartFeedback));
+        });
+        document.querySelectorAll('[data-date-rating]').forEach(button => {
+            button.addEventListener('click', () => {
+                selectedDateRating = button.dataset.dateRating;
+                document.querySelectorAll('[data-date-rating]').forEach(item => item.classList.toggle('active', item === button));
+            });
+        });
+        document.getElementById('btnSaveDateRating').addEventListener('click', saveDateRating);
 
         // Sự kiện khi bấm nút "Thêm món ăn"
         document.getElementById('btnAddFood').addEventListener('click', () => {
@@ -1196,6 +1390,7 @@
             updatePredictionPreview();
             listenToCloudDatabase();
             listenToDateHistory();
+            listenToDateRatings();
             listenToFoodOptions();       // Bật lắng nghe món ăn tự động
             listenToActivityOptions();   // Bật lắng nghe địa điểm tự động
         });
