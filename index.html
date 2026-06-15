@@ -6,6 +6,12 @@
     <title>Lịch hẹn với Pooh iu 💕</title>
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💕</text></svg>">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" href="./img/86c7ccc717089656cf19.jpg">
+    <meta name="theme-color" content="#ff7597">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Date Pooh">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     <style>
         :root { --primary-pink: #ff7597; --secondary-pink: #ffb3c6; --soft-bg: #fff0f3; --text-color: #4a4a4a; --cream: #fffaf4; --lavender: #f6ecff; }
@@ -1164,17 +1170,32 @@
             return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.matchMedia('(max-width: 760px)').matches;
         }
 
+        function isIosDevice() {
+            return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        function isStandaloneApp() {
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+
         function getNotificationSupportText() {
+            if (isIosDevice() && !isStandaloneApp()) {
+                return "Trên iPhone, Safari chỉ cho bật thông báo khi web đã được Thêm vào Màn hình chính. Bấm Chia sẻ > Thêm vào Màn hình chính, rồi mở app Date Pooh từ icon mới để bật thông báo.";
+            }
             if (!("Notification" in window)) {
-                return "Trình duyệt này chưa hỗ trợ thông báo trên thiết bị. Nếu dùng iPhone, hãy mở bằng Safari và thêm web vào Màn hình chính để nhận thông báo.";
+                return "Trình duyệt này chưa hỗ trợ thông báo trên thiết bị. Nếu dùng iPhone, hãy cập nhật iOS 16.4+ và thêm web vào Màn hình chính.";
             }
             if (isMobileDevice()) {
-                return "Thông báo điện thoại đã sẵn sàng. Nhớ giữ trang mở hoặc thêm web vào màn hình chính nếu trình duyệt yêu cầu nha.";
+                return "Thông báo điện thoại đã sẵn sàng. Nhớ cho phép Notification trong cài đặt trình duyệt và giữ trang mở khi chờ reminder nha.";
             }
             return "Thông báo đã sẵn sàng trên thiết bị này. Nhớ giữ trình duyệt mở để nhận reminder nha.";
         }
 
         async function requestNotificationPermission() {
+            if (isIosDevice() && !isStandaloneApp()) {
+                updateReminderStatus(getNotificationSupportText());
+                return false;
+            }
             if (!("Notification" in window)) {
                 updateReminderStatus(getNotificationSupportText());
                 return false;
@@ -1196,17 +1217,25 @@
             return isGranted;
         }
 
-        function showReminderNotification(plan, minutesBefore) {
+        async function showReminderNotification(plan, minutesBefore) {
             if (!("Notification" in window) || Notification.permission !== "granted") return;
             if (navigator.vibrate) navigator.vibrate([120, 60, 120]);
-            const notification = new Notification("Date Pooh Reminder 💕", {
+            const options = {
                 body: getNotificationBody(plan, minutesBefore),
                 icon: "./img/86c7ccc717089656cf19.jpg",
                 badge: "./img/86c7ccc717089656cf19.jpg",
                 tag: `datepooh-${plan.dateTime}-${minutesBefore}`,
                 renotify: true,
                 requireInteraction: true
-            });
+            };
+            if ('serviceWorker' in navigator) {
+                const registration = await navigator.serviceWorker.getRegistration();
+                if (registration && registration.showNotification) {
+                    registration.showNotification("Date Pooh Reminder 💕", options);
+                    return;
+                }
+            }
+            const notification = new Notification("Date Pooh Reminder 💕", options);
             notification.onclick = () => window.focus();
         }
 
@@ -1522,8 +1551,15 @@
                 .catch(err => alert("Lỗi thêm địa điểm: " + err.message));
         });
 
+        function registerServiceWorker() {
+            if (!('serviceWorker' in navigator)) return;
+            navigator.serviceWorker.register('./sw.js')
+                .catch(error => console.warn("Không thể đăng ký service worker:", error));
+        }
+
         // Khởi động khi tải xong trang
         window.addEventListener('DOMContentLoaded', () => {
+            registerServiceWorker();
             for (let i = 0; i < 15; i++) {
                 const sp = document.createElement('div'); sp.classList.add('sparkle');
                 sp.style.left = Math.random() * 100 + 'vw'; sp.style.width = sp.style.height = Math.random() * 6 + 4 + 'px';
