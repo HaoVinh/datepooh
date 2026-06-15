@@ -137,6 +137,17 @@
         .weather-stat strong { display: block; color: var(--primary-pink); font-size: 0.78rem; margin-bottom: 3px; }
         .weather-stat span { font-size: 0.8rem; color: #666; }
         .live-weather-tip { margin-top: 10px; color: #777; font-size: 0.78rem; line-height: 1.35; position: relative; z-index: 1; }
+        .date-panel { width: 100%; background: rgba(255,248,249,0.95); border: 1px solid #ffd3dd; border-radius: 20px; padding: 14px; margin: 12px 0; box-shadow: 0 12px 26px rgba(255, 117, 151, 0.1); text-align: left; }
+        .date-panel-title { color: var(--primary-pink); font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .checklist-list { display: flex; flex-direction: column; gap: 8px; }
+        .checklist-item { display: flex; align-items: center; gap: 9px; background: #fff; border: 1px solid #ffe1e8; border-radius: 13px; padding: 9px 10px; font-size: 0.84rem; color: #555; cursor: pointer; }
+        .checklist-item input { accent-color: var(--primary-pink); flex-shrink: 0; }
+        .checklist-item.done span { text-decoration: line-through; color: #aaa; }
+        .history-list { display: flex; flex-direction: column; gap: 9px; }
+        .history-item { background: #fff; border: 1px solid #ffe1e8; border-radius: 14px; padding: 10px; }
+        .history-item strong { display: block; color: var(--primary-pink); font-size: 0.86rem; margin-bottom: 4px; }
+        .history-item p { color: #666; font-size: 0.78rem; line-height: 1.35; }
+        .empty-text { color: #888; font-size: 0.82rem; line-height: 1.35; }
     </style>
 </head>
 <body>
@@ -210,6 +221,22 @@
                         </div>
                     </div>
                     <div class="timeline-list" id="timelineList"></div>
+                    <div class="date-panel">
+                        <div class="date-panel-title">
+                            <span>✅ Checklist chuẩn bị</span>
+                            <span id="checklistProgress">0/0</span>
+                        </div>
+                        <div class="checklist-list" id="homeChecklistList"></div>
+                    </div>
+                    <div class="date-panel">
+                        <div class="date-panel-title">
+                            <span>📚 Lịch sử buổi date</span>
+                            <span id="historyCount">0 buổi</span>
+                        </div>
+                        <div class="history-list" id="dateHistoryList">
+                            <div class="empty-text">Chưa có lịch sử date nào.</div>
+                        </div>
+                    </div>
                     <div class="reminder-status" id="homeReminderStatus"></div>
                     <button class="reminder-btn" id="btnEnableReminderHome">Bật thông báo trên Windows 🔔</button>
                     <button class="confirm-btn" id="btnConfirmPlan">Pooh đồng ý lịch này 💕</button>
@@ -322,6 +349,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="date-panel">
+                    <div class="date-panel-title">
+                        <span>✅ Checklist cần chuẩn bị</span>
+                        <span>Tick trước khi chốt</span>
+                    </div>
+                    <div class="checklist-list" id="finalChecklistList"></div>
+                </div>
                 <div class="input-group">
                     <label for="notesInp">📝 Lời dặn dò:</label>
                     <textarea id="notesInp" rows="4" placeholder="Có gì cần note nhắn anh nha baby..."></textarea>
@@ -384,6 +418,15 @@
             60: "Trước 1 tiếng",
             1440: "Trước 1 ngày"
         };
+        const defaultChecklist = [
+            "Đặt bàn / giữ chỗ trước",
+            "Mua vé phim nếu có xem phim",
+            "Sạc pin điện thoại",
+            "Mang dù mini hoặc áo khoác",
+            "Chuẩn bị quà nhỏ / lời nhắn",
+            "Kiểm tra đường đi trước khi đón"
+        ];
+        let currentPlan = null;
 
         function runSlideshow() {
             clearInterval(slideshowInterval);
@@ -467,6 +510,77 @@
                 .replaceAll('>', '&gt;')
                 .replaceAll('"', '&quot;')
                 .replaceAll("'", '&#039;');
+        }
+
+        function normalizeChecklist(checklist) {
+            if (Array.isArray(checklist) && checklist.length) {
+                return checklist.map(item => ({
+                    text: typeof item === 'string' ? item : item.text,
+                    done: typeof item === 'string' ? false : Boolean(item.done)
+                })).filter(item => item.text);
+            }
+            return defaultChecklist.map(text => ({ text, done: false }));
+        }
+
+        function getChecklistFromFinalForm() {
+            return Array.from(document.querySelectorAll('input[name="prepChecklist"]')).map(input => ({
+                text: input.value,
+                done: input.checked
+            }));
+        }
+
+        function renderFinalChecklist(checklist) {
+            const list = document.getElementById('finalChecklistList');
+            list.innerHTML = normalizeChecklist(checklist).map((item, index) => `
+                <label class="checklist-item ${item.done ? 'done' : ''}">
+                    <input type="checkbox" name="prepChecklist" value="${escapeHtml(item.text)}" ${item.done ? 'checked' : ''} data-final-check-index="${index}">
+                    <span>${escapeHtml(item.text)}</span>
+                </label>
+            `).join('');
+        }
+
+        function renderHomeChecklist(plan) {
+            const checklist = normalizeChecklist(plan.checklist);
+            const list = document.getElementById('homeChecklistList');
+            const doneCount = checklist.filter(item => item.done).length;
+            document.getElementById('checklistProgress').innerText = `${doneCount}/${checklist.length}`;
+            list.innerHTML = checklist.map((item, index) => `
+                <label class="checklist-item ${item.done ? 'done' : ''}">
+                    <input type="checkbox" ${item.done ? 'checked' : ''} data-check-index="${index}">
+                    <span>${escapeHtml(item.text)}</span>
+                </label>
+            `).join('');
+        }
+
+        function toggleChecklistItem(index, done) {
+            if (!currentPlan) return;
+            const checklist = normalizeChecklist(currentPlan.checklist);
+            if (!checklist[index]) return;
+            checklist[index].done = done;
+            update(ref(db, 'datePlan'), { checklist })
+                .catch(error => alert("Lỗi cập nhật checklist: " + error.message));
+        }
+
+        function renderDateHistory(data) {
+            const list = document.getElementById('dateHistoryList');
+            const items = data ? Object.keys(data).map(key => ({ key, ...data[key] })) : [];
+            items.sort((a, b) => new Date(b.createdAt || b.dateTime || 0) - new Date(a.createdAt || a.dateTime || 0));
+            const latest = items.slice(0, 5);
+            document.getElementById('historyCount').innerText = `${items.length} buổi`;
+            if (!latest.length) {
+                list.innerHTML = '<div class="empty-text">Chưa có lịch sử date nào.</div>';
+                return;
+            }
+            list.innerHTML = latest.map(item => {
+                const activities = item.activities && item.activities.length ? item.activities.join(', ') : "Chỉ đi ăn thôi";
+                return `
+                    <div class="history-item">
+                        <strong>${escapeHtml(formatTime(item.dateTime) || "Chưa có thời gian")}</strong>
+                        <p>${escapeHtml(item.food || "Chưa chọn món")} · ${escapeHtml(activities)}</p>
+                        <p>📍 ${escapeHtml(item.pickupLocation || "Chưa nhập địa điểm đón")}</p>
+                    </div>
+                `;
+            }).join('');
         }
 
         function getWeatherInfo(code) {
@@ -811,6 +925,7 @@
         }
 
         function displayPlanData(plan) {
+            currentPlan = plan;
             document.getElementById('boxNoPlan').style.display = 'none';
             document.getElementById('boxHasPlan').style.display = 'block';
 
@@ -837,6 +952,8 @@
             confirmBtn.innerText = plan.confirmedAt ? "Pooh đã đồng ý rồi 💖" : "Pooh đồng ý lịch này 💕";
             confirmBtn.classList.toggle('confirmed', Boolean(plan.confirmedAt));
             renderTimeline(plan);
+            renderHomeChecklist(plan);
+            renderFinalChecklist(plan.checklist);
 
             initCountdown(plan.dateTime);
             scheduleReminders(plan);
@@ -853,11 +970,12 @@
             const timeline = document.getElementById('timelineInp').value.trim();
             const notes = document.getElementById('notesInp').value;
             const reminders = getSelectedReminders();
+            const checklist = getChecklistFromFinalForm();
 
             if(!time) { alert("Vui lòng chọn thời gian đón em nhé!"); return; }
 
             const prediction = predictDateVibe({ food, activities: acts, dateTime: time, pickupLocation });
-            const plan = { food, activities: acts, dateTime: time, pickupLocation, timeline, notes, reminders, prediction, confirmedAt: null };
+            const plan = { food, activities: acts, dateTime: time, pickupLocation, timeline, notes, reminders, checklist, prediction, confirmedAt: null, createdAt: new Date().toISOString() };
 
             const btn = document.getElementById('btnSubmitFinal');
             btn.innerText = "Đang đồng bộ lên mây...";
@@ -865,6 +983,7 @@
 
             set(ref(db, 'datePlan'), plan)
                 .then(() => {
+                    push(ref(db, 'dateHistory'), plan).catch(error => console.warn("Lỗi lưu lịch sử date:", error));
                     btn.innerText = "Chốt Đơn Kế Hoạch! 💖";
                     btn.disabled = false;
                     alert("🎉 Đã đồng bộ thành công! Pooh ở nhà mở trang web lên là sẽ tự động thấy ngay kế hoạch!");
@@ -886,6 +1005,7 @@
                 if(plan) {
                     displayPlanData(plan);
                 } else {
+                    currentPlan = null;
                     reminderTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
                     reminderTimeouts = [];
                     clearInterval(weatherInterval);
@@ -899,6 +1019,14 @@
             }, (error) => {
                 console.error("Lỗi đọc từ Firebase:", error);
                 document.getElementById('loadingTxt').innerText = "Không thể kết nối cơ sở dữ liệu.";
+            });
+        }
+
+        function listenToDateHistory() {
+            onValue(ref(db, 'dateHistory'), (snapshot) => {
+                renderDateHistory(snapshot.val());
+            }, (error) => {
+                console.error("Lỗi đọc lịch sử date:", error);
             });
         }
 
@@ -1014,6 +1142,16 @@
         document.getElementById('pickupInp').addEventListener('input', updatePredictionPreview);
         document.getElementById('foodGrid').addEventListener('change', updatePredictionPreview);
         document.getElementById('planGrid').addEventListener('change', updatePredictionPreview);
+        document.getElementById('homeChecklistList').addEventListener('change', (event) => {
+            const input = event.target.closest('input[data-check-index]');
+            if (!input) return;
+            toggleChecklistItem(Number(input.dataset.checkIndex), input.checked);
+        });
+        document.getElementById('finalChecklistList').addEventListener('change', (event) => {
+            const input = event.target.closest('input[name="prepChecklist"]');
+            if (!input) return;
+            input.closest('.checklist-item').classList.toggle('done', input.checked);
+        });
 
         // Sự kiện khi bấm nút "Thêm món ăn"
         document.getElementById('btnAddFood').addEventListener('click', () => {
@@ -1054,8 +1192,10 @@
                 document.body.appendChild(sp);
             }
             runSlideshow();
+            renderFinalChecklist();
             updatePredictionPreview();
             listenToCloudDatabase();
+            listenToDateHistory();
             listenToFoodOptions();       // Bật lắng nghe món ăn tự động
             listenToActivityOptions();   // Bật lắng nghe địa điểm tự động
         });
