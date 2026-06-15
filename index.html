@@ -345,7 +345,7 @@
                         <div class="rating-status" id="dateRatingStatus">Đánh giá này sẽ giúp Bean rút kinh nghiệm sau mỗi buổi date nên khuyến khích Pooh thoải mái đánh giá nhé.</div>
                     </div>
                     <div class="reminder-status" id="homeReminderStatus"></div>
-                    <button class="reminder-btn" id="btnEnableReminderHome">Bật thông báo trên Windows 🔔</button>
+                    <button class="reminder-btn" id="btnEnableReminderHome">Bật thông báo trên điện thoại 🔔</button>
                     <button class="confirm-btn" id="btnConfirmPlan">Pooh đồng ý lịch này 💕</button>
                     <p style="font-size: 0.8rem; color: #666;">⏳ Thời gian đón em:</p>
                     <div class="countdown" id="mainTimer">00d 00h 00m 00s</div>
@@ -489,8 +489,8 @@
                         <label class="reminder-pill"><input type="checkbox" name="reminderOpt" value="60"> Trước 1 tiếng</label>
                         <label class="reminder-pill"><input type="checkbox" name="reminderOpt" value="1440"> Trước 1 ngày</label>
                     </div>
-                    <div class="reminder-status" id="finalReminderStatus">Thông báo sẽ hiện trên Windows nếu trình duyệt đang mở và đã cấp quyền.</div>
-                    <button type="button" class="reminder-btn" id="btnEnableReminderFinal">Cho phép thông báo Windows</button>
+                    <div class="reminder-status" id="finalReminderStatus">Thông báo sẽ hiện trên điện thoại hoặc máy tính nếu trình duyệt hỗ trợ, đã cấp quyền và trang vẫn đang mở.</div>
+                    <button type="button" class="reminder-btn" id="btnEnableReminderFinal">Cho phép thông báo trên thiết bị</button>
                 </div>
 
                 <button class="btn" id="btnSubmitFinal">Chốt Đơn Kế Hoạch! 💖</button>
@@ -1160,34 +1160,52 @@
             return `${prefix}\n${pickup}${plan.food}\n${activities}\n${formatTime(plan.dateTime)}`;
         }
 
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.matchMedia('(max-width: 760px)').matches;
+        }
+
+        function getNotificationSupportText() {
+            if (!("Notification" in window)) {
+                return "Trình duyệt này chưa hỗ trợ thông báo trên thiết bị. Nếu dùng iPhone, hãy mở bằng Safari và thêm web vào Màn hình chính để nhận thông báo.";
+            }
+            if (isMobileDevice()) {
+                return "Thông báo điện thoại đã sẵn sàng. Nhớ giữ trang mở hoặc thêm web vào màn hình chính nếu trình duyệt yêu cầu nha.";
+            }
+            return "Thông báo đã sẵn sàng trên thiết bị này. Nhớ giữ trình duyệt mở để nhận reminder nha.";
+        }
+
         async function requestNotificationPermission() {
             if (!("Notification" in window)) {
-                updateReminderStatus("Trình duyệt này chưa hỗ trợ thông báo Windows.");
+                updateReminderStatus(getNotificationSupportText());
                 return false;
             }
 
             if (Notification.permission === "granted") {
-                updateReminderStatus("Đã bật thông báo Windows. Nhớ giữ trình duyệt mở để nhận nhắc hẹn nha.");
+                updateReminderStatus(getNotificationSupportText());
                 return true;
             }
 
             if (Notification.permission === "denied") {
-                updateReminderStatus("Thông báo đang bị chặn. Hãy mở quyền Notification trong cài đặt trình duyệt.");
+                updateReminderStatus("Thông báo đang bị chặn. Hãy mở quyền Notification trong cài đặt trình duyệt điện thoại hoặc máy tính.");
                 return false;
             }
 
             const permission = await Notification.requestPermission();
             const isGranted = permission === "granted";
-            updateReminderStatus(isGranted ? "Đã bật thông báo Windows. Nhớ giữ trình duyệt mở để nhận nhắc hẹn nha." : "Chưa được cấp quyền thông báo Windows.");
+            updateReminderStatus(isGranted ? getNotificationSupportText() : "Chưa được cấp quyền thông báo trên thiết bị.");
             return isGranted;
         }
 
         function showReminderNotification(plan, minutesBefore) {
             if (!("Notification" in window) || Notification.permission !== "granted") return;
+            if (navigator.vibrate) navigator.vibrate([120, 60, 120]);
             const notification = new Notification("Date Pooh Reminder 💕", {
                 body: getNotificationBody(plan, minutesBefore),
                 icon: "./img/86c7ccc717089656cf19.jpg",
-                tag: `datepooh-${plan.dateTime}-${minutesBefore}`
+                badge: "./img/86c7ccc717089656cf19.jpg",
+                tag: `datepooh-${plan.dateTime}-${minutesBefore}`,
+                renotify: true,
+                requireInteraction: true
             });
             notification.onclick = () => window.focus();
         }
@@ -1213,7 +1231,7 @@
                 }
             });
 
-            const permissionHint = ("Notification" in window && Notification.permission === "granted") ? "Đã hẹn giờ thông báo Windows" : "Bấm bật thông báo Windows để nhận reminder";
+            const permissionHint = ("Notification" in window && Notification.permission === "granted") ? "Đã hẹn giờ thông báo trên thiết bị" : "Bấm bật thông báo để nhận reminder trên điện thoại hoặc máy tính";
             updateReminderStatus(`${permissionHint}. ${scheduledCount ? `Còn ${scheduledCount} mốc nhắc hẹn sắp tới.` : "Các mốc nhắc hẹn đã qua."}`);
         }
 
