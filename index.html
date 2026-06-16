@@ -175,9 +175,78 @@
         .step-dot { border: 1px solid #ffe0e8; background: #fff; color: #9b8b91; border-radius: 999px; min-height: 38px; padding: 7px 8px; font-size: 0.72rem; font-weight: 800; cursor: pointer; transition: 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .step-dot.active { background: linear-gradient(135deg, #ff7fa2, #ff5f89); color: #fff; border-color: transparent; box-shadow: 0 8px 16px rgba(255, 117, 151, 0.24); }
         .step-dot span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .intro-overlay { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 18px; background: radial-gradient(circle at 18% 12%, rgba(255,255,255,0.92), transparent 28%), radial-gradient(circle at 80% 80%, rgba(255,179,198,0.55), transparent 30%), linear-gradient(135deg, #fff0f5, #fffaf4 48%, #f7ecff); transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .intro-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .intro-card { width: min(920px, 100%); min-height: min(680px, calc(100dvh - 36px)); border: 1px solid rgba(255, 211, 221, 0.95); border-radius: 34px; background: rgba(255,255,255,0.78); box-shadow: 0 28px 70px rgba(255, 117, 151, 0.24); backdrop-filter: blur(18px); overflow: hidden; position: relative; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 20px; padding: 34px; }
+        .intro-card::before { content: ""; position: absolute; inset: 18px; border: 1px dashed rgba(255, 117, 151, 0.24); border-radius: 26px; pointer-events: none; }
+        .intro-copy, .intro-visual { position: relative; z-index: 1; }
+        .intro-kicker { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #ffd3dd; border-radius: 999px; background: #fff8fb; color: #ff5f89; padding: 8px 12px; font-size: 0.82rem; font-weight: 900; box-shadow: 0 8px 18px rgba(255, 117, 151, 0.1); }
+        .intro-copy h2 { margin-top: 18px; color: #ff4f79; font-size: clamp(2.1rem, 5vw, 4.3rem); line-height: 0.95; letter-spacing: -1.5px; }
+        .intro-copy p { margin-top: 14px; max-width: 520px; color: #655a60; font-size: clamp(0.95rem, 2vw, 1.08rem); line-height: 1.65; }
+        .intro-feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 22px 0; }
+        .intro-feature { background: #fff; border: 1px solid #ffe1e8; border-radius: 16px; padding: 12px; color: #6b5d64; font-size: 0.86rem; font-weight: 800; box-shadow: 0 10px 22px rgba(255, 117, 151, 0.08); }
+        .intro-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .intro-start, .intro-skip { border: 0; border-radius: 16px; min-height: 48px; padding: 0 18px; font-weight: 900; cursor: pointer; }
+        .intro-start { color: #fff; background: linear-gradient(135deg, #ff7fa2, #ff4f79); box-shadow: 0 14px 26px rgba(255, 117, 151, 0.28); }
+        .intro-skip { color: #ff5f89; background: #fff; border: 1px solid #ffd3dd; }
+        .intro-note { margin-top: 14px; color: #8c7d84; font-size: 0.78rem; }
+        .intro-visual { min-height: 430px; display: grid; place-items: center; }
+        .intro-orbit { width: min(330px, 72vw); aspect-ratio: 1; border-radius: 50%; position: relative; background: radial-gradient(circle, #fff 0 34%, #ffe8ef 35% 52%, rgba(255,255,255,0.2) 53%); box-shadow: inset 0 0 0 1px #ffd3dd, 0 28px 48px rgba(255, 117, 151, 0.2); animation: introPulse 2.8s ease-in-out infinite; }
+        .intro-photo { position: absolute; inset: 22%; border: 10px solid #fff; border-bottom-width: 34px; border-radius: 12px; transform: rotate(-5deg); overflow: hidden; box-shadow: 0 18px 28px rgba(255, 117, 151, 0.2); background: #fff; }
+        .intro-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .intro-bubble { position: absolute; display: grid; place-items: center; min-width: 72px; min-height: 72px; padding: 12px; border-radius: 24px; background: rgba(255,255,255,0.92); border: 1px solid #ffe1e8; color: #ff5f89; font-weight: 900; box-shadow: 0 14px 28px rgba(255, 117, 151, 0.14); animation: introFloat 3.4s ease-in-out infinite; }
+        .intro-bubble:nth-child(2) { top: 2%; left: 15%; }
+        .intro-bubble:nth-child(3) { top: 18%; right: -4%; animation-delay: 0.4s; }
+        .intro-bubble:nth-child(4) { bottom: 9%; right: 8%; animation-delay: 0.8s; }
+        .intro-bubble:nth-child(5) { bottom: 14%; left: -7%; animation-delay: 1.2s; }
+        .intro-heart { position: absolute; color: #ff7fa2; opacity: 0.8; animation: introDrift 5s linear infinite; }
+        .intro-heart.h1 { top: 11%; left: 5%; font-size: 1.6rem; }
+        .intro-heart.h2 { top: 7%; right: 13%; font-size: 1.1rem; animation-delay: 1.4s; }
+        .intro-heart.h3 { bottom: 10%; right: 4%; font-size: 1.8rem; animation-delay: 2s; }
+        @keyframes introPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.025); } }
+        @keyframes introFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes introDrift { 0% { transform: translateY(0) rotate(0deg); opacity: 0.35; } 50% { opacity: 0.9; } 100% { transform: translateY(-26px) rotate(18deg); opacity: 0.35; } }
+        .intro-overlay.cinematic { background: #120810; color: #fff; overflow: hidden; }
+        .intro-overlay.cinematic::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px), radial-gradient(circle at 30% 20%, rgba(255,117,151,0.42), transparent 32%), radial-gradient(circle at 75% 80%, rgba(246,236,255,0.28), transparent 34%); background-size: 44px 44px, auto, auto; animation: introCameraMove 9s ease-in-out forwards; }
+        .intro-overlay.cinematic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.72) 0 9%, transparent 9% 91%, rgba(0,0,0,0.72) 91% 100%); pointer-events: none; }
+        .intro-overlay.cinematic .intro-card { width: 100%; height: 100dvh; min-height: 100dvh; border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; display: block; padding: 0; overflow: hidden; }
+        .intro-overlay.cinematic .intro-card::before { display: none; }
+        .intro-scene { position: absolute; inset: 0; display: grid; place-items: center; padding: clamp(24px, 6vw, 72px); opacity: 0; transform: scale(1.08); animation: introScene 9s ease-in-out forwards; }
+        .intro-scene-1 { animation-delay: 0s; }
+        .intro-scene-2 { animation-delay: 2.8s; }
+        .intro-scene-3 { animation-delay: 5.7s; }
+        .intro-shot { width: min(920px, 100%); text-align: center; position: relative; z-index: 2; }
+        .intro-film-kicker { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.22); border-radius: 999px; padding: 8px 14px; background: rgba(255,255,255,0.1); color: #ffdce5; font-weight: 900; letter-spacing: 0.04em; backdrop-filter: blur(10px); }
+        .intro-shot h2 { color: #fff; font-size: clamp(2.35rem, 7vw, 6.2rem); line-height: 0.92; letter-spacing: -2px; text-shadow: 0 16px 50px rgba(255, 117, 151, 0.34); }
+        .intro-shot p { width: min(620px, 100%); margin: 18px auto 0; color: rgba(255,255,255,0.78); font-size: clamp(0.98rem, 2vw, 1.22rem); line-height: 1.7; }
+        .intro-memory-reel { width: min(760px, 88vw); height: min(430px, 58vh); position: relative; filter: drop-shadow(0 28px 44px rgba(0,0,0,0.38)); }
+        .intro-frame { position: absolute; width: 44%; height: 70%; border: 12px solid #fff; border-bottom-width: 38px; border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 22px 40px rgba(0,0,0,0.34); }
+        .intro-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .intro-frame:nth-child(1) { left: 0; top: 14%; transform: rotate(-8deg); }
+        .intro-frame:nth-child(2) { left: 28%; top: 0; transform: rotate(3deg); z-index: 2; }
+        .intro-frame:nth-child(3) { right: 0; top: 18%; transform: rotate(9deg); }
+        .intro-feature-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 34px; }
+        .intro-feature-card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 16px 12px; color: #fff; backdrop-filter: blur(12px); box-shadow: 0 18px 36px rgba(0,0,0,0.18); }
+        .intro-feature-card strong { display: block; font-size: 1.35rem; margin-bottom: 8px; }
+        .intro-final-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+        .intro-start, .intro-skip { position: relative; z-index: 5; }
+        .intro-overlay.cinematic .intro-start { min-width: 210px; color: #fff; background: linear-gradient(135deg, #ff7fa2, #ff4f79); box-shadow: 0 18px 34px rgba(255, 79, 121, 0.34); }
+        .intro-overlay.cinematic .intro-skip { min-width: 150px; color: #fff; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.28); backdrop-filter: blur(10px); }
+        .intro-skip-floating { position: fixed; right: clamp(14px, 3vw, 32px); top: calc(14px + env(safe-area-inset-top)); z-index: 60; }
+        .intro-progress { position: fixed; left: 0; right: 0; bottom: 0; height: 4px; z-index: 60; background: rgba(255,255,255,0.12); }
+        .intro-progress span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, #ffb3c6, #ff4f79, #fff); animation: introProgress 9s linear forwards; }
+        .intro-particles span { position: fixed; z-index: 1; color: rgba(255,255,255,0.58); animation: introParticle 6s linear infinite; }
+        .intro-particles span:nth-child(1) { left: 12%; bottom: 8%; font-size: 1.4rem; animation-delay: 0s; }
+        .intro-particles span:nth-child(2) { left: 84%; bottom: 18%; font-size: 1.1rem; animation-delay: 0.9s; }
+        .intro-particles span:nth-child(3) { left: 25%; bottom: 32%; font-size: 1.8rem; animation-delay: 1.6s; }
+        .intro-particles span:nth-child(4) { left: 70%; bottom: 5%; font-size: 1.5rem; animation-delay: 2.2s; }
+        @keyframes introScene { 0% { opacity: 0; transform: scale(1.08) translateY(18px); filter: blur(8px); } 10%, 28% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } 35%, 100% { opacity: 0; transform: scale(0.98) translateY(-16px); filter: blur(6px); } }
+        @keyframes introProgress { to { width: 100%; } }
+        @keyframes introCameraMove { 0% { transform: scale(1); } 100% { transform: scale(1.08) translate3d(-2%, -1%, 0); } }
+        @keyframes introParticle { 0% { transform: translateY(30px) scale(0.8); opacity: 0; } 25%, 75% { opacity: 0.78; } 100% { transform: translateY(-160px) scale(1.2) rotate(18deg); opacity: 0; } }
 
         @media (hover: hover) {
-            .btn:hover, .smart-action-btn:hover, .reminder-btn:hover, .confirm-btn:hover, .live-weather-refresh:hover, .rating-option:hover, .step-dot:hover { transform: translateY(-1px); }
+            .btn:hover, .smart-action-btn:hover, .reminder-btn:hover, .confirm-btn:hover, .live-weather-refresh:hover, .rating-option:hover, .step-dot:hover, .intro-start:hover, .intro-skip:hover { transform: translateY(-1px); }
             .option-card:hover, .mini-card:hover, .date-panel:hover, .smart-card:hover, .live-weather-card:hover { box-shadow: 0 16px 34px rgba(255, 117, 151, 0.16); }
         }
 
@@ -214,6 +283,19 @@
             .option-card { padding: 14px 8px; }
             .btn, .reminder-btn, .confirm-btn, .smart-action-btn, .rating-option, .custom-input-box .add-btn { min-height: 46px; }
             .summary-card, .live-weather-card, .date-panel, .smart-card, .prediction-card, .reminder-box, .activity-insight { border-radius: 18px; padding: 13px; }
+            .intro-overlay { padding: 0; }
+            .intro-card { min-height: 100dvh; border-radius: 0; border: 0; grid-template-columns: 1fr; gap: 10px; padding: calc(26px + env(safe-area-inset-top)) 18px calc(22px + env(safe-area-inset-bottom)); }
+            .intro-card::before { inset: 10px; border-radius: 24px; }
+            .intro-copy h2 { margin-top: 14px; font-size: 2.45rem; }
+            .intro-feature-grid { grid-template-columns: 1fr; margin: 16px 0; }
+            .intro-visual { min-height: 260px; order: -1; }
+            .intro-orbit { width: min(260px, 72vw); }
+            .intro-bubble { min-width: 58px; min-height: 58px; border-radius: 18px; font-size: 0.78rem; }
+            .intro-scene { padding: 22px 18px; }
+            .intro-memory-reel { height: 310px; }
+            .intro-frame { width: 56%; height: 64%; border-width: 8px; border-bottom-width: 28px; }
+            .intro-feature-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 22px; }
+            .intro-feature-card { padding: 12px 8px; font-size: 0.82rem; }
         }
 
         @media (max-width: 380px) {
@@ -224,10 +306,59 @@
             .live-weather-temp { font-size: 1.7rem; }
             .date-panel-title, .smart-title, .insight-header, .live-weather-top { align-items: flex-start; flex-direction: column; }
             .step-dot span { display: none; }
+            .intro-actions { flex-direction: column; align-items: stretch; }
+            .intro-start, .intro-skip { width: 100%; }
+            .intro-feature-cards { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intro-orbit, .intro-bubble, .intro-heart, .intro-scene, .intro-progress span, .intro-particles span, .photo-album, .sparkle { animation: none; }
+            .intro-scene-1 { opacity: 1; transform: none; filter: none; }
+            .intro-scene-2, .intro-scene-3 { display: none; }
         }
     </style>
 </head>
 <body>
+
+    <div class="intro-overlay cinematic" id="introOverlay" aria-label="Intro cinematic Date Pooh">
+        <div class="intro-card">
+            <button class="intro-skip intro-skip-floating" id="btnSkipIntro">Bỏ qua</button>
+            <div class="intro-particles" aria-hidden="true">
+                <span>💕</span><span>✨</span><span>💖</span><span>🌸</span>
+            </div>
+            <section class="intro-scene intro-scene-1">
+                <div class="intro-shot">
+                    <div class="intro-film-kicker">DATE POOH PRESENTS</div>
+                    <h2>Một buổi hẹn sắp bắt đầu</h2>
+                    <p>Camera mở lên, tim đập nhẹ, Bean chuẩn bị mọi thứ để Pooh chỉ cần chọn điều mình thích.</p>
+                </div>
+            </section>
+            <section class="intro-scene intro-scene-2" aria-hidden="true">
+                <div class="intro-memory-reel">
+                    <div class="intro-frame"><img src="./img/86c7ccc717089656cf19.jpg" alt=""></div>
+                    <div class="intro-frame"><img src="./img/82f33b13e0dc618238cd.jpg" alt=""></div>
+                    <div class="intro-frame"><img src="./img/a000d9fd1d329c6cc523.jpg" alt=""></div>
+                </div>
+            </section>
+            <section class="intro-scene intro-scene-3">
+                <div class="intro-shot">
+                    <div class="intro-film-kicker">READY FOR OUR DATE</div>
+                    <h2>Chọn món, chọn nơi, chốt lịch</h2>
+                    <p>Thời tiết, reminder, checklist và gợi ý thông minh đã sẵn sàng cho buổi date của hai đứa.</p>
+                    <div class="intro-feature-cards">
+                        <div class="intro-feature-card"><strong>🌤️</strong>Thời tiết realtime</div>
+                        <div class="intro-feature-card"><strong>🤖</strong>Gợi ý theo gu</div>
+                        <div class="intro-feature-card"><strong>✅</strong>Checklist chuẩn bị</div>
+                        <div class="intro-feature-card"><strong>🔔</strong>Reminder thiết bị</div>
+                    </div>
+                    <div class="intro-final-actions">
+                        <button class="intro-start" id="btnStartIntro">Vào app ngay 💕</button>
+                    </div>
+                </div>
+            </section>
+            <div class="intro-progress" aria-hidden="true"><span></span></div>
+        </div>
+    </div>
 
     <div class="phone-container" id="phoneWrapper">
         <div class="header">
@@ -1553,12 +1684,32 @@
 
         function registerServiceWorker() {
             if (!('serviceWorker' in navigator)) return;
-            navigator.serviceWorker.register('./sw.js')
+            navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' })
+                .then(registration => registration.update())
                 .catch(error => console.warn("Không thể đăng ký service worker:", error));
+        }
+
+        function closeIntro() {
+            const intro = document.getElementById('introOverlay');
+            if (!intro || intro.classList.contains('hidden')) return;
+            intro.classList.add('hidden');
+            setTimeout(() => intro.remove(), 600);
+        }
+
+        function initIntro() {
+            const intro = document.getElementById('introOverlay');
+            if (!intro) return;
+            document.getElementById('btnStartIntro').addEventListener('click', closeIntro);
+            document.getElementById('btnSkipIntro').addEventListener('click', closeIntro);
+            intro.addEventListener('click', event => {
+                if (event.target === intro) closeIntro();
+            });
+            setTimeout(closeIntro, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 2500 : 9400);
         }
 
         // Khởi động khi tải xong trang
         window.addEventListener('DOMContentLoaded', () => {
+            initIntro();
             registerServiceWorker();
             for (let i = 0; i < 15; i++) {
                 const sp = document.createElement('div'); sp.classList.add('sparkle');
