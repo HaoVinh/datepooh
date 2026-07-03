@@ -70,6 +70,7 @@
         .btn { background: linear-gradient(135deg, var(--primary-pink), #ff4f79); color: white; border: none; width: 100%; padding: 15px; border-radius: 15px; font-size: 1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 12px rgba(255, 117, 151, 0.3); transition: all 0.2s; margin-top: auto; text-align: center; text-decoration: none; }
         .btn:active { transform: scale(0.98); }
         .btn-secondary { background: #fff; color: var(--primary-pink); border: 2px solid var(--primary-pink); box-shadow: none; margin-top: 10px; }
+        .btn-danger { background: #fff; color: #e11d48; border: 2px solid #fecdd3; box-shadow: none; margin-top: 10px; }
         #stepFinal .btn { margin-top: 10px; flex-shrink: 0; }
 
         /* Lưới chọn Option linh hoạt */
@@ -101,14 +102,25 @@
         .reminder-status { font-size: 0.78rem; color: #777; line-height: 1.35; }
         .reminder-btn, .confirm-btn { background: #fff; color: var(--primary-pink); border: 2px solid var(--primary-pink); padding: 9px 10px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; width: 100%; }
         .confirm-btn.confirmed { background: #fff5f7; border-color: #ff4f79; }
+        .status-select { width: 100%; border: 2px solid #ffd3dd; border-radius: 12px; color: var(--primary-pink); font-weight: 800; padding: 9px 10px; background: #fff; outline: none; }
         .timeline-list { width: 100%; background: #fff8f9; border-radius: 16px; padding: 12px 14px; margin: 10px 0; text-align: left; }
         .timeline-item { border-left: 3px solid var(--secondary-pink); padding: 0 0 10px 10px; font-size: 0.86rem; line-height: 1.35; }
         .timeline-item:last-child { padding-bottom: 0; }
 
         /* Màn hình kết quả tóm tắt */
-        .summary-card { background: rgba(255,248,249,0.94); border: 1px dashed var(--primary-pink); border-radius: 16px; padding: 15px; margin: 12px 0; text-align: left; width: 100%; box-shadow: 0 10px 24px rgba(255, 117, 151, 0.08); }
+        .plan-hero { width: 100%; background: linear-gradient(135deg, #fff, #fff7f9); border: 1px solid #ffd3dd; border-radius: 22px; padding: 16px; margin-bottom: 12px; text-align: left; box-shadow: 0 14px 30px rgba(255, 117, 151, 0.12); }
+        .plan-hero h2 { color: var(--primary-pink); font-size: 1.22rem; margin-bottom: 6px; }
+        .plan-hero p { color: #666; font-size: 0.86rem; line-height: 1.4; }
+        .summary-card { background: rgba(255,248,249,0.94); border: 1px solid #ffd3dd; border-radius: 18px; padding: 15px; margin: 12px 0; text-align: left; width: 100%; box-shadow: 0 10px 24px rgba(255, 117, 151, 0.08); }
         .summary-item { margin-bottom: 10px; font-size: 0.9rem; }
         .summary-item strong { color: var(--primary-pink); }
+        .plan-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; margin-top: 12px; }
+        .plan-actions .btn, .plan-actions .confirm-btn, .plan-actions .reminder-btn { margin-top: 0; height: 100%; }
+        .plan-actions .full-width { grid-column: 1 / -1; }
+        .home-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; width: 100%; margin: 10px 0 12px; }
+        .home-tab-btn { border: 1px solid #ffd3dd; border-radius: 999px; background: #fff; color: var(--primary-pink); cursor: pointer; font-size: 0.74rem; font-weight: 900; padding: 9px 6px; }
+        .home-tab-btn.active { background: linear-gradient(135deg, #ff7fa2, #ff5f89); border-color: transparent; color: #fff; box-shadow: 0 8px 16px rgba(255, 117, 151, 0.18); }
+        .home-section.hidden { display: none; }
         .countdown { background: #ffe3e8; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold; color: var(--primary-pink); margin-top: 10px; font-size: 1.1rem; }
         .decor-strip { width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0 12px; }
         .decor-chip { background: #fff; border: 1px solid #ffe1e8; border-radius: 999px; padding: 8px; text-align: center; color: var(--primary-pink); font-size: 0.78rem; font-weight: 700; box-shadow: 0 8px 18px rgba(255, 117, 151, 0.08); }
@@ -128,6 +140,23 @@
         .outfit-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
         .outfit-chip { background: #fff; border: 1px solid #ffd3dd; border-radius: 999px; color: #ff5f89; padding: 6px 9px; font-size: 0.76rem; font-weight: 700; }
         .insight-reason { margin-top: 10px; font-size: 0.78rem; color: #777; line-height: 1.35; }
+        .favorite-card { width: 100%; background: linear-gradient(135deg, #fff8f9, #fff); border: 1px solid #ffd3dd; border-radius: 20px; padding: 14px; margin: 0 0 18px; box-shadow: 0 12px 26px rgba(255, 117, 151, 0.1); text-align: left; }
+        .favorite-form { display: grid; gap: 8px; grid-template-columns: 1fr auto; margin: 10px 0; }
+        .favorite-form input { min-width: 0; }
+        .favorite-list { display: flex; flex-direction: column; gap: 9px; margin-top: 10px; }
+        .favorite-item { align-items: center; background: #fff; border: 1px solid #ffe1e8; border-radius: 15px; display: grid; gap: 8px; grid-template-columns: 1fr auto auto; padding: 10px; }
+        .favorite-item strong { color: var(--primary-pink); font-size: 0.86rem; }
+        .favorite-item button { border: 1px solid #ffd3dd; border-radius: 12px; background: #fff; color: var(--primary-pink); cursor: pointer; font-size: 0.76rem; font-weight: 900; padding: 8px; }
+        .toast-stack { position: fixed; top: calc(16px + env(safe-area-inset-top)); right: 16px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; width: min(340px, calc(100vw - 32px)); pointer-events: none; }
+        .toast { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: flex-start; background: rgba(255,255,255,0.96); border: 1px solid #ffe1e8; border-left: 5px solid var(--primary-pink); border-radius: 18px; box-shadow: 0 18px 38px rgba(74, 25, 42, 0.18); color: #555; padding: 12px; pointer-events: auto; animation: toastIn 0.28s ease both; }
+        .toast.success { border-left-color: #22c55e; }
+        .toast.error { border-left-color: #ef4444; }
+        .toast.info { border-left-color: #ff7597; }
+        .toast-icon { font-size: 1.25rem; line-height: 1; }
+        .toast-title { color: #4a4a4a; font-weight: 900; font-size: 0.88rem; margin-bottom: 3px; }
+        .toast-message { font-size: 0.82rem; line-height: 1.35; }
+        .toast-close { border: 0; background: transparent; color: #999; cursor: pointer; font-size: 1.1rem; line-height: 1; padding: 0 2px; }
+        @keyframes toastIn { from { opacity: 0; transform: translateY(-8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         .live-weather-card { width: 100%; background: linear-gradient(135deg, #fff8f9, #f7fbff); border: 1px solid #ffd3dd; border-radius: 22px; padding: 14px; margin: 12px 0; box-shadow: 0 14px 30px rgba(255, 117, 151, 0.12); overflow: hidden; position: relative; }
         .live-weather-card::after { content: ""; position: absolute; width: 115px; height: 115px; border-radius: 50%; right: -36px; top: -38px; background: rgba(255, 211, 221, 0.45); }
         .live-weather-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; position: relative; z-index: 1; }
@@ -146,13 +175,39 @@
         .date-panel { width: 100%; background: rgba(255,248,249,0.95); border: 1px solid #ffd3dd; border-radius: 20px; padding: 14px; margin: 12px 0; box-shadow: 0 12px 26px rgba(255, 117, 151, 0.1); text-align: left; }
         .date-panel-title { color: var(--primary-pink); font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
         .checklist-list { display: flex; flex-direction: column; gap: 8px; }
-        .checklist-item { display: flex; align-items: center; gap: 9px; background: #fff; border: 1px solid #ffe1e8; border-radius: 13px; padding: 9px 10px; font-size: 0.84rem; color: #555; cursor: pointer; }
+        .checklist-item { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 9px; background: #fff; border: 1px solid #ffe1e8; border-radius: 13px; padding: 9px 10px; font-size: 0.84rem; color: #555; cursor: pointer; }
         .checklist-item input { accent-color: var(--primary-pink); flex-shrink: 0; }
         .checklist-item.done span { text-decoration: line-through; color: #aaa; }
+        .checklist-edit-btn, .checklist-delete-btn { border: 1px solid #ffd3dd; border-radius: 999px; background: #fff; color: var(--primary-pink); cursor: pointer; font-size: 0.72rem; font-weight: 800; padding: 6px 8px; }
+        .checklist-delete-btn { color: #e11d48; border-color: #fecdd3; }
+        .checklist-add-form { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 10px; }
+        .checklist-add-form input { min-width: 0; border: 1px solid #ffe1e8; border-radius: 12px; padding: 10px; outline: none; }
+        .checklist-add-form button { border: 0; border-radius: 12px; background: var(--primary-pink); color: #fff; cursor: pointer; font-weight: 900; padding: 0 12px; }
         .history-list { display: flex; flex-direction: column; gap: 9px; }
         .history-item { background: #fff; border: 1px solid #ffe1e8; border-radius: 14px; padding: 10px; }
         .history-item strong { display: block; color: var(--primary-pink); font-size: 0.86rem; margin-bottom: 4px; }
         .history-item p { color: #666; font-size: 0.78rem; line-height: 1.35; }
+        .history-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; margin-top: 8px; }
+        .history-action-btn, .history-delete-btn { background: #fff; border: 1px solid #ffd3dd; border-radius: 999px; color: var(--primary-pink); cursor: pointer; font-size: 0.74rem; font-weight: 800; padding: 7px 10px; }
+        .history-delete-btn { border-color: #fecdd3; color: #e11d48; }
+        .history-detail { background: #fff; border: 1px solid #ffd3dd; border-radius: 16px; color: #555; font-size: 0.82rem; line-height: 1.45; margin-top: 12px; padding: 12px; text-align: left; }
+        .history-detail.hidden { display: none; }
+        .history-detail h4 { color: var(--primary-pink); margin-bottom: 8px; }
+        .status-pill { display: inline-flex; align-items: center; border-radius: 999px; background: #fff5f7; color: var(--primary-pink); font-size: 0.72rem; font-weight: 900; padding: 5px 8px; margin-bottom: 6px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+        .calendar-day { background: #fff; border: 1px solid #ffe1e8; border-radius: 12px; min-height: 40px; padding: 6px 4px; text-align: center; font-size: 0.72rem; color: #777; }
+        .calendar-day strong { display: block; color: #555; margin-bottom: 3px; }
+        .calendar-day.has-date { border-color: var(--primary-pink); background: #fff5f7; color: var(--primary-pink); font-weight: 900; }
+        .memory-form { display: grid; gap: 8px; margin-bottom: 10px; }
+        .memory-form input { border: 1px solid #ffe1e8; border-radius: 12px; padding: 10px; outline: none; }
+        .memory-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+        .memory-item { background: #fff; border: 1px solid #ffe1e8; border-radius: 14px; overflow: hidden; }
+        .memory-item img { width: 100%; height: 120px; object-fit: cover; display: block; }
+        .memory-item p { color: #666; font-size: 0.78rem; line-height: 1.35; padding: 8px; }
+        .memory-item button { border: 0; border-top: 1px solid #ffe1e8; background: #fff; color: #e11d48; cursor: pointer; font-size: 0.74rem; font-weight: 900; padding: 8px; width: 100%; }
+        .rating-score-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0; }
+        .rating-score-grid label { color: #666; font-size: 0.78rem; font-weight: 800; }
+        .rating-score-grid select { width: 100%; border: 1px solid #ffe1e8; border-radius: 12px; color: var(--primary-pink); font-weight: 900; margin-top: 5px; padding: 8px; outline: none; }
         .empty-text { color: #888; font-size: 0.82rem; line-height: 1.35; }
         .smart-card { width: 100%; background: linear-gradient(135deg, #fff8f9, #fff, #f7fbff); border: 1px solid #ffd3dd; border-radius: 20px; padding: 14px; margin: 12px 0; box-shadow: 0 14px 28px rgba(255, 117, 151, 0.12); text-align: left; }
         .smart-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--primary-pink); font-weight: 900; margin-bottom: 10px; }
@@ -164,6 +219,13 @@
         .smart-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
         .smart-action-btn { background: #fff; border: 1px solid #ffd3dd; color: var(--primary-pink); border-radius: 12px; padding: 9px; font-size: 0.78rem; font-weight: 800; cursor: pointer; }
         .smart-apply-btn { grid-column: 1 / -1; background: linear-gradient(135deg, #ff7fa2, #ff5f89); color: #fff; border: none; box-shadow: 0 10px 18px rgba(255, 117, 151, 0.18); }
+        .install-card { width: 100%; background: linear-gradient(135deg, #fff, #fff8fb); border: 1px solid #ffd3dd; border-radius: 18px; padding: 13px; margin: 10px 0 12px; text-align: left; box-shadow: 0 12px 26px rgba(255, 117, 151, 0.1); }
+        .install-title { color: var(--primary-pink); font-weight: 900; display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+        .install-title span:last-child { background: #ffe3e8; color: #ff5f89; border-radius: 999px; padding: 5px 9px; font-size: 0.72rem; white-space: nowrap; }
+        .install-status { color: #666; font-size: 0.82rem; line-height: 1.45; }
+        .install-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .install-btn { border: 1px solid #ffd3dd; border-radius: 12px; padding: 10px 9px; font-size: 0.78rem; font-weight: 900; cursor: pointer; background: #fff; color: var(--primary-pink); }
+        .install-btn.primary { background: linear-gradient(135deg, #ff7fa2, #ff5f89); color: #fff; border: none; box-shadow: 0 10px 18px rgba(255, 117, 151, 0.18); }
         .rating-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
         .rating-option { background: #fff; border: 1px solid #ffe1e8; color: #666; border-radius: 14px; padding: 10px 6px; font-size: 0.78rem; font-weight: 800; cursor: pointer; }
         .rating-option.active { border-color: var(--primary-pink); background: #fff5f7; color: var(--primary-pink); box-shadow: 0 8px 18px rgba(255, 117, 151, 0.1); }
@@ -282,7 +344,10 @@
             .options-grid { gap: 10px; }
             .option-card { padding: 14px 8px; }
             .btn, .reminder-btn, .confirm-btn, .smart-action-btn, .rating-option, .custom-input-box .add-btn { min-height: 46px; }
-            .summary-card, .live-weather-card, .date-panel, .smart-card, .prediction-card, .reminder-box, .activity-insight { border-radius: 18px; padding: 13px; }
+            .plan-actions { grid-template-columns: 1fr; }
+            .plan-actions .full-width { grid-column: auto; }
+            .summary-card, .live-weather-card, .date-panel, .smart-card, .prediction-card, .reminder-box, .activity-insight, .favorite-card, .install-card { border-radius: 18px; padding: 13px; }
+            .toast-stack { left: 12px; right: 12px; top: calc(10px + env(safe-area-inset-top)); width: auto; }
             .intro-overlay { padding: 0; }
             .intro-card { min-height: 100dvh; border-radius: 0; border: 0; grid-template-columns: 1fr; gap: 10px; padding: calc(26px + env(safe-area-inset-top)) 18px calc(22px + env(safe-area-inset-bottom)); }
             .intro-card::before { inset: 10px; border-radius: 24px; }
@@ -305,10 +370,11 @@
             .live-weather-icon { width: 58px; height: 58px; border-radius: 18px; font-size: 2rem; }
             .live-weather-temp { font-size: 1.7rem; }
             .date-panel-title, .smart-title, .insight-header, .live-weather-top { align-items: flex-start; flex-direction: column; }
+            .favorite-form, .favorite-item { grid-template-columns: 1fr; }
             .step-dot span { display: none; }
             .intro-actions { flex-direction: column; align-items: stretch; }
             .intro-start, .intro-skip { width: 100%; }
-            .intro-feature-cards { grid-template-columns: 1fr; }
+            .intro-feature-cards, .install-actions { grid-template-columns: 1fr; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -320,6 +386,8 @@
 </head>
 <body>
 
+    <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
     <div class="intro-overlay cinematic" id="introOverlay" aria-label="Intro cinematic Date Pooh">
         <div class="intro-card">
             <button class="intro-skip intro-skip-floating" id="btnSkipIntro">Bỏ qua</button>
@@ -329,7 +397,7 @@
             <section class="intro-scene intro-scene-1">
                 <div class="intro-shot">
                     <div class="intro-film-kicker">DATE POOH PRESENTS</div>
-                    <h2>Một buổi hẹn sắp bắt đầu</h2>
+                    <h2>Chào mừng đến với Pooh Date</h2>
                     <p>Camera mở lên, tim đập nhẹ, Bean chuẩn bị mọi thứ để Pooh chỉ cần chọn điều mình thích.</p>
                 </div>
             </section>
@@ -384,6 +452,17 @@
                     <div class="decor-chip">Pooh mode</div>
                     <div class="decor-chip">Love plan</div>
                 </div>
+                <div class="install-card" id="installCard">
+                    <div class="install-title">
+                        <strong>📲 Cài Date Pooh App</strong>
+                        <span id="installBadge">PWA</span>
+                    </div>
+                    <div class="install-status" id="installStatus">Đang kiểm tra khả năng cài app trên thiết bị này...</div>
+                    <div class="install-actions">
+                        <button class="install-btn primary" id="btnInstallApp" type="button">Cài app</button>
+                        <button class="install-btn" id="btnReplayIntro" type="button">Xem lại intro</button>
+                    </div>
+                </div>
 
                 <div id="boxNoPlan" style="width: 100%;">
                     <h2 style="color: var(--primary-pink); margin-bottom: 10px;">Chủ nhật 21/06</h2>
@@ -392,8 +471,17 @@
                 </div>
 
                 <div id="boxHasPlan" style="width: 100%; display: none;">
-                    <h2 style="color: var(--primary-pink);">Lịch Hẹn Của Hai Đứa!</h2>
-                    <div class="live-weather-card">
+                    <div class="plan-hero">
+                        <h2>Lịch hẹn của hai đứa</h2>
+                        <p>Thông tin chính được gom gọn bên dưới để Pooh dễ xem, dễ xác nhận hoặc chỉnh lại khi cần.</p>
+                    </div>
+                    <div class="home-tabs" aria-label="Các mục lịch hẹn">
+                        <button type="button" class="home-tab-btn active" data-home-tab="overview">Tổng quan</button>
+                        <button type="button" class="home-tab-btn" data-home-tab="checklist">Checklist</button>
+                        <button type="button" class="home-tab-btn" data-home-tab="history">Lịch sử</button>
+                        <button type="button" class="home-tab-btn" data-home-tab="memories">Kỷ niệm</button>
+                    </div>
+                    <div class="live-weather-card home-section" data-home-section="overview">
                         <div class="live-weather-top">
                             <div>
                                 <div class="live-weather-title">🌈 Thời tiết hiện tại</div>
@@ -415,16 +503,17 @@
                         </div>
                         <div class="live-weather-tip" id="liveWeatherTip">Dữ liệu  dùng Open-Meteo, không cần API key.</div>
                     </div>
-                    <div class="summary-card">
+                    <div class="summary-card home-section" data-home-section="overview">
                         <div class="summary-item">🍕 <strong>Món ăn:</strong> <span id="lblFood"></span></div>
                         <div class="summary-item">🛵 <strong>Đi chơi:</strong> <span id="lblActivities"></span></div>
                         <div class="summary-item">📍 <strong>Địa điểm đón:</strong> <span id="lblPickup"></span></div>
                         <div class="summary-item">⏰ <strong>Thời gian:</strong> <span id="lblTime"></span></div>
                         <div class="summary-item">📝 <strong>Dặn dò:</strong> <span id="lblNotes"></span></div>
                         <div class="summary-item">🔔 <strong>Nhắc nhở:</strong> <span id="lblReminder"></span></div>
+                        <div class="summary-item">📌 <strong>Trạng thái:</strong> <span id="lblPlanStatus"></span></div>
                         <div class="summary-item">💌 <strong>Xác nhận:</strong> <span id="lblConfirmStatus"></span></div>
                     </div>
-                    <div class="prediction-grid">
+                    <div class="prediction-grid home-section" data-home-section="overview">
                         <div class="mini-card">
                             <strong>🌤️ Thời tiết dự đoán</strong>
                             <span id="lblWeather"></span>
@@ -434,8 +523,8 @@
                             <span id="lblDresscode"></span>
                         </div>
                     </div>
-                    <div class="timeline-list" id="timelineList"></div>
-                    <div class="smart-card">
+                    <div class="timeline-list home-section" data-home-section="overview" id="timelineList"></div>
+                    <div class="smart-card home-section" data-home-section="overview">
                         <div class="smart-title">
                             <span>🤖 Gợi ý</span>
                             <span class="smart-badge" id="homeSmartConfidence">Đang học</span>
@@ -451,14 +540,25 @@
                             <button class="smart-action-btn smart-apply-btn" data-apply-smart>Áp dụng gợi ý vào form ✨</button>
                         </div>
                     </div>
-                    <div class="date-panel">
+                    <div class="date-panel home-section hidden" data-home-section="checklist">
                         <div class="date-panel-title">
                             <span>✅ Checklist chuẩn bị</span>
                             <span id="checklistProgress">0/0</span>
                         </div>
+                        <div class="checklist-add-form">
+                            <input type="text" id="homeChecklistInput" placeholder="Thêm việc cần chuẩn bị...">
+                            <button type="button" id="btnAddHomeChecklist">Thêm</button>
+                        </div>
                         <div class="checklist-list" id="homeChecklistList"></div>
                     </div>
-                    <div class="date-panel">
+                    <div class="date-panel home-section hidden" data-home-section="history">
+                        <div class="date-panel-title">
+                            <span>🗓️ Lịch tháng</span>
+                            <span id="calendarMonthLabel">--</span>
+                        </div>
+                        <div class="calendar-grid" id="dateCalendarGrid"></div>
+                    </div>
+                    <div class="date-panel home-section hidden" data-home-section="history">
                         <div class="date-panel-title">
                             <span>📚 Lịch sử buổi date</span>
                             <span id="historyCount">0 buổi</span>
@@ -466,8 +566,21 @@
                         <div class="history-list" id="dateHistoryList">
                             <div class="empty-text">Chưa có lịch sử date nào.</div>
                         </div>
+                        <div class="history-detail hidden" id="historyDetailPanel"></div>
                     </div>
-                    <div class="date-panel">
+                    <div class="date-panel home-section hidden" data-home-section="memories">
+                        <div class="date-panel-title">
+                            <span>📸 Album sau buổi date</span>
+                            <span id="memoryCount">0 ảnh</span>
+                        </div>
+                        <div class="memory-form">
+                            <input type="url" id="memoryPhotoUrl" placeholder="Dán link ảnh kỷ niệm...">
+                            <input type="text" id="memoryCaption" placeholder="Caption ngắn cho ảnh...">
+                            <button type="button" class="smart-action-btn smart-apply-btn" id="btnAddMemoryPhoto">Thêm ảnh vào album</button>
+                        </div>
+                        <div class="memory-grid" id="memoryGrid"></div>
+                    </div>
+                    <div class="date-panel home-section hidden" data-home-section="memories">
                         <div class="date-panel-title">
                             <span>💗 Đánh giá sau buổi date</span>
                             <span id="dateRatingBadge">Chưa đánh giá</span>
@@ -477,16 +590,47 @@
                             <button class="rating-option" data-date-rating="ok">Ổn áp</button>
                             <button class="rating-option" data-date-rating="nope">Chưa hợp</button>
                         </div>
+                        <div class="rating-score-grid">
+                            <label>Món ăn
+                                <select id="ratingFoodScore">
+                                    <option value="">--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                                </select>
+                            </label>
+                            <label>Địa điểm
+                                <select id="ratingPlaceScore">
+                                    <option value="">--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                                </select>
+                            </label>
+                            <label>Không khí
+                                <select id="ratingMoodScore">
+                                    <option value="">--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                                </select>
+                            </label>
+                            <label>Thời gian
+                                <select id="ratingTimeScore">
+                                    <option value="">--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                                </select>
+                            </label>
+                        </div>
                         <textarea class="rating-note" id="dateRatingNote" placeholder="Pooh thích/chưa thích điểm nào, note lại để anh tiếp nhận ý kiến và những lần tới rút kinh nghiệm nha..."></textarea>
                         <button class="smart-action-btn" id="btnSaveDateRating" style="width: 100%; margin-top: 8px;">Lưu đánh giá</button>
                         <div class="rating-status" id="dateRatingStatus">Đánh giá này sẽ giúp Bean rút kinh nghiệm sau mỗi buổi date nên khuyến khích Pooh thoải mái đánh giá nhé.</div>
                     </div>
-                    <div class="reminder-status" id="homeReminderStatus"></div>
-                    <button class="reminder-btn" id="btnEnableReminderHome">Bật thông báo trên điện thoại 🔔</button>
-                    <button class="confirm-btn" id="btnConfirmPlan">Pooh đồng ý lịch này 💕</button>
-                    <p style="font-size: 0.8rem; color: #666;">⏳ Thời gian đón em:</p>
-                    <div class="countdown" id="mainTimer">00d 00h 00m 00s</div>
-                    <button class="btn btn-secondary" id="btnEditPlan">Sửa Lại Kế Hoạch 🛠️</button>
+                    <p class="home-section" data-home-section="overview" style="font-size: 0.8rem; color: #666;">⏳ Thời gian đón em:</p>
+                    <div class="countdown home-section" data-home-section="overview" id="mainTimer">00d 00h 00m 00s</div>
+                    <div class="reminder-status home-section" data-home-section="overview" id="homeReminderStatus"></div>
+                    <div class="plan-actions home-section" data-home-section="overview">
+                        <button class="confirm-btn" id="btnConfirmPlan">Pooh đồng ý lịch này 💕</button>
+                        <button class="reminder-btn" id="btnEnableReminderHome">Bật thông báo 🔔</button>
+                        <select class="status-select" id="planStatusSelect" aria-label="Trạng thái buổi hẹn">
+                            <option value="planned">Sắp tới</option>
+                            <option value="confirmed">Đã xác nhận</option>
+                            <option value="completed">Đã hoàn thành</option>
+                            <option value="cancelled">Đã hủy</option>
+                        </select>
+                        <button class="btn btn-secondary" id="btnEditPlan">Sửa kế hoạch</button>
+                        <button class="btn btn-danger" id="btnDeletePlan">Xóa buổi hẹn</button>
+                    </div>
                 </div>
             </div>
 
@@ -540,6 +684,22 @@
                 <div class="custom-input-box">
                     <input type="text" id="txtPlanFood" placeholder="Thêm địa điểm em có thể suggest...">
                     <button type="button" class="add-btn" id="btnAddAct">Thêm</button>
+                </div>
+
+                <div class="favorite-card">
+                    <div class="insight-header">
+                        <span>💗 Chỗ yêu thích</span>
+                        <span class="insight-badge">Lưu trên máy</span>
+                    </div>
+                    <div class="empty-text">Lưu lại những quán hoặc chỗ chơi hai đứa muốn quay lại, lần sau chỉ cần bấm chọn.</div>
+                    <div class="favorite-form">
+                        <input type="text" id="favoritePlaceInp" placeholder="Ví dụ: ☕ Quán cafe yên tĩnh">
+                        <button type="button" class="add-btn" id="btnAddFavoritePlace">Lưu</button>
+                    </div>
+                    <button type="button" class="smart-action-btn smart-apply-btn" id="btnSaveSelectedFavorites">Lưu các chỗ đang chọn vào yêu thích</button>
+                    <div class="favorite-list" id="favoritePlaceList">
+                        <div class="empty-text">Chưa có chỗ yêu thích nào.</div>
+                    </div>
                 </div>
 
                 <div class="activity-insight">
@@ -612,6 +772,10 @@
                         <span>✅ Checklist cần chuẩn bị</span>
                         <span>Tick trước khi chốt</span>
                     </div>
+                    <div class="checklist-add-form">
+                        <input type="text" id="finalChecklistInput" placeholder="Thêm checklist khác...">
+                        <button type="button" id="btnAddFinalChecklist">Thêm</button>
+                    </div>
                     <div class="checklist-list" id="finalChecklistList"></div>
                 </div>
                 <div class="input-group">
@@ -639,7 +803,7 @@
 
     <script type="module">
      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-        import { getDatabase, ref, set, update, onValue, push } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
+        import { getDatabase, ref, set, update, onValue, push, remove } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
 
         // Cấu hình Firebase của bạn
         const firebaseConfig = {
@@ -676,6 +840,12 @@
             60: "Trước 1 tiếng",
             1440: "Trước 1 ngày"
         };
+        const statusLabels = {
+            planned: "Sắp tới",
+            confirmed: "Đã xác nhận",
+            completed: "Đã hoàn thành",
+            cancelled: "Đã hủy"
+        };
         const defaultChecklist = [
             "Đặt bàn / giữ chỗ trước",
             "Mua vé phim nếu có xem phim",
@@ -689,6 +859,9 @@
         let dateRatingsCache = [];
         let latestSmartSuggestion = null;
         let selectedDateRating = "";
+        let deferredInstallPrompt = null;
+        let introTimeout = null;
+        const favoritePlacesKey = "datePoohFavoritePlaces";
 
         function runSlideshow() {
             clearInterval(slideshowInterval);
@@ -777,8 +950,87 @@
                 .replaceAll("'", '&#039;');
         }
 
+        function showToast(message, type = "info", title = "") {
+            const stack = document.getElementById('toastStack');
+            if (!stack) return;
+            const labels = {
+                success: { icon: "✅", title: "Thành công" },
+                error: { icon: "⚠️", title: "Có lỗi rồi" },
+                info: { icon: "💌", title: "Thông báo" }
+            };
+            const config = labels[type] || labels.info;
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon">${config.icon}</div>
+                <div>
+                    <div class="toast-title">${escapeHtml(title || config.title)}</div>
+                    <div class="toast-message">${escapeHtml(message)}</div>
+                </div>
+                <button type="button" class="toast-close" aria-label="Đóng thông báo">×</button>
+            `;
+            toast.querySelector('.toast-close').addEventListener('click', () => toast.remove());
+            stack.appendChild(toast);
+            setTimeout(() => toast.remove(), type === "error" ? 5200 : 3600);
+        }
+
+        function getFavoritePlaces() {
+            try {
+                const items = JSON.parse(localStorage.getItem(favoritePlacesKey) || "[]");
+                return Array.isArray(items) ? items.filter(Boolean) : [];
+            } catch (error) {
+                console.warn("Không thể đọc danh sách yêu thích:", error);
+                return [];
+            }
+        }
+
+        function saveFavoritePlaces(items) {
+            localStorage.setItem(favoritePlacesKey, JSON.stringify([...new Set(items.filter(Boolean))]));
+            renderFavoritePlaces();
+        }
+
+        function addFavoritePlace(value) {
+            const name = String(value || "").trim();
+            if (!name) return;
+            saveFavoritePlaces([...getFavoritePlaces(), name]);
+            showToast("Đã lưu vào chỗ yêu thích 💗", "success");
+        }
+
+        function removeFavoritePlace(value) {
+            saveFavoritePlaces(getFavoritePlaces().filter(item => item !== value));
+            showToast("Đã xóa khỏi chỗ yêu thích.", "success");
+        }
+
+        function renderFavoritePlaces() {
+            const list = document.getElementById('favoritePlaceList');
+            if (!list) return;
+            const favorites = getFavoritePlaces();
+            if (!favorites.length) {
+                list.innerHTML = '<div class="empty-text">Chưa có chỗ yêu thích nào.</div>';
+                return;
+            }
+
+            list.innerHTML = favorites.map(item => `
+                <div class="favorite-item">
+                    <strong>${escapeHtml(item)}</strong>
+                    <button type="button" data-use-favorite="${escapeHtml(item)}">Chọn</button>
+                    <button type="button" data-remove-favorite="${escapeHtml(item)}">Xóa</button>
+                </div>
+            `).join('');
+        }
+
+        function saveSelectedActivitiesToFavorites() {
+            const selected = Array.from(document.querySelectorAll('input[name="actOpt"]:checked')).map(input => input.value);
+            if (!selected.length) {
+                showToast("Chọn ít nhất một chỗ đi chơi trước nha.", "info");
+                return;
+            }
+            saveFavoritePlaces([...getFavoritePlaces(), ...selected]);
+            showToast("Đã lưu vào chỗ yêu thích 💗", "success");
+        }
+
         function normalizeChecklist(checklist) {
-            if (Array.isArray(checklist) && checklist.length) {
+            if (Array.isArray(checklist)) {
                 return checklist.map(item => ({
                     text: typeof item === 'string' ? item : item.text,
                     done: typeof item === 'string' ? false : Boolean(item.done)
@@ -800,6 +1052,8 @@
                 <label class="checklist-item ${item.done ? 'done' : ''}">
                     <input type="checkbox" name="prepChecklist" value="${escapeHtml(item.text)}" ${item.done ? 'checked' : ''} data-final-check-index="${index}">
                     <span>${escapeHtml(item.text)}</span>
+                    <button type="button" class="checklist-edit-btn" data-edit-final-check="${index}">Sửa</button>
+                    <button type="button" class="checklist-delete-btn" data-delete-final-check="${index}">Xóa</button>
                 </label>
             `).join('');
         }
@@ -813,8 +1067,79 @@
                 <label class="checklist-item ${item.done ? 'done' : ''}">
                     <input type="checkbox" ${item.done ? 'checked' : ''} data-check-index="${index}">
                     <span>${escapeHtml(item.text)}</span>
+                    <button type="button" class="checklist-edit-btn" data-edit-home-check="${index}">Sửa</button>
+                    <button type="button" class="checklist-delete-btn" data-delete-home-check="${index}">Xóa</button>
                 </label>
             `).join('');
+        }
+
+        function getFinalChecklistDraft() {
+            return Array.from(document.querySelectorAll('input[name="prepChecklist"]')).map(input => ({
+                text: input.value,
+                done: input.checked
+            }));
+        }
+
+        function addFinalChecklistItem() {
+            const input = document.getElementById('finalChecklistInput');
+            const text = input.value.trim();
+            if (!text) return;
+            renderFinalChecklist([...getFinalChecklistDraft(), { text, done: false }]);
+            input.value = "";
+        }
+
+        function editFinalChecklistItem(index) {
+            const checklist = getFinalChecklistDraft();
+            if (!checklist[index]) return;
+            const text = window.prompt("Sửa checklist:", checklist[index].text);
+            if (text === null) return;
+            const nextText = text.trim();
+            if (!nextText) return;
+            checklist[index].text = nextText;
+            renderFinalChecklist(checklist);
+        }
+
+        function deleteFinalChecklistItem(index) {
+            const checklist = getFinalChecklistDraft();
+            if (!checklist[index]) return;
+            checklist.splice(index, 1);
+            renderFinalChecklist(checklist);
+        }
+
+        function updateHomeChecklist(checklist) {
+            if (!currentPlan) return;
+            update(ref(db, 'datePlan'), { checklist })
+                .catch(error => showToast("Lỗi cập nhật checklist: " + error.message, "error"));
+        }
+
+        function addHomeChecklistItem() {
+            if (!currentPlan) return;
+            const input = document.getElementById('homeChecklistInput');
+            const text = input.value.trim();
+            if (!text) return;
+            const checklist = [...normalizeChecklist(currentPlan.checklist), { text, done: false }];
+            input.value = "";
+            updateHomeChecklist(checklist);
+        }
+
+        function editHomeChecklistItem(index) {
+            if (!currentPlan) return;
+            const checklist = normalizeChecklist(currentPlan.checklist);
+            if (!checklist[index]) return;
+            const text = window.prompt("Sửa checklist:", checklist[index].text);
+            if (text === null) return;
+            const nextText = text.trim();
+            if (!nextText) return;
+            checklist[index].text = nextText;
+            updateHomeChecklist(checklist);
+        }
+
+        function deleteHomeChecklistItem(index) {
+            if (!currentPlan) return;
+            const checklist = normalizeChecklist(currentPlan.checklist);
+            if (!checklist[index]) return;
+            checklist.splice(index, 1);
+            updateHomeChecklist(checklist);
         }
 
         function toggleChecklistItem(index, done) {
@@ -822,8 +1147,7 @@
             const checklist = normalizeChecklist(currentPlan.checklist);
             if (!checklist[index]) return;
             checklist[index].done = done;
-            update(ref(db, 'datePlan'), { checklist })
-                .catch(error => alert("Lỗi cập nhật checklist: " + error.message));
+            updateHomeChecklist(checklist);
         }
 
         function renderDateHistory(data) {
@@ -832,6 +1156,7 @@
             items.sort((a, b) => new Date(b.createdAt || b.dateTime || 0) - new Date(a.createdAt || a.dateTime || 0));
             dateHistoryCache = items;
             renderSmartSuggestion();
+            renderDateCalendar();
             const latest = items.slice(0, 5);
             document.getElementById('historyCount').innerText = `${items.length} buổi`;
             if (!latest.length) {
@@ -843,11 +1168,159 @@
                 return `
                     <div class="history-item">
                         <strong>${escapeHtml(formatTime(item.dateTime) || "Chưa có thời gian")}</strong>
+                        <span class="status-pill">${escapeHtml(getStatusText(item))}</span>
                         <p>${escapeHtml(item.food || "Chưa chọn món")} · ${escapeHtml(activities)}</p>
                         <p>📍 ${escapeHtml(item.pickupLocation || "Chưa nhập địa điểm đón")}</p>
+                        <div class="history-actions">
+                            <button type="button" class="history-action-btn" data-view-history="${escapeHtml(item.key)}">Chi tiết</button>
+                            <button type="button" class="history-action-btn" data-reuse-history="${escapeHtml(item.key)}">Dùng lại</button>
+                            <button type="button" class="history-delete-btn" data-delete-history="${escapeHtml(item.key)}">Xóa buổi này</button>
+                        </div>
                     </div>
                 `;
             }).join('');
+        }
+
+        function getStatusText(plan) {
+            if (plan && plan.status) return statusLabels[plan.status] || plan.status;
+            if (plan && plan.confirmedAt) return statusLabels.confirmed;
+            return statusLabels.planned;
+        }
+
+        function findHistoryItem(historyKey) {
+            return dateHistoryCache.find(item => item.key === historyKey);
+        }
+
+        function viewHistoryItem(historyKey) {
+            const item = findHistoryItem(historyKey);
+            if (!item) return;
+            const panel = document.getElementById('historyDetailPanel');
+            const activities = item.activities && item.activities.length ? item.activities.join(', ') : "Chỉ đi ăn thôi";
+            const checklist = normalizeChecklist(item.checklist).map(check => `${check.done ? "✓" : "•"} ${escapeHtml(check.text)}`).join('<br>');
+            panel.classList.remove('hidden');
+            panel.innerHTML = `
+                <h4>Chi tiết buổi hẹn</h4>
+                <p><strong>Trạng thái:</strong> ${escapeHtml(getStatusText(item))}</p>
+                <p><strong>Thời gian:</strong> ${escapeHtml(formatTime(item.dateTime) || "Chưa có thời gian")}</p>
+                <p><strong>Món ăn:</strong> ${escapeHtml(item.food || "Chưa chọn món")}</p>
+                <p><strong>Đi chơi:</strong> ${escapeHtml(activities)}</p>
+                <p><strong>Địa điểm đón:</strong> ${escapeHtml(item.pickupLocation || "Chưa nhập địa điểm đón")}</p>
+                <p><strong>Dặn dò:</strong> ${escapeHtml(item.notes || "Không có dặn dò gì thêm")}</p>
+                <p><strong>Checklist:</strong><br>${checklist || "Chưa có checklist"}</p>
+            `;
+        }
+
+        function reuseHistoryItem(historyKey) {
+            const item = findHistoryItem(historyKey);
+            if (!item) return;
+
+            document.querySelectorAll('input[name="actOpt"]').forEach(input => {
+                input.checked = false;
+            });
+            selectOptionByValue('foodOpt', 'foodGrid', item.food || "Chưa chọn", true);
+            (item.activities || []).forEach(activity => selectOptionByValue('actOpt', 'planGrid', activity, true));
+            document.getElementById('pickupInp').value = item.pickupLocation || "";
+            document.getElementById('dateInp').value = item.dateTime || "";
+            document.getElementById('timelineInp').value = item.timeline || getDefaultTimeline(item).join('\n');
+            document.getElementById('notesInp').value = item.notes || "";
+            const reminders = getPlanReminders(item);
+            document.querySelectorAll('input[name="reminderOpt"]').forEach(input => {
+                input.checked = reminders.includes(Number(input.value));
+            });
+            renderFinalChecklist(item.checklist);
+            updatePredictionPreview();
+            goToStep(3);
+            showToast("Đã đưa buổi hẹn cũ vào form để chỉnh và chốt lại.", "success");
+        }
+
+        function deleteHistoryItem(historyKey) {
+            if (!historyKey) return;
+
+            const confirmed = window.confirm("Pooh chắc muốn xóa buổi hẹn này khỏi lịch sử chứ?");
+            if (!confirmed) return;
+
+            remove(ref(db, `dateHistory/${historyKey}`))
+                .then(() => showToast("Đã xóa buổi hẹn khỏi lịch sử.", "success"))
+                .catch(error => showToast("Lỗi xóa buổi hẹn: " + error.message, "error"));
+        }
+
+        function renderDateCalendar() {
+            const grid = document.getElementById('dateCalendarGrid');
+            const label = document.getElementById('calendarMonthLabel');
+            if (!grid || !label) return;
+
+            const dates = [currentPlan, ...dateHistoryCache]
+                .filter(item => item && item.dateTime)
+                .map(item => new Date(item.dateTime))
+                .filter(date => !Number.isNaN(date.getTime()));
+            const base = dates[0] || new Date();
+            const year = base.getFullYear();
+            const month = base.getMonth();
+            const dateKeys = new Set(dates
+                .filter(date => date.getFullYear() === year && date.getMonth() === month)
+                .map(date => date.getDate()));
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
+            label.innerText = `${month + 1}/${year}`;
+
+            const blanks = Array.from({ length: firstDay }, () => '<div class="calendar-day"></div>');
+            const days = Array.from({ length: daysInMonth }, (_, index) => {
+                const day = index + 1;
+                const hasDate = dateKeys.has(day);
+                return `<div class="calendar-day ${hasDate ? 'has-date' : ''}"><strong>${day}</strong>${hasDate ? 'Có hẹn' : ''}</div>`;
+            });
+            grid.innerHTML = [...blanks, ...days].join('');
+        }
+
+        function renderDateMemories(memories) {
+            const grid = document.getElementById('memoryGrid');
+            const count = document.getElementById('memoryCount');
+            if (!grid || !count) return;
+            const items = Array.isArray(memories) ? memories : [];
+            count.innerText = `${items.length} ảnh`;
+            if (!items.length) {
+                grid.innerHTML = '<div class="empty-text">Chưa có ảnh kỷ niệm nào.</div>';
+                return;
+            }
+
+            grid.innerHTML = items.map((item, index) => `
+                <div class="memory-item">
+                    <img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.caption || 'Ảnh kỷ niệm')}">
+                    <p>${escapeHtml(item.caption || 'Một khoảnh khắc của hai đứa')}</p>
+                    <button type="button" data-delete-memory="${index}">Xóa ảnh</button>
+                </div>
+            `).join('');
+        }
+
+        function addMemoryPhoto() {
+            if (!currentPlan) return;
+            const urlInput = document.getElementById('memoryPhotoUrl');
+            const captionInput = document.getElementById('memoryCaption');
+            const url = urlInput.value.trim();
+            const caption = captionInput.value.trim();
+            if (!url) {
+                showToast("Dán link ảnh trước nha.", "info");
+                return;
+            }
+
+            const memories = [...(Array.isArray(currentPlan.memories) ? currentPlan.memories : []), { url, caption, createdAt: new Date().toISOString() }];
+            update(ref(db, 'datePlan'), { memories })
+                .then(() => {
+                    urlInput.value = "";
+                    captionInput.value = "";
+                    showToast("Đã thêm ảnh vào album.", "success");
+                })
+                .catch(error => showToast("Lỗi thêm ảnh: " + error.message, "error"));
+        }
+
+        function deleteMemoryPhoto(index) {
+            if (!currentPlan) return;
+            const memories = Array.isArray(currentPlan.memories) ? [...currentPlan.memories] : [];
+            if (!memories[index]) return;
+            memories.splice(index, 1);
+            update(ref(db, 'datePlan'), { memories })
+                .then(() => showToast("Đã xóa ảnh khỏi album.", "success"))
+                .catch(error => showToast("Lỗi xóa ảnh: " + error.message, "error"));
         }
 
         function getTopFrequency(values) {
@@ -861,6 +1334,9 @@
 
         function getRatingWeight(item) {
             const value = item.rating && item.rating.value;
+            const scores = item.rating && item.rating.scores ? Object.values(item.rating.scores).map(Number).filter(Boolean) : [];
+            const avgScore = scores.length ? scores.reduce((sum, score) => sum + score, 0) / scores.length : 0;
+            if (avgScore >= 4.5) return 4;
             if (value === 'love') return 3;
             if (value === 'ok') return 2;
             if (value === 'nope') return 0;
@@ -919,8 +1395,8 @@
                 suggestion: latestSmartSuggestion,
                 createdAt: new Date().toISOString()
             }).then(() => {
-                alert(value === 'like' ? "Anh đã ghi nhận gu này rồi 💕" : "Anh sẽ để ý để lựa chọn phù hợp hơn nha.");
-            }).catch(error => alert("Lỗi lưu feedback: " + error.message));
+                showToast(value === 'like' ? "Anh đã ghi nhận gu này rồi 💕" : "Anh sẽ để ý để lựa chọn phù hợp hơn nha.", "success");
+            }).catch(error => showToast("Lỗi lưu feedback: " + error.message, "error"));
         }
 
         function normalizeOptionValue(value) {
@@ -972,7 +1448,7 @@
             renderFinalChecklist(suggestion.checklist);
             updatePredictionPreview();
             goToStep(3);
-            alert("Đã áp dụng gợi ý vào form. Pooh chỉ cần kiểm tra thời gian, địa điểm rồi chốt nha 💕");
+            showToast("Đã áp dụng gợi ý vào form. Pooh chỉ cần kiểm tra thời gian, địa điểm rồi chốt nha 💕", "success");
         }
 
         function renderDateRating(rating) {
@@ -981,6 +1457,11 @@
                 button.classList.toggle('active', button.dataset.dateRating === selectedDateRating);
             });
             document.getElementById('dateRatingNote').value = rating && rating.note ? rating.note : "";
+            const scores = rating && rating.scores ? rating.scores : {};
+            document.getElementById('ratingFoodScore').value = scores.food || "";
+            document.getElementById('ratingPlaceScore').value = scores.place || "";
+            document.getElementById('ratingMoodScore').value = scores.mood || "";
+            document.getElementById('ratingTimeScore').value = scores.time || "";
             const labels = { love: "Rất thích", ok: "Ổn áp", nope: "Chưa hợp" };
             document.getElementById('dateRatingBadge').innerText = selectedDateRating ? labels[selectedDateRating] : "Chưa đánh giá";
             document.getElementById('dateRatingStatus').innerText = selectedDateRating
@@ -991,12 +1472,18 @@
         function saveDateRating() {
             if (!currentPlan) return;
             if (!selectedDateRating) {
-                alert("Pooh chọn mức đánh giá trước nha.");
+                showToast("Pooh chọn mức đánh giá trước nha.", "info");
                 return;
             }
 
             const rating = {
                 value: selectedDateRating,
+                scores: {
+                    food: document.getElementById('ratingFoodScore').value,
+                    place: document.getElementById('ratingPlaceScore').value,
+                    mood: document.getElementById('ratingMoodScore').value,
+                    time: document.getElementById('ratingTimeScore').value
+                },
                 note: document.getElementById('dateRatingNote').value.trim(),
                 createdAt: new Date().toISOString()
             };
@@ -1007,9 +1494,9 @@
                 .then(() => {
                     currentPlan = payload;
                     renderDateRating(rating);
-                    alert("Đã lưu đánh giá, lần sau anh sẽ gợi ý đúng gu hơn 💕");
+                    showToast("Đã lưu đánh giá, lần sau anh sẽ gợi ý đúng gu hơn 💕", "success");
                 })
-                .catch(error => alert("Lỗi lưu đánh giá: " + error.message));
+                .catch(error => showToast("Lỗi lưu đánh giá: " + error.message, "error"));
         }
 
         function getWeatherInfo(code) {
@@ -1309,6 +1796,56 @@
             return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
         }
 
+        function updateInstallCard() {
+            const status = document.getElementById('installStatus');
+            const badge = document.getElementById('installBadge');
+            const installBtn = document.getElementById('btnInstallApp');
+            if (!status || !badge || !installBtn) return;
+
+            if (isStandaloneApp()) {
+                badge.innerText = "Đã cài";
+                status.innerText = "Date Pooh đang chạy như app rồi. Pooh có thể mở nhanh từ icon ngoài màn hình chính.";
+                installBtn.disabled = true;
+                installBtn.innerText = "Đã cài app";
+                return;
+            }
+
+            if (deferredInstallPrompt) {
+                badge.innerText = "Sẵn sàng";
+                status.innerText = "Thiết bị này có thể cài Date Pooh như app. Bấm Cài app để thêm icon ra màn hình chính.";
+                installBtn.disabled = false;
+                installBtn.innerText = "Cài app";
+                return;
+            }
+
+            installBtn.disabled = false;
+            if (isIosDevice()) {
+                badge.innerText = "iPhone";
+                status.innerText = "Trên iPhone: mở bằng Safari, bấm Chia sẻ, chọn Thêm vào Màn hình chính, rồi mở Date Pooh từ icon mới.";
+                installBtn.innerText = "Xem hướng dẫn";
+                return;
+            }
+
+            badge.innerText = "Hướng dẫn";
+            status.innerText = "Nếu trình duyệt chưa hiện nút cài, mở menu trình duyệt và chọn Install app hoặc Add to Home screen.";
+            installBtn.innerText = "Xem hướng dẫn";
+        }
+
+        async function installDatePoohApp() {
+            if (!deferredInstallPrompt) {
+                updateInstallCard();
+                showToast(isIosDevice()
+                    ? "Trên iPhone: Safari > nút Chia sẻ > Thêm vào Màn hình chính > mở app từ icon mới."
+                    : "Mở menu trình duyệt rồi chọn Install app hoặc Add to Home screen nha.", "info");
+                return;
+            }
+
+            deferredInstallPrompt.prompt();
+            await deferredInstallPrompt.userChoice;
+            deferredInstallPrompt = null;
+            updateInstallCard();
+        }
+
         function getNotificationSupportText() {
             if (isIosDevice() && !isStandaloneApp()) {
                 return "Trên iPhone, Safari chỉ cho bật thông báo khi web đã được Thêm vào Màn hình chính. Bấm Chia sẻ > Thêm vào Màn hình chính, rồi mở app Date Pooh từ icon mới để bật thông báo.";
@@ -1405,6 +1942,7 @@
             document.getElementById('lblPickup').innerText = plan.pickupLocation || "Chưa nhập địa điểm đón";
             document.getElementById('lblTime').innerText = formatTime(plan.dateTime);
             document.getElementById('lblNotes').innerText = plan.notes || "Không có dặn dò gì thêm";
+            document.getElementById('lblPlanStatus').innerText = getStatusText(plan);
             document.getElementById('lblConfirmStatus').innerText = plan.confirmedAt ? `Pooh đã đồng ý lúc ${formatTime(plan.confirmedAt)}` : "Đang chờ Pooh xác nhận";
             const prediction = plan.prediction || predictDateVibe(plan);
             document.getElementById('lblWeather').innerText = prediction.weather;
@@ -1422,10 +1960,13 @@
             const confirmBtn = document.getElementById('btnConfirmPlan');
             confirmBtn.innerText = plan.confirmedAt ? "Pooh đã đồng ý rồi 💖" : "Pooh đồng ý lịch này 💕";
             confirmBtn.classList.toggle('confirmed', Boolean(plan.confirmedAt));
+            document.getElementById('planStatusSelect').value = plan.status || (plan.confirmedAt ? 'confirmed' : 'planned');
             renderTimeline(plan);
             renderHomeChecklist(plan);
             renderFinalChecklist(plan.checklist);
             renderDateRating(plan.rating);
+            renderDateMemories(plan.memories);
+            renderDateCalendar();
 
             initCountdown(plan.dateTime);
             scheduleReminders(plan);
@@ -1444,11 +1985,12 @@
             const reminders = getSelectedReminders();
             const checklist = getChecklistFromFinalForm();
 
-            if(!time) { alert("Vui lòng chọn thời gian đón em nhé!"); return; }
+            if(!time) { showToast("Vui lòng chọn thời gian đón em nhé!", "info"); return; }
 
             const prediction = predictDateVibe({ food, activities: acts, dateTime: time, pickupLocation });
             const smartSuggestion = latestSmartSuggestion || generateSmartSuggestion();
-            const plan = { food, activities: acts, dateTime: time, pickupLocation, timeline, notes, reminders, checklist, prediction, smartSuggestion, confirmedAt: null, createdAt: new Date().toISOString() };
+            const status = document.getElementById('planStatusSelect')?.value || 'planned';
+            const plan = { food, activities: acts, dateTime: time, pickupLocation, timeline, notes, reminders, checklist, prediction, smartSuggestion, status, confirmedAt: null, createdAt: new Date().toISOString() };
 
             const btn = document.getElementById('btnSubmitFinal');
             btn.innerText = "Đang đồng bộ lên mây...";
@@ -1459,7 +2001,7 @@
                     push(ref(db, 'dateHistory'), plan).catch(error => console.warn("Lỗi lưu lịch sử date:", error));
                     btn.innerText = "Chốt Đơn Kế Hoạch! 💖";
                     btn.disabled = false;
-                    alert("🎉 Đã đồng bộ thành công! Pooh ở nhà mở trang web lên là sẽ tự động thấy ngay kế hoạch!");
+                    showToast("Đã đồng bộ thành công! Pooh ở nhà mở trang web lên là sẽ tự động thấy ngay kế hoạch!", "success");
                     displayPlanData(plan);
                     goToStep(0);
                     setTimeout(triggerSuccessEffects, 300);
@@ -1467,7 +2009,7 @@
                 .catch((error) => {
                     btn.innerText = "Chốt Đơn Kế Hoạch! 💖";
                     btn.disabled = false;
-                    alert("Lỗi lưu dữ liệu: " + error.message);
+                    showToast("Lỗi lưu dữ liệu: " + error.message, "error");
                 });
         }
 
@@ -1483,6 +2025,8 @@
                     reminderTimeouts = [];
                     clearInterval(weatherInterval);
                     currentWeatherPlan = null;
+                    renderDateMemories([]);
+                    renderDateCalendar();
                     updateReminderStatus("Chưa có lịch hẹn để đặt nhắc nhở.");
                     document.getElementById('loadingTxt').innerText = "Chưa có kế hoạch nào được tạo.";
                     document.getElementById('btnStartInit').style.display = 'block';
@@ -1516,14 +2060,62 @@
         function confirmPlan() {
             const btn = document.getElementById('btnConfirmPlan');
             btn.disabled = true;
-            update(ref(db, 'datePlan'), { confirmedAt: new Date().toISOString() })
+            update(ref(db, 'datePlan'), { confirmedAt: new Date().toISOString(), status: 'confirmed' })
                 .then(() => {
                     btn.disabled = false;
+                    showToast("Pooh đã đồng ý lịch này rồi 💖", "success");
                     triggerSuccessEffects();
                 })
                 .catch((error) => {
                     btn.disabled = false;
-                    alert("Lỗi xác nhận lịch: " + error.message);
+                    showToast("Lỗi xác nhận lịch: " + error.message, "error");
+                });
+        }
+
+        function updatePlanStatus(status) {
+            if (!currentPlan) {
+                showToast("Chưa có buổi hẹn để cập nhật trạng thái.", "info");
+                return;
+            }
+
+            update(ref(db, 'datePlan'), { status })
+                .then(() => showToast(`Đã đổi trạng thái thành: ${statusLabels[status] || status}.`, "success"))
+                .catch(error => showToast("Lỗi cập nhật trạng thái: " + error.message, "error"));
+        }
+
+        function switchHomeTab(tabName) {
+            document.querySelectorAll('[data-home-tab]').forEach(button => {
+                button.classList.toggle('active', button.dataset.homeTab === tabName);
+            });
+            document.querySelectorAll('[data-home-section]').forEach(section => {
+                section.classList.toggle('hidden', section.dataset.homeSection !== tabName);
+            });
+        }
+
+        function deletePlan() {
+            if (!currentPlan) {
+                showToast("Hiện chưa có buổi hẹn nào để xóa.", "info");
+                return;
+            }
+
+            const confirmed = window.confirm("Pooh chắc muốn xóa buổi hẹn hiện tại chứ? Lịch sử buổi date vẫn được giữ lại.");
+            if (!confirmed) return;
+
+            const btn = document.getElementById('btnDeletePlan');
+            btn.disabled = true;
+            btn.innerText = "Đang xóa...";
+
+            remove(ref(db, 'datePlan'))
+                .then(() => {
+                    btn.disabled = false;
+                    btn.innerText = "Xóa buổi hẹn";
+                    showToast("Đã xóa buổi hẹn hiện tại. Mình có thể lên kế hoạch mới nha.", "success");
+                    goToStep(0);
+                })
+                .catch((error) => {
+                    btn.disabled = false;
+                    btn.innerText = "Xóa buổi hẹn";
+                    showToast("Lỗi xóa buổi hẹn: " + error.message, "error");
                 });
         }
 
@@ -1612,6 +2204,9 @@
         document.querySelectorAll('[data-step-target]').forEach(button => {
             button.addEventListener('click', () => goToStep(Number(button.dataset.stepTarget)));
         });
+        document.querySelectorAll('[data-home-tab]').forEach(button => {
+            button.addEventListener('click', () => switchHomeTab(button.dataset.homeTab));
+        });
         document.getElementById('btnStartInit').addEventListener('click', () => goToStep(1));
         document.getElementById('btnEditPlan').addEventListener('click', () => goToStep(1));
         document.getElementById('btnGoToStep2').addEventListener('click', () => goToStep(2));
@@ -1623,15 +2218,82 @@
         document.getElementById('btnEnableReminderFinal').addEventListener('click', requestNotificationPermission);
         document.getElementById('btnEnableReminderHome').addEventListener('click', requestNotificationPermission);
         document.getElementById('btnConfirmPlan').addEventListener('click', confirmPlan);
+        document.getElementById('btnDeletePlan').addEventListener('click', deletePlan);
+        document.getElementById('planStatusSelect').addEventListener('change', event => updatePlanStatus(event.target.value));
         document.getElementById('btnRefreshWeather').addEventListener('click', () => loadLiveWeather(currentWeatherPlan));
+        document.getElementById('btnAddHomeChecklist').addEventListener('click', addHomeChecklistItem);
+        document.getElementById('btnAddFinalChecklist').addEventListener('click', addFinalChecklistItem);
+        document.getElementById('btnAddMemoryPhoto').addEventListener('click', addMemoryPhoto);
+        document.getElementById('homeChecklistInput').addEventListener('keydown', event => {
+            if (event.key !== 'Enter') return;
+            event.preventDefault();
+            addHomeChecklistItem();
+        });
+        document.getElementById('finalChecklistInput').addEventListener('keydown', event => {
+            if (event.key !== 'Enter') return;
+            event.preventDefault();
+            addFinalChecklistItem();
+        });
+        document.getElementById('btnAddFavoritePlace').addEventListener('click', () => {
+            const input = document.getElementById('favoritePlaceInp');
+            addFavoritePlace(input.value);
+            input.value = "";
+        });
+        document.getElementById('btnSaveSelectedFavorites').addEventListener('click', saveSelectedActivitiesToFavorites);
+        document.getElementById('btnInstallApp').addEventListener('click', installDatePoohApp);
+        document.getElementById('btnReplayIntro').addEventListener('click', replayIntro);
         document.getElementById('dateInp').addEventListener('change', updatePredictionPreview);
         document.getElementById('pickupInp').addEventListener('input', updatePredictionPreview);
+        document.getElementById('favoritePlaceInp').addEventListener('keydown', event => {
+            if (event.key !== 'Enter') return;
+            event.preventDefault();
+            document.getElementById('btnAddFavoritePlace').click();
+        });
         document.getElementById('foodGrid').addEventListener('change', updatePredictionPreview);
         document.getElementById('planGrid').addEventListener('change', updatePredictionPreview);
+        document.getElementById('favoritePlaceList').addEventListener('click', event => {
+            const useButton = event.target.closest('[data-use-favorite]');
+            const removeButton = event.target.closest('[data-remove-favorite]');
+            if (useButton) {
+                selectOptionByValue('actOpt', 'planGrid', useButton.dataset.useFavorite, true);
+                updatePredictionPreview();
+                showToast("Đã chọn chỗ yêu thích vào lịch.", "success");
+                return;
+            }
+            if (removeButton) removeFavoritePlace(removeButton.dataset.removeFavorite);
+        });
+        document.getElementById('dateHistoryList').addEventListener('click', event => {
+            const viewButton = event.target.closest('[data-view-history]');
+            const reuseButton = event.target.closest('[data-reuse-history]');
+            const deleteButton = event.target.closest('[data-delete-history]');
+            if (viewButton) viewHistoryItem(viewButton.dataset.viewHistory);
+            if (reuseButton) reuseHistoryItem(reuseButton.dataset.reuseHistory);
+            if (deleteButton) deleteHistoryItem(deleteButton.dataset.deleteHistory);
+        });
+        document.getElementById('memoryGrid').addEventListener('click', event => {
+            const deleteButton = event.target.closest('[data-delete-memory]');
+            if (deleteButton) deleteMemoryPhoto(Number(deleteButton.dataset.deleteMemory));
+        });
+        document.getElementById('homeChecklistList').addEventListener('click', (event) => {
+            const editButton = event.target.closest('[data-edit-home-check]');
+            const deleteButton = event.target.closest('[data-delete-home-check]');
+            if (!editButton && !deleteButton) return;
+            event.preventDefault();
+            if (editButton) editHomeChecklistItem(Number(editButton.dataset.editHomeCheck));
+            if (deleteButton) deleteHomeChecklistItem(Number(deleteButton.dataset.deleteHomeCheck));
+        });
         document.getElementById('homeChecklistList').addEventListener('change', (event) => {
             const input = event.target.closest('input[data-check-index]');
             if (!input) return;
             toggleChecklistItem(Number(input.dataset.checkIndex), input.checked);
+        });
+        document.getElementById('finalChecklistList').addEventListener('click', (event) => {
+            const editButton = event.target.closest('[data-edit-final-check]');
+            const deleteButton = event.target.closest('[data-delete-final-check]');
+            if (!editButton && !deleteButton) return;
+            event.preventDefault();
+            if (editButton) editFinalChecklistItem(Number(editButton.dataset.editFinalCheck));
+            if (deleteButton) deleteFinalChecklistItem(Number(deleteButton.dataset.deleteFinalCheck));
         });
         document.getElementById('finalChecklistList').addEventListener('change', (event) => {
             const input = event.target.closest('input[name="prepChecklist"]');
@@ -1652,6 +2314,17 @@
         });
         document.getElementById('btnSaveDateRating').addEventListener('click', saveDateRating);
 
+        window.addEventListener('beforeinstallprompt', event => {
+            event.preventDefault();
+            deferredInstallPrompt = event;
+            updateInstallCard();
+        });
+
+        window.addEventListener('appinstalled', () => {
+            deferredInstallPrompt = null;
+            updateInstallCard();
+        });
+
         // Sự kiện khi bấm nút "Thêm món ăn"
         document.getElementById('btnAddFood').addEventListener('click', () => {
             const txtInput = document.getElementById('txtCustomFood');
@@ -1663,8 +2336,9 @@
             push(ref(db, 'foodOptions'), newItem)
                 .then(() => {
                     txtInput.value = "";
+                    showToast("Đã thêm món mới.", "success");
                 })
-                .catch(err => alert("Lỗi thêm món: " + err.message));
+                .catch(err => showToast("Lỗi thêm món: " + err.message, "error"));
         });
 
         // Sự kiện khi bấm nút "Thêm địa điểm"
@@ -1678,8 +2352,9 @@
             push(ref(db, 'activityOptions'), newItem)
                 .then(() => {
                     txtInput.value = "";
+                    showToast("Đã thêm địa điểm mới.", "success");
                 })
-                .catch(err => alert("Lỗi thêm địa điểm: " + err.message));
+                .catch(err => showToast("Lỗi thêm địa điểm: " + err.message, "error"));
         });
 
         function registerServiceWorker() {
@@ -1693,7 +2368,22 @@
             const intro = document.getElementById('introOverlay');
             if (!intro || intro.classList.contains('hidden')) return;
             intro.classList.add('hidden');
-            setTimeout(() => intro.remove(), 600);
+            clearTimeout(introTimeout);
+        }
+
+        function replayIntro() {
+            const intro = document.getElementById('introOverlay');
+            if (!intro) return;
+            intro.classList.remove('hidden');
+            intro.querySelectorAll('.intro-scene, .intro-progress span, .intro-particles span').forEach(item => {
+                item.style.animation = 'none';
+            });
+            void intro.offsetHeight;
+            intro.querySelectorAll('.intro-scene, .intro-progress span, .intro-particles span').forEach(item => {
+                item.style.animation = '';
+            });
+            clearTimeout(introTimeout);
+            introTimeout = setTimeout(closeIntro, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 2500 : 9400);
         }
 
         function initIntro() {
@@ -1704,13 +2394,14 @@
             intro.addEventListener('click', event => {
                 if (event.target === intro) closeIntro();
             });
-            setTimeout(closeIntro, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 2500 : 9400);
+            introTimeout = setTimeout(closeIntro, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 2500 : 9400);
         }
 
         // Khởi động khi tải xong trang
         window.addEventListener('DOMContentLoaded', () => {
             initIntro();
             registerServiceWorker();
+            updateInstallCard();
             for (let i = 0; i < 15; i++) {
                 const sp = document.createElement('div'); sp.classList.add('sparkle');
                 sp.style.left = Math.random() * 100 + 'vw'; sp.style.width = sp.style.height = Math.random() * 6 + 4 + 'px';
@@ -1719,6 +2410,7 @@
             }
             runSlideshow();
             renderFinalChecklist();
+            renderFavoritePlaces();
             updatePredictionPreview();
             listenToCloudDatabase();
             listenToDateHistory();
